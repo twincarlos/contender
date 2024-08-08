@@ -1,14 +1,18 @@
 import "./globals.css";
+import Navbar from "./components/Navbar/Navbar";
 
 export const metadata = {
-  title: "contenderTT",
+  title: "CONTENDER",
   description: "Tournament manager",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 };
