@@ -1,0 +1,18 @@
+.tournament-card {
+    border: 1px solid var(--border-color-1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 5px;
+}
+
+.tournament-card:nth-child(odd) {
+    border-bottom: none;
+    background: var(--background-1-secondary);
+}
+
+.tournament-card:nth-child(even) {
+    background: var(--background-1);
+}

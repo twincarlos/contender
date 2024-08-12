@@ -1,0 +1,22 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+input {
+    background: var(--background-1-secondary);
+    border: 1px solid var(--border-color-1);
+    font-size: 1em;
+    color: var(--color-1);
+    padding: 5px;
+}

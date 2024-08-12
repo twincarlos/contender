@@ -1,12 +1,9 @@
-import Header from "./components/Header/Header";
+import TournamentList from "./components/TournamentList/TournamentList";
 
 export default function Home() {
   return (
     <main>
-      <Header>
-        <p>Tournaments</p>
-        <button>Create tournament</button>
-      </Header>
+      <TournamentList />
     </main>
   );
 };
