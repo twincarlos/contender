@@ -55,18 +55,6 @@ CREATE TABLE IF NOT EXISTS "match_table" (
 	"match_id" smallint NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "player" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"name" varchar(255) NOT NULL,
-	"rating" smallint DEFAULT 0 NOT NULL,
-	"location" varchar(255),
-	"club" varchar(255),
-	"is_admin" boolean DEFAULT false NOT NULL,
-	"is_estimated" boolean DEFAULT false NOT NULL,
-	"dob" varchar(255),
-	"usatt_number" smallint
-);
---> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "tournament" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
@@ -90,6 +78,19 @@ CREATE TABLE IF NOT EXISTS "tournament_event" (
 	"prefer_groups_of" smallint DEFAULT 4 NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "tournament_player" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"tournament_id" smallint NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"rating" smallint DEFAULT 0 NOT NULL,
+	"location" varchar(255),
+	"club" varchar(255),
+	"is_admin" boolean DEFAULT false NOT NULL,
+	"is_estimated" boolean DEFAULT false NOT NULL,
+	"dob" varchar(255),
+	"usatt_number" smallint
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "tournament_table" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"tournament_id" smallint NOT NULL,
@@ -109,7 +110,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "event_player" ADD CONSTRAINT "event_player_player_id_player_id_fk" FOREIGN KEY ("player_id") REFERENCES "public"."player"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "event_player" ADD CONSTRAINT "event_player_player_id_tournament_player_id_fk" FOREIGN KEY ("player_id") REFERENCES "public"."tournament_player"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -164,6 +165,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "tournament_event" ADD CONSTRAINT "tournament_event_tournament_id_tournament_id_fk" FOREIGN KEY ("tournament_id") REFERENCES "public"."tournament"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "tournament_player" ADD CONSTRAINT "tournament_player_tournament_id_tournament_id_fk" FOREIGN KEY ("tournament_id") REFERENCES "public"."tournament"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

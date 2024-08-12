@@ -1,5 +1,5 @@
 {
-  "id": "d2a1df17-f0ad-4767-896f-04f6d9036515",
+  "id": "fbb2de86-a104-4ad3-9bdb-0077fcc0d078",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -84,10 +84,10 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "event_player_player_id_player_id_fk": {
-          "name": "event_player_player_id_player_id_fk",
+        "event_player_player_id_tournament_player_id_fk": {
+          "name": "event_player_player_id_tournament_player_id_fk",
           "tableFrom": "event_player",
-          "tableTo": "player",
+          "tableTo": "tournament_player",
           "columnsFrom": [
             "player_id"
           ],
@@ -446,73 +446,6 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.player": {
-      "name": "player",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "rating": {
-          "name": "rating",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "location": {
-          "name": "location",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "club": {
-          "name": "club",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "is_admin": {
-          "name": "is_admin",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "is_estimated": {
-          "name": "is_estimated",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "dob": {
-          "name": "dob",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "usatt_number": {
-          "name": "usatt_number",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "public.tournament": {
       "name": "tournament",
       "schema": "",
@@ -644,6 +577,93 @@
         "tournament_event_tournament_id_tournament_id_fk": {
           "name": "tournament_event_tournament_id_tournament_id_fk",
           "tableFrom": "tournament_event",
+          "tableTo": "tournament",
+          "columnsFrom": [
+            "tournament_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.tournament_player": {
+      "name": "tournament_player",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "tournament_id": {
+          "name": "tournament_id",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rating": {
+          "name": "rating",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "location": {
+          "name": "location",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "club": {
+          "name": "club",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_admin": {
+          "name": "is_admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "is_estimated": {
+          "name": "is_estimated",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "dob": {
+          "name": "dob",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "usatt_number": {
+          "name": "usatt_number",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tournament_player_tournament_id_tournament_id_fk": {
+          "name": "tournament_player_tournament_id_tournament_id_fk",
+          "tableFrom": "tournament_player",
           "tableTo": "tournament",
           "columnsFrom": [
             "tournament_id"

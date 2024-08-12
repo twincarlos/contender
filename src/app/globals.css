@@ -1,13 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-  --background-1: white;
-  --color-1: black;
-
-  --background-2: #8338ec;
-  --color-2: white;
-  --box-shadow-2: #2a0065 -5px 5px;
-  --box-shadow-2-hover: #2a0065 -10px 10px;
+  --background-1: #2a2929;
+  --color-1: #bfbfbf;
+  --border-color-1: #1d283a;
 }
 
 * {
@@ -42,4 +38,8 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+main {
+  width: 100%;
 }

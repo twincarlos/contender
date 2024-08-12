@@ -13,8 +13,9 @@ export const tournament = pgTable('tournament', {
     status: tournamentStatusEnum('status').notNull().default('upcoming')
 });
 
-export const player = pgTable('player', {
+export const tournamentPlayer = pgTable('tournament_player', {
     id: serial('id').primaryKey(),
+    tournamentId: smallint('tournament_id').references(() => tournament.id, 'id').notNull(),
     name: varchar('name', { length: 255 }).notNull(),
     rating: smallint('rating').notNull().default(0),
     location: varchar('location', { length: 255 }),
@@ -44,7 +45,7 @@ export const tournamentEvent = pgTable('tournament_event', {
 export const eventPlayer = pgTable('event_player', {
     id: serial('id').primaryKey(),
     eventId: smallint('event_id').references(() => tournamentEvent.id, 'id').notNull(),
-    playerId: smallint('player_id').references(() => player.id, 'id').notNull()
+    playerId: smallint('player_id').references(() => tournamentPlayer.id, 'id').notNull()
 });
 
 export const groupPlayer = pgTable('group_player', {
