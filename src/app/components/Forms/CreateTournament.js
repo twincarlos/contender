@@ -9,7 +9,7 @@ export function CreateTournament({ tournaments, setTournaments }) {
         date: "",
     });
     return (
-        <div className="create-tournament">
+        <div className="contender-form create-tournament">
             <p>Create tournament</p>
             <form action={async () => {
                 const newTournament = await createTournament(data);
