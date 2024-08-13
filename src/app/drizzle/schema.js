@@ -1,4 +1,5 @@
 import { pgTable, serial, varchar, boolean, smallint, date, time, pgEnum } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
 
 const tournamentStatusEnum = pgEnum('tournament_status', ['finished', 'upcoming', 'current']);
 const tournamentEventTypeEnum = pgEnum('tournament_event_type', ['rr', 'grr', 'teams', 'handicap']);
@@ -104,3 +105,16 @@ export const matchTable = pgTable('match_table', {
     tableId: smallint('table_id').references(() => tournamentTable.id, 'id').notNull(),
     matchId: smallint('match_id').references(() => match.id, 'id').notNull()
 });
+
+export const tournamentRelations = relations(tournament, ({ many }) => ({
+    tournamentPlayer: many(tournamentPlayer),
+    tournamentEvent: many(tournamentEvent)
+}));
+
+export const tournamentPlayerRelations = relations(tournamentPlayer, ({ one }) => ({
+    tournament: one(tournament, { fields: [tournamentPlayer.tournamentId], references: [tournament.id] })
+}));
+
+export const tournamentEventRelations = relations(tournamentEvent, ({ one }) => ({
+    tournament: one(tournament, { fields: [tournamentEvent.tournamentId], references: [tournament.id] })
+}));

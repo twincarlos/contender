@@ -5,6 +5,7 @@ export const metadata = {
   description: "Tournament manager",
 };
 
+
 export default function RootLayout({ children }) {
   return (
     <html>
