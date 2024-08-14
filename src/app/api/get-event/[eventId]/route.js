@@ -4,7 +4,7 @@ import { tournament, tournamentPlayer, tournamentEvent } from "@/app/drizzle/sch
 import { eq } from "drizzle-orm";
 
 export async function GET(req, { params }) {
-    const tournaments = await db.query.tournament.findFirst({
+    const tournaments = await db.query.tournamentEvent.findFirst({
         with: {
             tournamentPlayer,
             tournamentEvent

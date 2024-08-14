@@ -45,20 +45,20 @@ export const tournamentEvent = pgTable('tournament_event', {
 
 export const eventPlayer = pgTable('event_player', {
     id: serial('id').primaryKey(),
-    eventId: smallint('event_id').references(() => tournamentEvent.id, 'id').notNull(),
-    playerId: smallint('player_id').references(() => tournamentPlayer.id, 'id').notNull()
+    tournamentEventId: smallint('event_id').references(() => tournamentEvent.id, 'id').notNull(),
+    tournamentPlayerId: smallint('player_id').references(() => tournamentPlayer.id, 'id').notNull()
 });
 
 export const groupPlayer = pgTable('group_player', {
     id: serial('id').primaryKey(),
-    groupId: smallint('group_id').references(() => eventPlayer.id, 'id').notNull(),
+    eventGroupId: smallint('group_id').references(() => group.id, 'id').notNull(),
     eventPlayerId: smallint('event_player_id').references(() => eventPlayer.id, 'id').notNull(),
     position: smallint('position')
 });
 
 export const groupMatch = pgTable('group_match', {
     id: serial('id').primaryKey(),
-    groupId: smallint('group_id').references(() => groupPlayer.id, 'id').notNull(),
+    eventGroupId: smallint('group_id').references(() => groupPlayer.id, 'id').notNull(),
     matchId: smallint('match_id').references(() => groupPlayer.id, 'id').notNull()
 });
 
@@ -82,7 +82,7 @@ export const matchPlayer = pgTable('match_player', {
 
 export const eventGroup = pgTable('event_group', {
     id: serial('id').primaryKey(),
-    eventId: smallint('event_id').references(() => tournamentEvent.id, 'id').notNull(),
+    tournamentEventId: smallint('event_id').references(() => tournamentEvent.id, 'id').notNull(),
     number: smallint('number').notNull()
 });
 
@@ -102,19 +102,69 @@ export const tournamentTable = pgTable('tournament_table', {
 
 export const matchTable = pgTable('match_table', {
     id: serial('id').primaryKey(),
-    tableId: smallint('table_id').references(() => tournamentTable.id, 'id').notNull(),
+    tournamentTableId: smallint('table_id').references(() => tournamentTable.id, 'id').notNull(),
     matchId: smallint('match_id').references(() => match.id, 'id').notNull()
 });
 
+// RELATIONS
+
 export const tournamentRelations = relations(tournament, ({ many }) => ({
     tournamentPlayer: many(tournamentPlayer),
-    tournamentEvent: many(tournamentEvent)
+    tournamentEvent: many(tournamentEvent),
+    tournamentTable: many(tournamentTable)
 }));
 
-export const tournamentPlayerRelations = relations(tournamentPlayer, ({ one }) => ({
-    tournament: one(tournament, { fields: [tournamentPlayer.tournamentId], references: [tournament.id] })
+export const tournamentPlayerRelations = relations(tournamentPlayer, ({ one, many }) => ({
+    tournament: one(tournament, { fields: [tournamentPlayer.tournamentId], references: [tournament.id] }),
+    eventPlayer: many(eventPlayer)
 }));
 
-export const tournamentEventRelations = relations(tournamentEvent, ({ one }) => ({
-    tournament: one(tournament, { fields: [tournamentEvent.tournamentId], references: [tournament.id] })
+export const tournamentEventRelations = relations(tournamentEvent, ({ one, many }) => ({
+    tournament: one(tournament, { fields: [tournamentEvent.tournamentId], references: [tournament.id] }),
+    eventPlayer: many(eventPlayer),
+    eventGroup: many(eventGroup),
+}));
+
+export const eventPlayerRelations = relations(eventPlayer, ({ one, many }) => ({
+    tournamentEvent: one(tournamentEvent, { fields: [eventPlayer.tournamentEventId], references: [tournamentEvent.id] }),
+    tournamentPlayer: one(tournamentPlayer, { fields: [eventPlayer.tournamentPlayerId], references: [tournamentPlayer.id] }),
+    groupPlayer: one(groupPlayer, { fields: [eventPlayer.tournamentPlayerId], references: [groupPlayer.eventPlayerId] }),
+    matchPlayer: many(matchPlayer, { fields: [eventPlayer.tournamentPlayerId], references: [matchPlayer.eventPlayerId] })
+}));
+
+export const groupPlayerRelations = relations(groupPlayer, ({ one }) => ({
+    eventGroup: one(eventGroup, { fields: [groupPlayer.eventGroupId], references: [eventGroup.id] }),
+    eventPlayer: one(eventPlayer, { fields: [groupPlayer.eventPlayerId], references: [eventPlayer.id] })
+}));
+
+export const groupMatchRelations = relations(groupMatch, ({ one }) => ({
+    eventGroup: one(eventGroup, { fields: [groupMatch.eventGroupId], references: [eventGroup.id] }),
+    match: one(match, { fields: [groupMatch.matchId], references: [match.id] })
+}));
+
+export const matchPlayerRelations = relations(matchPlayer, ({ one }) => ({
+    match: one(match, { fields: [matchPlayer.matchId], references: [match.id] }),
+    eventPlayer: one(match, { fields: [eventPlayer.id], references: [matchPlayer.eventPlayerId] })
+}));
+
+export const eventGroupRelations = relations(eventGroup, ({ one, many }) => ({
+    tournamentEvent: one(tournamentEvent, { fields: [eventGroup.tournamentEventId], references: [tournamentEvent.id] }),
+    groupPlayer: many(groupPlayer),
+    groupMatch: many(groupMatch)
+}));
+
+export const matchRelations = relations(match, ({ one, many }) => ({
+    groupMatch: one(groupMatch, { fields: [match.id], references: [groupMatch.matchId] }),
+    matchPlayer: many(eventPlayer),
+    matchTable: many(matchTable)
+}));
+
+export const tournamentTableRelations = relations(tournamentTable, ({ one, many }) => ({
+    tournament: one(tournament, { fields: [tournamentTable.tournamentId], references: [tournament.id] }),
+    matchTable: many(matchTable)
+}));
+
+export const matchTableRelations = relations(matchTable, ({ one }) => ({
+    tournamentTable: one(tournamentTable, { fields: [matchTable.tournamentTableId], references: [tournamentTable.id] }),
+    match: one(match, { fields: [matchTable.matchId], references: [match.id] })
 }));
