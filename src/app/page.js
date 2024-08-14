@@ -27,7 +27,6 @@ export default function Home() {
   return (
     <main>
       <Header>
-        <p>Tournaments</p>
         <button onClick={() => setShowWindow(true)}>Create tournament</button>
       </Header>
       <TournamentList tournaments={tournaments} />

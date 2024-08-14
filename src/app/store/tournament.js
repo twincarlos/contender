@@ -12,5 +12,14 @@ export const tournamentStore = create(set => ({
         });
         const data = await res.json();
         set({ tournament: data })
-    }
+    },
+    addEvent: event => set(state => ({
+        tournament: {
+            ...state.tournament,
+            tournamentEvent: {
+                ...state.tournament.tournamentEvent,
+                [event.id]: event
+            }
+        }
+    }))
 }));

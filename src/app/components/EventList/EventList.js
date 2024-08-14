@@ -1,9 +1,10 @@
 import "./EventList.css";
+import EventCard from "../EventCard/EventCard";
 
 export default function EventList({ events }) {
     return (
         <section className="event-list">
-            { events.map(event => <p key={event.id}>{event.name}</p>) }
+            { events.map(event => <EventCard key={event.id} event={event} />) }
         </section>
     );
 };
