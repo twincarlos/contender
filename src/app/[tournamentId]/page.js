@@ -8,7 +8,6 @@ export default function Tournament({ params }) {
     const tournament = tournamentStore(state => state.tournament);
     const setTournament = tournamentStore(state => state.setTournament);
     useEffect(() => { setTournament(params.tournamentId) }, []);
-
     if (!tournament.id) return <p>loading</p>;
 
     return (
