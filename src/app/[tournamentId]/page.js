@@ -21,7 +21,7 @@ export default function Tournament({ params }) {
             const data = await res.json();
             setTournament(data);
         };
-        getTournament();
+        return () => getTournament();
     }, []);
 
     if (!tournament) return <p>loading</p>;

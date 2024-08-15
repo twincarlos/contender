@@ -48,3 +48,7 @@ main {
 section {
   padding: 10px;
 }
+
+.card {
+  border: 1px solid var(--border-color-1);
+}

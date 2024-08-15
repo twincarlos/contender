@@ -1,5 +1,5 @@
 {
-  "id": "0f667811-0bd4-4b5f-b55e-af6aee1aaf12",
+  "id": "2c476ca8-a4c7-4381-a9cc-1850d9d7cba9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -28,21 +28,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "event_group_event_id_tournament_event_id_fk": {
-          "name": "event_group_event_id_tournament_event_id_fk",
-          "tableFrom": "event_group",
-          "tableTo": "tournament_event",
-          "columnsFrom": [
-            "event_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -56,48 +42,21 @@
           "primaryKey": true,
           "notNull": true
         },
-        "event_id": {
-          "name": "event_id",
+        "tournament_event_id": {
+          "name": "tournament_event_id",
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
         },
-        "player_id": {
-          "name": "player_id",
+        "tournament_player_id": {
+          "name": "tournament_player_id",
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "event_player_event_id_tournament_event_id_fk": {
-          "name": "event_player_event_id_tournament_event_id_fk",
-          "tableFrom": "event_player",
-          "tableTo": "tournament_event",
-          "columnsFrom": [
-            "event_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "event_player_player_id_tournament_player_id_fk": {
-          "name": "event_player_player_id_tournament_player_id_fk",
-          "tableFrom": "event_player",
-          "tableTo": "tournament_player",
-          "columnsFrom": [
-            "player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -111,8 +70,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "group_id": {
-          "name": "group_id",
+        "event_group_id": {
+          "name": "event_group_id",
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
@@ -125,34 +84,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "group_match_group_id_group_player_id_fk": {
-          "name": "group_match_group_id_group_player_id_fk",
-          "tableFrom": "group_match",
-          "tableTo": "group_player",
-          "columnsFrom": [
-            "group_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "group_match_match_id_group_player_id_fk": {
-          "name": "group_match_match_id_group_player_id_fk",
-          "tableFrom": "group_match",
-          "tableTo": "group_player",
-          "columnsFrom": [
-            "match_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -166,8 +98,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "group_id": {
-          "name": "group_id",
+        "event_group_id": {
+          "name": "event_group_id",
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
@@ -186,34 +118,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "group_player_group_id_event_player_id_fk": {
-          "name": "group_player_group_id_event_player_id_fk",
-          "tableFrom": "group_player",
-          "tableTo": "event_player",
-          "columnsFrom": [
-            "group_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "group_player_event_player_id_event_player_id_fk": {
-          "name": "group_player_event_player_id_event_player_id_fk",
-          "tableFrom": "group_player",
-          "tableTo": "event_player",
-          "columnsFrom": [
-            "event_player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -360,34 +265,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "match_player_match_id_group_match_id_fk": {
-          "name": "match_player_match_id_group_match_id_fk",
-          "tableFrom": "match_player",
-          "tableTo": "group_match",
-          "columnsFrom": [
-            "match_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "match_player_event_player_id_event_player_id_fk": {
-          "name": "match_player_event_player_id_event_player_id_fk",
-          "tableFrom": "match_player",
-          "tableTo": "event_player",
-          "columnsFrom": [
-            "event_player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -401,8 +279,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "table_id": {
-          "name": "table_id",
+        "tournament_table_id": {
+          "name": "tournament_table_id",
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
@@ -416,19 +294,6 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "match_table_table_id_tournament_table_id_fk": {
-          "name": "match_table_table_id_tournament_table_id_fk",
-          "tableFrom": "match_table",
-          "tableTo": "tournament_table",
-          "columnsFrom": [
-            "table_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
         "match_table_match_id_match_id_fk": {
           "name": "match_table_match_id_match_id_fk",
           "tableFrom": "match_table",
@@ -573,21 +438,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "tournament_event_tournament_id_tournament_id_fk": {
-          "name": "tournament_event_tournament_id_tournament_id_fk",
-          "tableFrom": "tournament_event",
-          "tableTo": "tournament",
-          "columnsFrom": [
-            "tournament_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -660,21 +511,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "tournament_player_tournament_id_tournament_id_fk": {
-          "name": "tournament_player_tournament_id_tournament_id_fk",
-          "tableFrom": "tournament_player",
-          "tableTo": "tournament",
-          "columnsFrom": [
-            "tournament_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -702,21 +539,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "tournament_table_tournament_id_tournament_id_fk": {
-          "name": "tournament_table_tournament_id_tournament_id_fk",
-          "tableFrom": "tournament_table",
-          "tableTo": "tournament",
-          "columnsFrom": [
-            "tournament_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

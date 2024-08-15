@@ -2,10 +2,14 @@
 import { useEffect } from "react";
 import { PusherClient } from "../../../pusher";
 
-export function useSubscribe(channelName, eventName, eventFunction) {
+export function useSubscribe(channel) {
     useEffect(() => {
-        var channel = PusherClient.subscribe(channelName);
-        channel.bind(eventName, eventFunction);
-        return () => PusherClient.unsubscribe(channelName);
-    }, [channelName, eventName, eventFunction]);
+        const pusher = PusherClient.subscribe(channel);
+
+        pusher.bind("example", () => {
+            console.log("This is an example!")
+        });
+
+        return () => PusherClient.unsubscribe(channel);
+    }, [channel]);
 };

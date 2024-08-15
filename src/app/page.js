@@ -21,7 +21,7 @@ export default function Home() {
       const data = await res.json();
       setTournaments(data);
     };
-    getTournaments();
+    return () => getTournaments();
   }, []);
 
   if (!tournaments) return null;
