@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 export const useStore = create(set => ({
-    tournament: null,
-    setTournament: async (tournamentId) => {
-        const res = await fetch(`/api/get-tournament/${tournamentId}`, {
+    event: null,
+    setEvent: async (eventId) => {
+        const res = await fetch(`/api/get-event/${eventId}`, {
             headers: {
                 'Cache-Control': 'no-cache',
                 'Pragma': 'no-cache',
@@ -11,15 +11,6 @@ export const useStore = create(set => ({
             }
         });
         const data = await res.json();
-        set({ tournament: data })
-    },
-    addEvent: event => set(state => ({
-        tournament: {
-            ...state.tournament,
-            tournamentEvent: {
-                ...state.tournament.tournamentEvent,
-                [event.id]: event
-            }
-        }
-    }))
+        set({ event: data })
+    }
 }));

@@ -3,9 +3,9 @@ import "./Forms.css";
 import { useState } from "react";
 import { createEvent } from "@/app/actions/actions";
 
-export function CreateEvent({ addEvent, tournamentId }) {
+export function CreateEvent({ tournament, setTournament }) {
     const [data, setData] = useState({
-        tournamentId,
+        tournamentId: tournament.id,
         name: "",
         groupsDate: "",
         groupsTime: "",
@@ -23,7 +23,13 @@ export function CreateEvent({ addEvent, tournamentId }) {
             <p>Create event</p>
             <form action={async () => {
                 const newEvent = await createEvent(data);
-                addEvent(newEvent);
+                setTournament({
+                    ...tournament,
+                    tournamentEvent: {
+                        ...tournament.tournamentEvent,
+                        [newEvent.id]: newEvent
+                    }
+                })
             }}>
                 <label>
                     Event name

@@ -6,7 +6,7 @@ import { CreateTournament } from "./components/Forms/CreateTournament";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [tournaments, setTournaments] = useState([]);
+  const [tournaments, setTournaments] = useState(null);
   const [showWindow, setShowWindow] = useState(false);
 
   useEffect(() => {
@@ -24,14 +24,14 @@ export default function Home() {
     getTournaments();
   }, []);
 
-  if (!tournaments.length) return null;
+  if (!tournaments) return null;
 
   return (
     <main>
       <Header>
         <button onClick={() => setShowWindow(true)}>Create tournament</button>
       </Header>
-      <TournamentList tournaments={tournaments} />
+      <TournamentList tournaments={Object.values(tournaments)} />
       <Window showWindow={showWindow} setShowWindow={setShowWindow}>
         <CreateTournament tournaments={tournaments} setTournaments={setTournaments} />
       </Window>

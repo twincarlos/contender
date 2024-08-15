@@ -13,7 +13,10 @@ export function CreateTournament({ tournaments, setTournaments }) {
             <p>Create tournament</p>
             <form action={async () => {
                 const newTournament = await createTournament(data);
-                setTournaments([...tournaments, newTournament]);
+                setTournaments({
+                    ...tournaments,
+                    [newTournament.id]: newTournament
+                });
             }}>
                 <label>
                     Tournament name
