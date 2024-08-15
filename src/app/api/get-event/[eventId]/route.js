@@ -1,15 +1,12 @@
 export const fetchCache = 'force-no-store';
 import { db } from "@/app/drizzle/db";
-import { tournament, tournamentPlayer, tournamentEvent } from "@/app/drizzle/schema";
+import { tournamentEvent } from "@/app/drizzle/schema";
 import { eq } from "drizzle-orm";
+import { arrayToObject } from "../../utils";
 
 export async function GET(req, { params }) {
-    const tournaments = await db.query.tournamentEvent.findFirst({
-        with: {
-            tournamentPlayer,
-            tournamentEvent
-        },
-        where: eq(tournament.id, params.tournamentId)
+    const events = await db.query.tournamentEvent.findMany({
+        where: eq(tournamentEvent.id, params.eventId)
     });
-    return new Response(JSON.stringify(tournaments[0]));
+    return new Response(JSON.stringify(arrayToObject(events)));
 };
