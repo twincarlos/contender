@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
-export const tournamentStore = create(set => ({
-    tournament: {},
+export const useStore = create(set => ({
+    tournament: null,
     setTournament: async (tournamentId) => {
         const res = await fetch(`/api/get-tournament/${tournamentId}`, {
             headers: {

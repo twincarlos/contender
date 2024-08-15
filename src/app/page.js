@@ -24,6 +24,8 @@ export default function Home() {
     getTournaments();
   }, []);
 
+  if (!tournaments.length) return null;
+
   return (
     <main>
       <Header>

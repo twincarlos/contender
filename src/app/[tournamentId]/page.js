@@ -1,5 +1,6 @@
 "use client";
-import { tournamentStore } from "../store/tournament";
+import "./Tournament.css";
+import { useStore } from "../store/store";
 import { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import EventList from "../components/EventList/EventList";
@@ -8,11 +9,11 @@ import { CreateEvent } from "../components/Forms/CreateEvent";
 
 export default function Tournament({ params }) {
     const [showWindow, setShowWindow] = useState(false);
-    const tournament = tournamentStore(state => state.tournament);
-    const setTournament = tournamentStore(state => state.setTournament);
-    const addEvent = tournamentStore(state => state.addEvent);
-    useEffect(() => { setTournament(params.tournamentId) }, []);
-    if (!tournament.id) return <p>loading</p>;
+    const tournament = useStore(state => state.tournament);
+    const setTournament = useStore(state => state.setTournament);
+    const addEvent = useStore(state => state.addEvent);
+    useEffect(() => { !tournament && setTournament(params.tournamentId) }, []);
+    if (!tournament) return <p>loading</p>;
 
     return (
         <main className="tournament">
