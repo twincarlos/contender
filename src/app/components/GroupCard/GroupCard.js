@@ -1,6 +1,7 @@
 "use client";
 import "./GroupCard.css";
 import { useStore } from "@/app/store/store";
+import MatchCard from "@/app/components/MatchCard/MatchCard";
 
 export default function GroupCard({ egId }) {
     const eg = useStore(state => state.te.egs[egId]);
@@ -18,6 +19,15 @@ export default function GroupCard({ egId }) {
                     ))
                 }
             </div> */}
+            <div className="group-body card-body">
+                {
+                    Object.values(eg.gms).map(gm => <MatchCard key={gm.id} mInfo={{
+                        stage: "groups",
+                        egId,
+                        gmId: gm.id
+                    }} />)
+                }
+            </div>
         </div>
     );
 };

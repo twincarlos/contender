@@ -1,0 +1,31 @@
+.match-player {
+    display: flex;
+    flex-direction: column;
+}
+
+.match-player.match-player-bottom {
+    flex-direction: column-reverse;
+}
+
+.match-player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.match-player-body {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.match-player-body > * {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
+    background: var(--color-1);
+    color: black;
+    font-size: 1em;
+    border: none;
+}

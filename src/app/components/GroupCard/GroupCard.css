@@ -4,5 +4,8 @@
 }
 
 .group-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     background: var(--background-1-secondary);
 }
