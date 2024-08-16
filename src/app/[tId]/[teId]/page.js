@@ -10,7 +10,7 @@ export default function Event({ params }) {
     const te = useStore(state => state.te);
     const setTe = useStore(state => state.setTe);
     useEffect(() => { setTe(params.teId) }, []);
-    useSubscribe(params.teId);
+    // useSubscribe(params.teId);
     if (!te) return <p>loading</p>;
 
     return (

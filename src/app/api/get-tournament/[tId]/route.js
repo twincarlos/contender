@@ -14,7 +14,7 @@ export async function GET(req, { params }) {
     });
     return new Response(JSON.stringify({
         ...t,
-        tps: arrayToObject(t.tps),
-        tes: arrayToObject(t.tes)
+        tps: arrayToObject(t.tps, "id"),
+        tes: arrayToObject(t.tes, "id")
     }));
 };

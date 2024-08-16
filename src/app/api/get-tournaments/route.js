@@ -4,5 +4,5 @@ import { arrayToObject } from "../utils";
 
 export async function GET() {
     const ts = await db.query.ts.findMany();
-    return new Response(JSON.stringify(arrayToObject(ts)));
+    return new Response(JSON.stringify(arrayToObject(ts, "id")));
 };

@@ -1,6 +1,6 @@
-export function arrayToObject(array) {
+export function arrayToObject(array, key) {
     return array.reduce((acc, obj) => {
-        acc[obj.id] = obj;
+        acc[obj[key]] = obj;
         return acc;
     }, {});
 };

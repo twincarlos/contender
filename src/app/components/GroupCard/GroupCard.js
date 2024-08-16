@@ -9,7 +9,7 @@ export default function GroupCard({ egId }) {
             <div className="group-header card-header">
                 <p>Group {eg.number}</p>
             </div>
-            <div className="group-body card-body">
+            {/* <div className="group-body card-body">
                 {
                     Object.values(eg.gps).map(gp => (
                         <p key={gp.id}>
@@ -17,7 +17,7 @@ export default function GroupCard({ egId }) {
                         </p>
                     ))
                 }
-            </div>
+            </div> */}
         </div>
     );
 };
