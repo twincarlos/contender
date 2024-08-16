@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 export const useStore = create(set => ({
-    event: null,
-    setEvent: async (eventId) => {
+    te: null,
+    setTe: async (eventId) => {
         const res = await fetch(`/api/get-event/${eventId}`, {
             headers: {
                 'Cache-Control': 'no-cache',
@@ -11,6 +11,6 @@ export const useStore = create(set => ({
             }
         });
         const data = await res.json();
-        set({ event: data })
+        set({ te: data })
     }
 }));

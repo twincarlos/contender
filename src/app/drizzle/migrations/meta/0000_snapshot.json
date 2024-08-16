@@ -1,11 +1,11 @@
 {
-  "id": "2c476ca8-a4c7-4381-a9cc-1850d9d7cba9",
+  "id": "95d891be-c17e-4153-944f-78197139499a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.event_group": {
-      "name": "event_group",
+    "public.egs": {
+      "name": "egs",
       "schema": "",
       "columns": {
         "id": {
@@ -32,8 +32,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.event_player": {
-      "name": "event_player",
+    "public.eps": {
+      "name": "eps",
       "schema": "",
       "columns": {
         "id": {
@@ -60,8 +60,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.group_match": {
-      "name": "group_match",
+    "public.gms": {
+      "name": "gms",
       "schema": "",
       "columns": {
         "id": {
@@ -88,8 +88,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.group_player": {
-      "name": "group_player",
+    "public.gps": {
+      "name": "gps",
       "schema": "",
       "columns": {
         "id": {
@@ -122,51 +122,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.match": {
-      "name": "match",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "best_of": {
-          "name": "best_of",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 5
-        },
-        "status": {
-          "name": "status",
-          "type": "match_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'upcoming'"
-        },
-        "round": {
-          "name": "round",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sequence": {
-          "name": "sequence",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.match_player": {
-      "name": "match_player",
+    "public.mps": {
+      "name": "mps",
       "schema": "",
       "columns": {
         "id": {
@@ -269,8 +226,51 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.match_table": {
-      "name": "match_table",
+    "public.ms": {
+      "name": "ms",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "best_of": {
+          "name": "best_of",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 5
+        },
+        "status": {
+          "name": "status",
+          "type": "match_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'upcoming'"
+        },
+        "round": {
+          "name": "round",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sequence": {
+          "name": "sequence",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.mts": {
+      "name": "mts",
       "schema": "",
       "columns": {
         "id": {
@@ -294,10 +294,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "match_table_match_id_match_id_fk": {
-          "name": "match_table_match_id_match_id_fk",
-          "tableFrom": "match_table",
-          "tableTo": "match",
+        "mts_match_id_ms_id_fk": {
+          "name": "mts_match_id_ms_id_fk",
+          "tableFrom": "mts",
+          "tableTo": "ms",
           "columnsFrom": [
             "match_id"
           ],
@@ -311,45 +311,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.tournament": {
-      "name": "tournament",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "date": {
-          "name": "date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "status": {
-          "name": "status",
-          "type": "tournament_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'upcoming'"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.tournament_event": {
-      "name": "tournament_event",
+    "public.tes": {
+      "name": "tes",
       "schema": "",
       "columns": {
         "id": {
@@ -421,20 +384,6 @@
           "type": "smallint",
           "primaryKey": false,
           "notNull": false
-        },
-        "allow_unrated_advance": {
-          "name": "allow_unrated_advance",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "prefer_groups_of": {
-          "name": "prefer_groups_of",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 4
         }
       },
       "indexes": {},
@@ -442,8 +391,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.tournament_player": {
-      "name": "tournament_player",
+    "public.tps": {
+      "name": "tps",
       "schema": "",
       "columns": {
         "id": {
@@ -515,8 +464,45 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.tournament_table": {
-      "name": "tournament_table",
+    "public.ts": {
+      "name": "ts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "status": {
+          "name": "status",
+          "type": "tournament_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'upcoming'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.tts": {
+      "name": "tts",
       "schema": "",
       "columns": {
         "id": {

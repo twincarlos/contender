@@ -1,10 +1,10 @@
 import "./TournamentList.css";
 import TournamentCard from "../TournamentCard/TournamentCard";
 
-export default function TournamentList({ tournaments }) {
+export default function TournamentList({ ts }) {
     return (
         <section className="tournament-list">
-            {tournaments.map(tournament => <TournamentCard tournament={tournament} key={tournament.id} />)}
+            {ts.map(t => <TournamentCard t={t} key={t.id} />)}
         </section>
     );
 };

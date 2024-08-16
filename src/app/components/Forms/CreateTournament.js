@@ -1,9 +1,9 @@
 "use client";
 import "./Forms.css";
 import { useState } from "react";
-import { createTournament } from "@/app/actions/actions";
+import { createT } from "@/app/actions/actions";
 
-export function CreateTournament({ tournaments, setTournaments }) {
+export function CreateTournament({ ts, setTs }) {
     const [data, setData] = useState({
         name: "",
         date: "",
@@ -12,10 +12,10 @@ export function CreateTournament({ tournaments, setTournaments }) {
         <div className="contender-form create-tournament">
             <p>Create tournament</p>
             <form action={async () => {
-                const newTournament = await createTournament(data);
-                setTournaments({
-                    ...tournaments,
-                    [newTournament.id]: newTournament
+                const t = await createT(data);
+                setTs({
+                    ...ts,
+                    [t.id]: t
                 });
             }}>
                 <label>

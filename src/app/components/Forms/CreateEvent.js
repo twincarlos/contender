@@ -1,11 +1,11 @@
 "use client";
 import "./Forms.css";
 import { useState } from "react";
-import { createEvent } from "@/app/actions/actions";
+import { createTe } from "@/app/actions/actions";
 
-export function CreateEvent({ tournament, setTournament }) {
+export function CreateEvent({ t, setT }) {
     const [data, setData] = useState({
-        tournamentId: tournament.id,
+        tournamentId: t.id,
         name: "",
         groupsDate: "",
         groupsTime: "",
@@ -14,20 +14,18 @@ export function CreateEvent({ tournament, setTournament }) {
         type: "rr",
         status: "upcoming",
         maxRating: null,
-        maxAge: null,
-        allowUnratedAdvance: false,
-        preferGroupsOf: 4,
+        maxAge: null
     });
     return (
         <div className="contender-form create-event">
             <p>Create event</p>
             <form action={async () => {
-                const newEvent = await createEvent(data);
-                setTournament({
-                    ...tournament,
-                    tournamentEvent: {
-                        ...tournament.tournamentEvent,
-                        [newEvent.id]: newEvent
+                const te = await createTe(data);
+                setT({
+                    ...t,
+                    tes: {
+                        ...t.tes,
+                        [te.id]: te
                     }
                 })
             }}>
@@ -115,14 +113,6 @@ export function CreateEvent({ tournament, setTournament }) {
                     </label>
                 </fieldset>
                 <label>
-                    <input
-                        type="checkbox"
-                        value={data.allowUnratedAdvance}
-                        onChange={e => setData({ ...data, allowUnratedAdvance: e.target.value })}
-                    />
-                    Allow unrated players to advance
-                </label>
-                <label>
                     Rating must be under
                     <input
                         type="number"
@@ -136,14 +126,6 @@ export function CreateEvent({ tournament, setTournament }) {
                         type="number"
                         value={data.maxAge || ""}
                         onChange={e => setData({ ...data, maxAge: e.target.value })}
-                    />
-                </label>
-                <label>
-                    Prefer groups of
-                    <input
-                        type="number"
-                        value={data.preferGroupsOf}
-                        onChange={e => setData({ ...data, preferGroupsOf: e.target.value })}
                     />
                 </label>
                 <button type="submit">Submit</button>

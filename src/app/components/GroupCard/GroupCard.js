@@ -2,18 +2,18 @@
 import "./GroupCard.css";
 import { useStore } from "@/app/store/store";
 
-export default function GroupCard({ groupId }) {
-    const group = useStore(state => state.event.eventGroup[groupId]);
+export default function GroupCard({ egId }) {
+    const eg = useStore(state => state.te.egs[egId]);
     return (
         <div className="group-card card">
             <div className="group-header card-header">
-                <p>Group {group.number}</p>
+                <p>Group {eg.number}</p>
             </div>
             <div className="group-body card-body">
                 {
-                    Object.values(group.groupPlayer).map(groupPlayer => (
-                        <p key={groupPlayer.id}>
-                            {groupPlayer.eventPlayer.tournamentPlayer.name}
+                    Object.values(eg.gps).map(gp => (
+                        <p key={gp.id}>
+                            {gp.ep.tp.name}
                         </p>
                     ))
                 }

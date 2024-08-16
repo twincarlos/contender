@@ -8,10 +8,10 @@ import { CreateEvent } from "../components/Forms/CreateEvent";
 
 export default function Tournament({ params }) {
     const [showWindow, setShowWindow] = useState(false);
-    const [tournament, setTournament] = useState(null);
+    const [t, setT] = useState(null);
     useEffect(() => {
-        async function getTournament() {
-            const res = await fetch(`/api/get-tournament/${params.tournamentId}`, {
+        async function getT() {
+            const res = await fetch(`/api/get-tournament/${params.tId}`, {
                 headers: {
                     'Cache-Control': 'no-cache',
                     'Pragma': 'no-cache',
@@ -19,22 +19,22 @@ export default function Tournament({ params }) {
                 }
             });
             const data = await res.json();
-            setTournament(data);
+            setT(data);
         };
-        return () => getTournament();
+        return () => getT();
     }, []);
 
-    if (!tournament) return <p>loading</p>;
+    if (!t) return <p>loading</p>;
 
     return (
         <main className="tournament">
             <Header>
-                <p>{tournament.name}</p>
+                <p>{t.name}</p>
                 <button onClick={() => setShowWindow(true)}>Add event</button>
             </Header>
-            <EventList events={Object.values(tournament.tournamentEvent)} />
+            <EventList tes={Object.values(t.tes)} />
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
-                <CreateEvent tournament={tournament} setTournament={setTournament} />
+                <CreateEvent t={t} setT={setT} />
             </Window>
         </main>
     );

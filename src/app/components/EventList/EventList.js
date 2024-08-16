@@ -1,10 +1,10 @@
 import "./EventList.css";
 import EventCard from "../EventCard/EventCard";
 
-export default function EventList({ events }) {
+export default function EventList({ tes }) {
     return (
         <section className="event-list">
-            { events.map(event => <EventCard key={event.id} event={event} />) }
+            { tes.map(te => <EventCard key={te.id} te={te} />) }
         </section>
     );
 };

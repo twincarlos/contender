@@ -6,11 +6,11 @@ import { CreateTournament } from "./components/Forms/CreateTournament";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [tournaments, setTournaments] = useState(null);
+  const [ts, setTs] = useState(null);
   const [showWindow, setShowWindow] = useState(false);
 
   useEffect(() => {
-    async function getTournaments() {
+    async function getTs() {
       const res = await fetch("/api/get-tournaments", {
         headers: {
           'Cache-Control': 'no-cache',
@@ -19,21 +19,21 @@ export default function Home() {
         }
       });
       const data = await res.json();
-      setTournaments(data);
+      setTs(data);
     };
-    return () => getTournaments();
+    return () => getTs();
   }, []);
 
-  if (!tournaments) return null;
+  if (!ts) return null;
 
   return (
     <main>
       <Header>
         <button onClick={() => setShowWindow(true)}>Create tournament</button>
       </Header>
-      <TournamentList tournaments={Object.values(tournaments)} />
+      <TournamentList ts={Object.values(ts)} />
       <Window showWindow={showWindow} setShowWindow={setShowWindow}>
-        <CreateTournament tournaments={tournaments} setTournaments={setTournaments} />
+        <CreateTournament ts={ts} setTs={setTs} />
       </Window>
     </main>
   );

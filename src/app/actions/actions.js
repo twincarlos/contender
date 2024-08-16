@@ -1,13 +1,13 @@
 "use server";
 import { db } from "../drizzle/db";
-import { tournament, tournamentEvent } from "../drizzle/schema";
+import { ts, tes } from "../drizzle/schema";
 
-export async function createTournament(data) {
-  const newTournament = await db.insert(tournament).values(data).returning();
-  return newTournament[0];
+export async function createT(data) {
+  const t = await db.insert(ts).values(data).returning();
+  return t[0];
 };
 
-export async function createEvent(data) {
-  const newEvent = await db.insert(tournamentEvent).values(data).returning();
-  return newEvent[0];
+export async function createTe(data) {
+  const te = await db.insert(tes).values(data).returning();
+  return te[0];
 };

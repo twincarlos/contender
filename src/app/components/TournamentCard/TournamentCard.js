@@ -1,12 +1,12 @@
 import "./TournamentCard.css";
 import Link from "next/link";
 
-export default function TournamentCard({ tournament }) {
+export default function TournamentCard({ t }) {
     return (
-        <Link href={`/${tournament.id}`} className="tournament-card">
-            <p>{tournament.name}</p>
-            <p>{tournament.date}</p>
-            <p>{tournament.status}</p>
+        <Link href={`/${t.id}`} className="tournament-card">
+            <p>{t.name}</p>
+            <p>{t.date}</p>
+            <p>{t.status}</p>
         </Link>
     );
 };

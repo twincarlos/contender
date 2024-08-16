@@ -4,12 +4,12 @@ import { useStore } from "@/app/store/store";
 import GroupCard from "../GroupCard/GroupCard";
 
 export default function GroupList() {
-    const groups = useStore(state => state.event.eventGroup);
+    const egs = useStore(state => state.te.egs);
     return (
         <section className="group-list">
             {
-                Object.values(groups).map(group => (
-                    <GroupCard key={group.id} groupId={group.id} />
+                Object.values(egs).map(eg => (
+                    <GroupCard key={eg.id} egId={eg.id} />
                 ))
             }
         </section>
