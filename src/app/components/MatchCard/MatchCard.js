@@ -14,8 +14,8 @@ export default function MatchCard({ mInfo }) {
 
     return (
         <div className="match-card card">
-            <MatchPlayer mBestOf={m.bestOf} mp={m.mps.top} />
-            <MatchPlayer mBestOf={m.bestOf} mp={m.mps.bottom} />
+            <MatchPlayer mInfo={mInfo} mBestOf={m.bestOf} mp={m.mps.top} />
+            <MatchPlayer mInfo={mInfo} mBestOf={m.bestOf} mp={m.mps.bottom} />
         </div>
     );
 };
