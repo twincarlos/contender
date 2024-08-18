@@ -20,13 +20,7 @@ export default function GroupCard({ egId }) {
                 }
             </div> */}
             <div className="group-body card-body">
-                {
-                    Object.values(eg.gms).map(gm => <MatchCard key={gm.id} mInfo={{
-                        stage: "groups",
-                        egId,
-                        gmId: gm.id
-                    }} />)
-                }
+                { Object.values(eg.gms).map(gm =>  <MatchCard key={gm.id} m={gm} />) }
             </div>
         </div>
     );

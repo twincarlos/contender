@@ -12,6 +12,7 @@ export default function Event({ params }) {
     useEffect(() => { setTe(params.teId) }, []);
     // useSubscribe(params.teId);
     if (!te) return <p>loading</p>;
+    console.log(te);
 
     return (
         <main className="event">

@@ -12,6 +12,7 @@
     "@neondatabase/serverless": "^0.9.4",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.32.2",
+    "lodash": "^4.17.21",
     "next": "14.2.5",
     "pusher": "^5.2.0",
     "pusher-js": "^8.4.0-rc2",
