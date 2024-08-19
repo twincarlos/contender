@@ -1,10 +1,9 @@
 "use client";
 import "./GroupCard.css";
-import { useStore } from "@/app/store/store";
 import MatchCard from "@/app/components/MatchCard/MatchCard";
+import { memo } from "react";
 
-export default function GroupCard({ egId }) {
-    const eg = useStore(state => state.te.egs[egId]);
+export default memo(function GroupCard({ eg }) {
     return (
         <div className="group-card card">
             <div className="group-header card-header">
@@ -24,4 +23,4 @@ export default function GroupCard({ egId }) {
             </div>
         </div>
     );
-};
+});

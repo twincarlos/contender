@@ -12,7 +12,6 @@ export default function Event({ params }) {
     useEffect(() => { setTe(params.teId) }, []);
     // useSubscribe(params.teId);
     if (!te) return <p>loading</p>;
-    console.log(te);
 
     return (
         <main className="event">
@@ -20,7 +19,7 @@ export default function Event({ params }) {
                 <p>{te.name}</p>
                 <button>Start groups</button>
             </Header>
-            <GroupList />
+            <GroupList egs={te.egs} />
         </main>
     );
 };
