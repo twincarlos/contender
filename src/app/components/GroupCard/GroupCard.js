@@ -7,15 +7,15 @@ export default function GroupCard({ eg }) {
             <div className="group-header card-header">
                 <p>Group {eg.number}</p>
             </div>
-            {/* <div className="group-body card-body">
+            <div className="group-body card-body">
                 {
                     eg.gps.map(gp => (
                         <p key={gp.id}>
-                            {gp.ep.tp.name}
+                            {gp.eps.tps.name}
                         </p>
                     ))
                 }
-            </div> */}
+            </div>
             <div className="group-body card-body">
                 { eg.gms.map(gm => <MatchCard key={gm.id} m={gm} />) }
             </div>
