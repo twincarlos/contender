@@ -1,9 +1,9 @@
 "use client";
 import "./GroupList.css";
-import { useStore } from "@/app/store/store";
 import GroupCard from "../GroupCard/GroupCard";
+import { memo } from "react";
 
-export default function GroupList({ egs }) {
+export default memo(function GroupList({ egs }) {
     return (
         <section className="group-list">
             {
@@ -13,4 +13,4 @@ export default function GroupList({ egs }) {
             }
         </section>
     );
-};
+});
