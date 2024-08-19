@@ -1,6 +1,6 @@
 import "./MatchPlayer.css";
 
-export default function MatchPlayer({ m, mp, updateScore }) {
+export default function MatchPlayer({ m, mp, updateGameScore }) {
     return (
         <div className={`match-player match-player-${mp.position}`}>
             <div className="match-player-header">
@@ -23,11 +23,10 @@ export default function MatchPlayer({ m, mp, updateScore }) {
                                 key={n}
                                 type="number"
                                 value={mp[`score${n}`] || ""}
-                                onChange={e => updateScore({
-                                    mId: m.id,
-                                    mpPosition: mp.position,
+                                onChange={e => updateGameScore({
+                                    position: mp.position,
                                     n,
-                                    score: e.target.value
+                                    score: isNaN(e.target.value) ? null : Number(e.target.value)
                                 })}
                             />
                         )))

@@ -28,19 +28,10 @@ export const gmsStore = create(set => ({
 export const msStore = create(set => ({
     ms: null,
     setMs: ms => set({ ms }),
-    updateScore: ({ mId, mpPosition, n, score }) => set(state => ({
+    updateScore: m => set(state=> ({
         ms: {
             ...state.ms,
-            [mId]: {
-                ...state.ms[mId],
-                mps: {
-                    ...state.ms[mId].mps,
-                    [mpPosition]: {
-                        ...state.ms[mId].mps[mpPosition],
-                        [`score${n}`]: score
-                    }
-                }
-            }
+            [m.id]: m
         }
     }))
 }));
