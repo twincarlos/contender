@@ -1,0 +1,12 @@
+.group-player-standing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.group-player-stats {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}

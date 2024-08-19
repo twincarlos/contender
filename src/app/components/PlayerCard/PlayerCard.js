@@ -1,5 +1,5 @@
-import "PlayerCard.css";
+import "./PlayerCard.css";
 
-export default function PlayerCard() {
-    return <p>Player</p>
+export default function PlayerCard({ tp }) {
+    return <p>{ tp.name }</p>
 };

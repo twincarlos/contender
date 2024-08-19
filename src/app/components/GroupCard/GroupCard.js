@@ -9,6 +9,7 @@ export default function GroupCard({ eg }) {
     const gps = gpsStore(state => state.gps[eg.id]);
     const gms = gmsStore(state => state.gms[eg.id]);
     const [showMatchList, setShowMatchList] = useState(false);
+
     return (
         <div className="group-card card">
             <div className="group-header card-header">
