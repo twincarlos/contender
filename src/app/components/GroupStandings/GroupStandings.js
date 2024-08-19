@@ -6,8 +6,8 @@ export default function GroupStandings({ gps }) {
     return (
         <div className="group-standings">
             {gps.map(gp => (
-                <div className="group-player-standing">
-                    <PlayerCard key={gp.id} tp={gp.ep.tp} />
+                <div key={gp.id} className="group-player-standing">
+                    <PlayerCard tp={gp.ep.tp} />
                     <div className="group-player-stats">
                         <p>0 - 0</p>
                         <p>#1</p>
