@@ -45,49 +45,30 @@ export async function GET(req, { params }) {
             }
         }
     });
-    return new Response(JSON.stringify({
-        ...te,
-        eps: {
-            ...arrayToObject(te.eps, "id"),
-        },
-        egs: {
-            ...arrayToObject(te.egs.map(eg => ({
-                ...eg,
-                gps: arrayToObject(eg.gps.map(gp => {
-                    const formattedGp = {
-                        ...gp,
-                        ep: {
-                            ...gp.eps,
-                            tp: gp.eps.tps
-                        }
-                    };
-                    delete formattedGp.eps;
-                    delete formattedGp.ep.tps;
-                    return formattedGp;
-                }), "id"),
-                gms: arrayToObject(eg.gms.map(gm => {
-                    const formattedGm = {
-                        ...gm,
-                        m: {
-                            ...gm.ms,
-                            mps: arrayToObject(gm.ms.mps.map(mp => {
-                                const formattedMp = {
-                                    ...mp,
-                                    ep: {
-                                        ...mp.eps,
-                                        tp: mp.eps.tps
-                                    }
-                                };
-                                delete formattedMp.eps;
-                                delete formattedMp.ep.tps;
-                                return formattedMp;
-                            }), "position")
-                        }
-                    };
-                    delete formattedGm.ms;
-                    return formattedGm;
-                }), "id")
-            })), "id")
-        },
-    }));
+    const teData = {
+        te,
+        eps: arrayToObject(te.egs, "id"),
+        egs: arrayToObject(te.egs, "id"),
+        gps: te.egs.map(eg => {
+            const gpsData = {};
+            eg.gps.forEach(gp => eg.id in gpsData ? gpsData[eg.id] = { ...gpsData[eg.id], [gp.id]: gp } : gpsData[eg.id] = { [gp.id]: gp });
+            return gpsData;
+        }).reduce((acc, currentObj) => {
+            return { ...acc, ...currentObj };
+        }, {}),
+        gms: te.egs.map(eg => {
+            const gmsData = {};
+            eg.gms.forEach(gm => eg.id in gmsData ? gmsData[eg.id] = { ...gmsData[eg.id], [gm.id]: gm } : gmsData[eg.id] = { [gm.id]: gm });
+            return gmsData;
+        }).reduce((acc, currentObj) => {
+            return { ...acc, ...currentObj };
+        }, {}),
+        ms: te.egs.map(eg => arrayToObject(eg.gms.map(gm => {
+            gm.ms.mps = arrayToObject(gm.ms.mps, "position");
+            return gm.ms;
+        }), "id")).reduce((acc, currentObj) => {
+            return { ...acc, ...currentObj };
+        }, {})
+    };
+    return new Response(JSON.stringify(teData));
 };

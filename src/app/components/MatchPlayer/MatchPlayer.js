@@ -1,17 +1,17 @@
 "use client";
 import "./MatchPlayer.css";
 import { useStore } from "@/app/store/store";
+import { memo } from "react";
 
-export default function MatchPlayer({ m, mp }) {
-    const updateGmGameScore = useStore(state => state.updateGmGameScore);
+export default memo(function MatchPlayer({ m, mp, updateScore }) {
     return (
         <div className={`match-player match-player-${mp.position}`}>
             <div className="match-player-header">
                 <div className="match-player-info">
                     <div className="match-player-details">
-                        {mp.ep.tp.rating}
+                        {mp.eps.tps.rating}
                     </div>
-                    <p>{mp.ep.tp.name}</p>
+                    <p>{mp.eps.tps.name}</p>
                 </div>
                 <div className="match-player-winner">
                     <h1>W</h1>
@@ -26,9 +26,8 @@ export default function MatchPlayer({ m, mp }) {
                                 key={n}
                                 type="number"
                                 value={mp[`score${n}`] || ""}
-                                onChange={e => updateGmGameScore({
-                                    egId: m.eventGroupId,
-                                    gmId: m.matchId,
+                                onChange={e => updateScore({
+                                    msId: m.id,
                                     mpPosition: mp.position,
                                     n,
                                     score: e.target.value
@@ -39,4 +38,4 @@ export default function MatchPlayer({ m, mp }) {
             </div>
         </div>
     );
-};
+});
