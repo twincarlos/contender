@@ -1,4 +1,3 @@
-"use client";
 import "./GroupList.css";
 import GroupCard from "../GroupCard/GroupCard";
 import { egsStore } from "@/app/store/store";

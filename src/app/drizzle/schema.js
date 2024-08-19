@@ -113,56 +113,56 @@ export const tournamentRelations = relations(ts, ({ many }) => ({
 }));
 
 export const tournamentPlayerRelations = relations(tps, ({ one, many }) => ({
-    ts: one(ts, { fields: [tps.tournamentId], references: [ts.id] }),
+    t: one(ts, { fields: [tps.tournamentId], references: [ts.id] }),
     eps: many(eps)
 }));
 
 export const tournamentEventRelations = relations(tes, ({ one, many }) => ({
-    ts: one(ts, { fields: [tes.tournamentId], references: [ts.id] }),
+    t: one(ts, { fields: [tes.tournamentId], references: [ts.id] }),
     eps: many(eps),
     egs: many(egs),
 }));
 
 export const eventPlayerRelations = relations(eps, ({ one, many }) => ({
-    tes: one(tes, { fields: [eps.tournamentEventId], references: [tes.id] }),
-    tps: one(tps, { fields: [eps.tournamentPlayerId], references: [tps.id] }),
-    gps: one(gps, { fields: [eps.id], references: [gps.eventPlayerId] }),
+    te: one(tes, { fields: [eps.tournamentEventId], references: [tes.id] }),
+    tp: one(tps, { fields: [eps.tournamentPlayerId], references: [tps.id] }),
+    gp: one(gps, { fields: [eps.id], references: [gps.eventPlayerId] }),
     mps: many(mps)
 }));
 
 export const groupPlayerRelations = relations(gps, ({ one }) => ({
-    egs: one(egs, { fields: [gps.eventGroupId], references: [egs.id] }),
-    eps: one(eps, { fields: [gps.eventPlayerId], references: [eps.id] })
+    eg: one(egs, { fields: [gps.eventGroupId], references: [egs.id] }),
+    ep: one(eps, { fields: [gps.eventPlayerId], references: [eps.id] })
 }));
 
 export const groupMatchRelations = relations(gms, ({ one }) => ({
-    egs: one(egs, { fields: [gms.eventGroupId], references: [egs.id] }),
-    ms: one(ms, { fields: [gms.matchId], references: [ms.id] })
+    eg: one(egs, { fields: [gms.eventGroupId], references: [egs.id] }),
+    m: one(ms, { fields: [gms.matchId], references: [ms.id] })
 }));
 
 export const matchPlayerRelations = relations(mps, ({ one }) => ({
-    ms: one(ms, { fields: [mps.matchId], references: [ms.id] }),
-    eps: one(eps, { fields: [mps.eventPlayerId], references: [eps.id] })
+    m: one(ms, { fields: [mps.matchId], references: [ms.id] }),
+    ep: one(eps, { fields: [mps.eventPlayerId], references: [eps.id] })
 }));
 
 export const eventGroupRelations = relations(egs, ({ one, many }) => ({
-    tes: one(tes, { fields: [egs.tournamentEventId], references: [tes.id] }),
+    te: one(tes, { fields: [egs.tournamentEventId], references: [tes.id] }),
     gps: many(gps),
     gms: many(gms)
 }));
 
 export const matchRelations = relations(ms, ({ one, many }) => ({
-    gms: one(gms, { fields: [ms.id], references: [gms.matchId] }),
+    gm: one(gms, { fields: [ms.id], references: [gms.matchId] }),
     mps: many(mps),
     mts: many(mts)
 }));
 
 export const tournamentTableRelations = relations(tts, ({ one, many }) => ({
-    ts: one(ts, { fields: [tts.tournamentId], references: [ts.id] }),
+    t: one(ts, { fields: [tts.tournamentId], references: [ts.id] }),
     mts: many(mts)
 }));
 
 export const matchTableRelations = relations(mts, ({ one }) => ({
-    tts: one(tts, { fields: [mts.tournamentTableId], references: [tts.id] }),
-    ms: one(ms, { fields: [mts.matchId], references: [ms.id] })
+    tt: one(tts, { fields: [mts.tournamentTableId], references: [tts.id] }),
+    m: one(ms, { fields: [mts.matchId], references: [ms.id] })
 }));

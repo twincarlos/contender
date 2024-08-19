@@ -10,29 +10,29 @@ export async function GET(req, { params }) {
         with: {
             eps: {
                 with: {
-                    tps: true
+                    tp: true
                 }
             },
             egs: {
                 with: {
                     gps: {
                         with: {
-                            eps: {
+                            ep: {
                                 with: {
-                                    tps: true
+                                    tp: true
                                 }
                             }
                         }
                     },
                     gms: {
                         with: {
-                            ms: {
+                            m: {
                                 with: {
                                     mps: {
                                         with: {
-                                            eps: {
+                                            ep: {
                                                 with: {
-                                                    tps: true,
+                                                    tp: true,
                                                 },
                                             }
                                         }
@@ -64,8 +64,8 @@ export async function GET(req, { params }) {
             return { ...acc, ...currentObj };
         }, {}),
         ms: te.egs.map(eg => arrayToObject(eg.gms.map(gm => {
-            gm.ms.mps = arrayToObject(gm.ms.mps, "position");
-            return gm.ms;
+            gm.m.mps = arrayToObject(gm.m.mps, "position");
+            return gm.m;
         }), "id")).reduce((acc, currentObj) => {
             return { ...acc, ...currentObj };
         }, {})
