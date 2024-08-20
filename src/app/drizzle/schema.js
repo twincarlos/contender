@@ -4,7 +4,7 @@ import { relations } from 'drizzle-orm';
 const tournamentStatusEnum = pgEnum('tournament_status', ['finished', 'upcoming', 'current']);
 const tournamentEventTypeEnum = pgEnum('tournament_event_type', ['rr', 'grr', 'teams', 'handicap']);
 const tournamentEventStatusEnum = pgEnum('tournament_event_status', ['finished', 'upcoming', 'groups', 'draw']);
-const matchStatusEnum = pgEnum('match_status', ['finished', 'upcoming', 'ready', 'in progress']);
+const matchStatusEnum = pgEnum('match_status', ['finished', 'upcoming', 'ready', 'in progress', 'pending']);
 const matchPlayerPositionEnum = pgEnum('match_player_position', ['top', 'bottom']);
 
 export const ts = pgTable('ts', {
