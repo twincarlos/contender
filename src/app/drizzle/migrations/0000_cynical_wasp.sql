@@ -1,3 +1,9 @@
+CREATE TYPE "tournament_status_enum" AS ENUM ('finished', 'upcoming', 'current');
+CREATE TYPE "tournament_event_type_enum" AS ENUM ('rr', 'grr', 'teams', 'handicap');
+CREATE TYPE "tournament_event_status_enum" AS ENUM ('finished', 'upcoming', 'groups', 'draw');
+CREATE TYPE "match_status_enum" AS ENUM ('finished', 'upcoming', 'ready', 'in progress', 'pending');
+CREATE TYPE "match_player_position_enum" AS ENUM ('top', 'bottom');
+
 CREATE TABLE IF NOT EXISTS "egs" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"event_id" smallint NOT NULL,
@@ -27,7 +33,7 @@ CREATE TABLE IF NOT EXISTS "mps" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"match_id" smallint NOT NULL,
 	"event_player_id" smallint,
-	"position" "match_player_position" NOT NULL,
+	"position" "match_player_position_enum" NOT NULL,
 	"score1" smallint,
 	"score2" smallint,
 	"score3" smallint,
@@ -44,7 +50,7 @@ CREATE TABLE IF NOT EXISTS "mps" (
 CREATE TABLE IF NOT EXISTS "ms" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"best_of" smallint DEFAULT 5 NOT NULL,
-	"status" "match_status" DEFAULT 'upcoming' NOT NULL,
+	"status" "match_status_enum" DEFAULT 'upcoming' NOT NULL,
 	"round" smallint,
 	"sequence" smallint
 );
@@ -63,8 +69,8 @@ CREATE TABLE IF NOT EXISTS "tes" (
 	"groups_time" time,
 	"draw_date" date,
 	"draw_time" time,
-	"type" "tournament_event_type" DEFAULT 'rr' NOT NULL,
-	"status" "tournament_event_status" DEFAULT 'upcoming' NOT NULL,
+	"type" "tournament_event_type_enum" DEFAULT 'rr' NOT NULL,
+	"status" "tournament_event_status_enum" DEFAULT 'upcoming' NOT NULL,
 	"max_rating" smallint,
 	"max_age" smallint
 );
@@ -86,7 +92,7 @@ CREATE TABLE IF NOT EXISTS "ts" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"date" date DEFAULT now() NOT NULL,
-	"status" "tournament_status" DEFAULT 'upcoming' NOT NULL
+	"status" "tournament_status_enum" DEFAULT 'upcoming' NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "tts" (
