@@ -3,9 +3,9 @@ import "./GroupCard.css";
 import MatchList from "../MatchList/MatchList";
 import GroupStandings from "../GroupStandings/GroupStandings";
 import { gmsStore, gpsStore } from "@/app/store/store";
-import { useState } from "react";
+import { useState, memo } from "react";
 
-export default function GroupCard({ eg }) {
+export default memo(function GroupCard({ eg }) {
     const gps = gpsStore(state => state.gps[eg.id]);
     const gms = gmsStore(state => state.gms[eg.id]);
     const [showMatchList, setShowMatchList] = useState(false);
@@ -20,4 +20,4 @@ export default function GroupCard({ eg }) {
             {showMatchList && <MatchList ms={Object.values(gms)} />}
         </div>
     );
-};
+});

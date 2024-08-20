@@ -28,10 +28,20 @@ export const gmsStore = create(set => ({
 export const msStore = create(set => ({
     ms: null,
     setMs: ms => set({ ms }),
-    updateScore: m => set(state=> ({
+    updateScore: m => set(state => ({
         ms: {
             ...state.ms,
             [m.id]: m
         }
-    }))
+    })),
+    setGroupMatchesReady: () => set(state => {
+        const msData = Object.keys(state.ms).reduce((acc, key) => {
+            acc[key] = {
+                ...state.ms[key],
+                status: "ready"
+            };
+            return acc;
+        }, {});
+        return { ms: msData };
+    })
 }));
