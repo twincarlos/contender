@@ -1,15 +1,13 @@
 import "./MatchPlayer.css";
+import PlayerCard from "../PlayerCard/PlayerCard";
+import PlayerButton from "../PlayerButton/PlayerButton";
 
 export default function MatchPlayer({ m, mp, updateGameScore }) {
     return (
         <div className={`match-player match-player-${mp.position}`}>
             <div className="match-player-header">
-                <div className="match-player-info">
-                    <div className="match-player-details">
-                        {mp.ep.tp.rating}
-                    </div>
-                    <p>{mp.ep.tp.name}</p>
-                </div>
+                <PlayerButton m={m} mp={mp} />
+                <PlayerCard tp={mp.ep.tp} />
                 <div className="match-player-winner">
                     <h1>W</h1>
                 </div>
@@ -23,6 +21,7 @@ export default function MatchPlayer({ m, mp, updateGameScore }) {
                                 key={n}
                                 type="number"
                                 value={mp[`score${n}`] || ""}
+                                disabled={m.status !== "in progress"}
                                 onChange={e => updateGameScore({
                                     position: mp.position,
                                     n,

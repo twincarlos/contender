@@ -50,3 +50,11 @@ export async function updateMScore(mData) {
   const m = db.update(ms).set({ status: mData.status }).where(eq(ms.id, mData.id));
   await Promise.all([mpTop, mpBottom, m]);
 };
+
+export async function playerCheckIn(mId, mpId) {
+  const mp = await db.update(mps).set({ checkedIn: true }).where(eq(mps.id, mpId)).returning({ position: mps.position, checkedIn: mps.checkedIn });
+  const otherMp = await db.select({ checkedIn: mps.checkedIn }).from(mps).where(and(eq(mps.matchId, mId), eq(mps.position, mp.position === "top" ? "bottom" : "top")));
+  if (mp.checkedIn && otherMp.checkedIn) {
+    await db.update(ms).set({ status: "in progress" }).where(eq(ms.id, mId));
+  };
+};

@@ -43,5 +43,21 @@ export const msStore = create(set => ({
             return acc;
         }, {});
         return { ms: msData };
-    })
+    }),
+    setPlayerCheckIn: ({ mId, position }) => set(state => ({
+        ms: {
+            ...state.ms,
+            [mId]: {
+                ...state.ms[mId],
+                mps: {
+                    ...state.ms[mId].mps,
+                    [position]: {
+                        ...state.ms[mId].mps[position],
+                        checkedIn: true
+                    }
+                },
+                status: (state.ms[mId].mps.top.checkedIn && state.ms[mId].mps.bottom.checkedIn) ? "in progress" : state.ms[mId].status
+            }
+        }
+    }))
 }));
