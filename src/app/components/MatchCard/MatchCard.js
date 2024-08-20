@@ -1,6 +1,7 @@
 import "./MatchCard.css";
 import MatchPlayer from "@/app/components/MatchPlayer/MatchPlayer";
 import { msStore } from "@/app/store/store";
+import { updateMScore } from "@/app/actions/actions";
 
 export default function MatchCard({ mId }) {
     const m = msStore(state => state.ms[mId]);
@@ -56,6 +57,7 @@ export default function MatchCard({ mId }) {
         };
         if (isValid) mData.status = "pending";
         updateScore(mData);
+        updateMScore(mData);
     };
 
     return (
