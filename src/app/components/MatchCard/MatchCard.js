@@ -27,12 +27,18 @@ export default function MatchCard({ mId }) {
                 top: {
                     ...m.mps.top,
                     [`score${n}`]: position === "top" ? score : m.mps.top[`score${n}`],
-                    games: 0
+                    games: 0,
+                    checkedIn: false,
+                    verified: false,
+                    isWinner: false
                 },
                 bottom: {
                     ...m.mps.bottom,
                     [`score${n}`]: position === "bottom" ? score : m.mps.bottom[`score${n}`],
-                    games: 0
+                    games: 0,
+                    checkedIn: false,
+                    verified: false,
+                    isWinner: false
                 }
             }
         };
@@ -55,7 +61,11 @@ export default function MatchCard({ mId }) {
                 };
             };
         };
-        if (isValid) mData.status = "pending";
+        if (isValid) {
+            mData.status = "pending";
+            if (mData.mps.top.games > mData.mps.bottom.games) mData.mps.top.isWinner = true;
+            else mData.mps.bottom.isWinner = true;
+        };
         updateScore(mData);
         updateMScore(mData);
     };

@@ -56,7 +56,23 @@ export const msStore = create(set => ({
                         checkedIn: true
                     }
                 },
-                status: (state.ms[mId].mps.top.checkedIn && state.ms[mId].mps.bottom.checkedIn) ? "in progress" : state.ms[mId].status
+                status: (state.ms[mId].mps[position === "top" ? "bottom" : "top"].checkedIn ? "in progress" : "ready")
+            }
+        }
+    })),
+    setPlayerVerify: ({ mId, position }) => set(state => ({
+        ms: {
+            ...state.ms,
+            [mId]: {
+                ...state.ms[mId],
+                mps: {
+                    ...state.ms[mId].mps,
+                    [position]: {
+                        ...state.ms[mId].mps[position],
+                        verified: true
+                    }
+                },
+                status: (state.ms[mId].mps[position === "top" ? "bottom" : "top"].verified ? "finished" : "pending")
             }
         }
     }))
