@@ -1,5 +1,5 @@
 {
-  "id": "5fefe079-1f44-4ddb-8bc3-4e0a5d322bbf",
+  "id": "f25d48d4-593e-49c0-8e6a-a8daf8f7a81b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -25,6 +25,14 @@
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "event_group_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'upcoming'"
         }
       },
       "indexes": {},
@@ -204,7 +212,8 @@
           "name": "is_winner",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": false
         },
         "checked_in": {
           "name": "checked_in",

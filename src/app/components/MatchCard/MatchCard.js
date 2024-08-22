@@ -3,7 +3,7 @@ import MatchPlayer from "@/app/components/MatchPlayer/MatchPlayer";
 import { msStore } from "@/app/store/store";
 import { updateMScore } from "@/app/actions/actions";
 
-export default function MatchCard({ mId }) {
+export default function MatchCard({ egId, mId }) {
     const m = msStore(state => state.ms[mId]);
     const updateScore = msStore(state => state.updateScore);
 
@@ -73,8 +73,8 @@ export default function MatchCard({ mId }) {
     return (
         <div className="match-card card">
             <p>{m.status}</p>
-            <MatchPlayer updateGameScore={updateGameScore} m={m} mp={m.mps.top} updateScore={updateScore} />
-            <MatchPlayer updateGameScore={updateGameScore} m={m} mp={m.mps.bottom} updateScore={updateScore} />
+            <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.top} updateScore={updateScore} />
+            <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.bottom} updateScore={updateScore} />
         </div>
     );
 };

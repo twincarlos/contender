@@ -1,7 +1,7 @@
 "use server";
 import { db } from "../drizzle/db";
 import { ts, tes, egs, gms, ms, mps } from "../drizzle/schema";
-import { eq, sql, and } from "drizzle-orm";
+import { eq, sql, and, count, not } from "drizzle-orm";
 
 export async function createT(data) {
   const t = await db.insert(ts).values(data).returning();
@@ -57,18 +57,33 @@ export async function updateMScore(mData) {
   await Promise.all([mpTop, mpBottom, m]);
 };
 
-export async function playerCheckIn(mId, mpId) {
-  const mp = await db.update(mps).set({ checkedIn: true }).where(eq(mps.id, mpId)).returning({ position: mps.position, checkedIn: mps.checkedIn });
+export async function playerCheckIn({ mId, mpId }) {
+  const mp = await db.update(mps).set({ checkedIn: true }).where(eq(mps.id, mpId)).returning();
   const otherMp = await db.select({ checkedIn: mps.checkedIn }).from(mps).where(and(eq(mps.matchId, mId), eq(mps.position, mp[0].position === "top" ? "bottom" : "top")));
   if (mp[0].checkedIn && otherMp[0].checkedIn) {
-    await db.update(ms).set({ status: "in progress" }).where(eq(ms.id, mId));
+    const m = await db.update(ms).set({ status: "in progress" }).where(eq(ms.id, mId)).returning();
+    return { mp: mp[0], m: m[0] };
+  } else {
+    return { mp: mp[0] };
   };
 };
 
-export async function playerVerify(mId, mpId) {
-  const mp = await db.update(mps).set({ verified: true }).where(eq(mps.id, mpId)).returning({ position: mps.position, verified: mps.verified });
+export async function playerVerify({ egId, mId, mpId }) {
+  const mp = await db.update(mps).set({ verified: true }).where(eq(mps.id, mpId)).returning();
   const otherMp = await db.select({ verified: mps.verified }).from(mps).where(and(eq(mps.matchId, mId), eq(mps.position, mp[0].position === "top" ? "bottom" : "top")));
   if (mp[0].verified && otherMp[0].verified) {
-    await db.update(ms).set({ status: "finished" }).where(eq(ms.id, mId));
+    const m = await db.update(ms).set({ status: "finished" }).where(eq(ms.id, mId)).returning();
+    const notFinishedMs = await db.select({ count: count() })
+      .from(ms)
+      .innerJoin(gms, eq(ms.id, gms.matchId))
+      .where(and(eq(gms.eventGroupId, egId), not(eq(ms.status, "finished"))));
+    if (notFinishedMs[0].count === 0) {
+      const eg = await db.update(egs).set({ status: "finished" }).where(eq(egs.id, egId)).returning();
+      return { mp: mp[0], m: m[0], eg: eg[0] }; // if group is done
+    } else {
+      return { mp: mp[0], m: m[0] }; // if match is done
+    };
+  } else {
+    return { mp: mp[0] }; // update player
   };
 };

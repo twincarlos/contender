@@ -4,6 +4,7 @@ import { relations } from 'drizzle-orm';
 const tournamentStatusEnum = pgEnum('tournament_status', ['finished', 'upcoming', 'current']);
 const tournamentEventTypeEnum = pgEnum('tournament_event_type', ['rr', 'grr', 'teams', 'handicap']);
 const tournamentEventStatusEnum = pgEnum('tournament_event_status', ['finished', 'upcoming', 'groups', 'draw']);
+const eventGroupStatusEnum = pgEnum('event_group_status', ['finished', 'ready', 'upcoming', 'in progress']);
 const matchStatusEnum = pgEnum('match_status', ['finished', 'upcoming', 'ready', 'in progress', 'pending']);
 const matchPlayerPositionEnum = pgEnum('match_player_position', ['top', 'bottom']);
 
@@ -73,7 +74,7 @@ export const mps = pgTable('mps', {
     score6: smallint('score6'),
     score7: smallint('score7'),
     games: smallint('games').notNull().default(0),
-    isWinner: boolean('is_winner'),
+    isWinner: boolean('is_winner').notNull().default(false),
     checkedIn: boolean('checked_in').notNull().default(false),
     verified: boolean('verified').notNull().default(false)
 });
@@ -81,7 +82,8 @@ export const mps = pgTable('mps', {
 export const egs = pgTable('egs', {
     id: serial('id').primaryKey(),
     tournamentEventId: smallint('event_id').notNull(),
-    number: smallint('number').notNull()
+    number: smallint('number').notNull(),
+    status: eventGroupStatusEnum('status').notNull().default('upcoming')
 });
 
 export const ms = pgTable('ms', {

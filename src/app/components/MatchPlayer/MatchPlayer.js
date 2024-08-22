@@ -2,11 +2,11 @@ import "./MatchPlayer.css";
 import PlayerCard from "../PlayerCard/PlayerCard";
 import PlayerButton from "../PlayerButton/PlayerButton";
 
-export default function MatchPlayer({ m, mp, updateGameScore }) {
+export default function MatchPlayer({ egId, m, mp, updateGameScore }) {
     return (
         <div className={`match-player match-player-${mp.position} ${mp.isWinner ? "match-player-winner" : ""}`}>
             <div className="match-player-header">
-                <PlayerButton m={m} mp={mp} />
+                <PlayerButton egId={egId} m={m} mp={mp} />
                 <PlayerCard tp={mp.ep.tp} />
                 {
                     mp.isWinner ? (

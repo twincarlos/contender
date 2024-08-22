@@ -1,16 +1,18 @@
 import "./PlayerButton.css";
 import { playerCheckIn, playerVerify } from "@/app/actions/actions";
-import { msStore } from "@/app/store/store";
+import { egsStore, msStore } from "@/app/store/store";
 
-export default function PlayerButton({ m, mp }) {
+export default function PlayerButton({ egId, m, mp }) {
     const { setPlayerCheckIn, setPlayerVerify } = msStore(state => state);
-    function handlePlayerCheckIn() {
-        playerCheckIn(m.id, mp.id);
-        setPlayerCheckIn({ mId: m.id, position: mp.position });
+    const setEgStatus = egsStore(state => state.setEgStatus);
+    async function handlePlayerCheckIn() {
+        const res = await playerCheckIn({ mId: m.id, mpId: mp.id});
+        setPlayerCheckIn({ m: res.m, mp: res.mp });
     };
-    function handlePlayerVerify() {
-        playerVerify(m.id, mp.id);
-        setPlayerVerify({ mId: m.id, position: mp.position });
+    async function handlePlayerVerify() {
+        const res = await playerVerify({ egId, mId: m.id, mpId: mp.id });
+        setPlayerVerify({ m: res.m, mp: res.mp });
+        if (res.eg) setEgStatus(res.eg);
     };
     const playerButton = {
         "ready": <button disabled={mp.checkedIn} onClick={handlePlayerCheckIn}>check in</button>,

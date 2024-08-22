@@ -12,7 +12,26 @@ export const epsStore = create(set => ({
 
 export const egsStore = create(set => ({
     egs: null,
-    setEgs: egs => set({ egs })
+    setEgs: egs => set({ egs }),
+    setEgsReady: () => set(state => {
+        const egsData = Object.keys(state.egs).reduce((acc, key) => {
+            acc[key] = {
+                ...state.ms[key],
+                status: "ready"
+            };
+            return acc;
+        }, {});
+        return { egs: egsData };
+    }),
+    setEgStatus: eg => set(state => ({
+        egs: {
+            ...state.egs,
+            [eg.id]: {
+                ...state.egs[eg.id],
+                status: eg.status
+            }
+        }
+    }))
 }));
 
 export const gpsStore = create(set => ({
@@ -44,35 +63,35 @@ export const msStore = create(set => ({
         }, {});
         return { ms: msData };
     }),
-    setPlayerCheckIn: ({ mId, position }) => set(state => ({
+    setPlayerCheckIn: ({ m, mp }) => set(state => ({
         ms: {
             ...state.ms,
-            [mId]: {
-                ...state.ms[mId],
+            [mp.matchId]: {
+                ...state.ms[mp.matchId],
+                status: m ? "in progress" : "ready",
                 mps: {
-                    ...state.ms[mId].mps,
-                    [position]: {
-                        ...state.ms[mId].mps[position],
+                    ...state.ms[mp.matchId].mps,
+                    [mp.position]: {
+                        ...state.ms[mp.matchId].mps[mp.position],
                         checkedIn: true
                     }
-                },
-                status: (state.ms[mId].mps[position === "top" ? "bottom" : "top"].checkedIn ? "in progress" : "ready")
+                }
             }
         }
     })),
-    setPlayerVerify: ({ mId, position }) => set(state => ({
+    setPlayerVerify: ({ m, mp }) => set(state => ({
         ms: {
             ...state.ms,
-            [mId]: {
-                ...state.ms[mId],
+            [mp.matchId]: {
+                ...state.ms[mp.matchId],
+                status: m ? "finished" : "pending",
                 mps: {
-                    ...state.ms[mId].mps,
-                    [position]: {
-                        ...state.ms[mId].mps[position],
+                    ...state.ms[mp.matchId].mps,
+                    [mp.position]: {
+                        ...state.ms[mp.matchId].mps[mp.position],
                         verified: true
                     }
-                },
-                status: (state.ms[mId].mps[position === "top" ? "bottom" : "top"].verified ? "finished" : "pending")
+                }
             }
         }
     }))
