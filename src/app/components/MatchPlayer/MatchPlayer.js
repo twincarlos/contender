@@ -1,15 +1,24 @@
 import "./MatchPlayer.css";
 import PlayerCard from "../PlayerCard/PlayerCard";
 import PlayerButton from "../PlayerButton/PlayerButton";
+import { useOptimistic, startTransition } from "react";
 
 export default function MatchPlayer({ egId, m, mp, updateGameScore }) {
+    const [optimisticMp, setOptimisticMp] = useOptimistic(mp, (state, { n, score }) => ({
+        ...state,
+        [`score${n}`]: score
+    }));
+    async function updateMp({ position, n, score }) {
+        startTransition(() => setOptimisticMp({ n, score }));
+        await updateGameScore({ position, n, score });
+    };
     return (
-        <div className={`match-player match-player-${mp.position} ${mp.isWinner ? "match-player-winner" : ""}`}>
+        <div className={`match-player match-player-${optimisticMp.position} ${optimisticMp.isWinner ? "match-player-winner" : ""}`}>
             <div className="match-player-header">
-                <PlayerButton egId={egId} m={m} mp={mp} />
-                <PlayerCard tp={mp.ep.tp} />
+                <PlayerButton egId={egId} m={m} mp={optimisticMp} />
+                <PlayerCard tp={optimisticMp.ep.tp} />
                 {
-                    mp.isWinner ? (
+                    optimisticMp.isWinner ? (
                         <div className="match-player-winner">
                             <h1>W</h1>
                         </div>
@@ -17,17 +26,17 @@ export default function MatchPlayer({ egId, m, mp, updateGameScore }) {
                 }
             </div>
             <div className="match-player-body">
-                <p>{mp.games}</p>
+                <p>{optimisticMp.games}</p>
                 {
                     [1, 2, 3, 4, 5, 6, 7].map(n => (
                         (n <= 5 || m.bestOf === 7) && (
                             <input
                                 key={n}
                                 type="number"
-                                value={mp[`score${n}`] || ""}
+                                value={optimisticMp[`score${n}`] || ""}
                                 disabled={m.status === "upcoming" || m.status === "ready" || m.status === "finished"}
-                                onChange={e => updateGameScore({
-                                    position: mp.position,
+                                onChange={e => updateMp({
+                                    position: optimisticMp.position,
                                     n,
                                     score: isNaN(e.target.value) ? null : Number(e.target.value)
                                 })}
