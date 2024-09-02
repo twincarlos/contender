@@ -47,7 +47,7 @@ export async function GET(req, { params }) {
     });
     const teData = {
         te,
-        eps: arrayToObject(te.egs, "id"),
+        eps: arrayToObject(te.eps, "id"),
         egs: arrayToObject(te.egs, "id"),
         gps: te.egs.map(eg => {
             const gpsData = {};

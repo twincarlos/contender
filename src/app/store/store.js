@@ -7,7 +7,13 @@ export const teStore = create(set => ({
 
 export const epsStore = create(set => ({
     eps: null,
-    setEps: eps => set({ eps })
+    setEps: eps => set({ eps }),
+    addEp: ep => set(state => ({ 
+        eps: {
+            ...state.eps,
+            [ep.id]: ep
+        }
+     }))
 }));
 
 export const egsStore = create(set => ({
