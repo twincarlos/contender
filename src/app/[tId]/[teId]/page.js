@@ -2,7 +2,7 @@
 import "./Event.css";
 import { useEffect } from "react";
 import { epsStore, teStore, egsStore, gpsStore, gmsStore, msStore } from "@/app/store/store";
-import { beginGroups } from "@/app/actions/actions";
+import { generateGroups, beginGroups } from "@/app/actions/actions";
 import Header from "@/app/components/Header/Header";
 import GroupList from "@/app/components/GroupList/GroupList";
 
@@ -15,9 +15,17 @@ export default function Event({ params }) {
     const setGms = gmsStore(state => state.setGms);
     const setMs = msStore(state => state.setMs);
 
-    function handleBeginGroups() {
-        beginGroups(params.teId);
+    async function handleBeginGroups() {
+        await beginGroups(params.teId);
         setGroupMatchesReady();
+    };
+
+    async function handleGenerateGroups() {
+        const data = await generateGroups({ teId: params.teId, preferGroupsOf: 4 });
+        setEgs(data.egs);
+        setGps(data.gps);
+        setGms(data.gms);
+        setMs(data.ms);
     };
 
     useEffect(() => {
@@ -46,6 +54,7 @@ export default function Event({ params }) {
         <main className="event">
             <Header>
                 <p>{te.name}</p>
+                <button onClick={handleGenerateGroups}>Generate groups</button>
                 <button onClick={handleBeginGroups}>Start groups</button>
             </Header>
             <GroupList />

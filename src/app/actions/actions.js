@@ -1,7 +1,7 @@
 "use server";
 import { db } from "../drizzle/db";
-import { ts, tes, egs, gms, ms, mps } from "../drizzle/schema";
-import { eq, sql, and, count, not } from "drizzle-orm";
+import { ts, tes, egs, gms, ms, mps, eps, tps, gps } from "../drizzle/schema";
+import { eq, sql, and, count, not, desc, asc } from "drizzle-orm";
 
 export async function createT(data) {
   const t = await db.insert(ts).values(data).returning();
@@ -88,36 +88,123 @@ export async function playerVerify({ egId, mId, mpId }) {
   };
 };
 
-export async function generateGroups() {
-  function groupPlayers(players, prefersGroupsOf) {
-    // Step 1: Sort players by rating in descending order
-    players.sort((a, b) => b.rating - a.rating);
+export async function generateGroups({ teId, preferGroupsOf }) {
+  const data = {
+    egs: {},
+    gps: {},
+    gms: {},
+    ms: {}
+  };
 
-    // Step 2: Calculate number of groups needed
+  async function groupPlayers(players) {
     const totalPlayers = players.length;
-    const numGroups = Math.ceil(totalPlayers / prefersGroupsOf);
+    const numGroups = Math.ceil(totalPlayers / preferGroupsOf);
 
-    // Initialize groups array
-    const groups = Array.from({ length: numGroups }, () => []);
+    const groups = Array.from({ length: numGroups }, () => ({}));
 
-    // Step 3: Distribute players using the "snake" pattern
-    let direction = 1; // 1 for forward, -1 for backward
+    let direction = 1;
     let groupIndex = 0;
 
-    players.forEach(player => {
-      groups[groupIndex].push(player);
+    for (const player of players) {
+      if (!groups[groupIndex].id) {
+        const newGroupQuery = await db.insert(egs).values({ tournamentEventId: teId, number: groupIndex + 1 }).returning();
+        const newGroup = newGroupQuery[0];
+        const newGroupPlayerQuery = await db.insert(gps).values({ eventGroupId: newGroup.id, eventPlayerId: player.id }).returning();
+        const newGroupPlayer = newGroupPlayerQuery[0];
 
-      // Move the groupIndex in the current direction
+        groups[groupIndex] = { ...newGroup, gps: [{ ...newGroupPlayer, ep: { ...player } }] };
+        data.egs = { ...data.egs, [newGroup.id]: { ...newGroup } };
+        data.gps = { ...data.gps, [newGroup.id]: { ...data.gps[newGroup.id], [newGroupPlayer.id]: { ...newGroupPlayer, ep: { ...player } } } };
+      }
+
+      else {
+        const newGroupPlayerQuery = await db.insert(gps).values({ eventGroupId: groups[groupIndex].id, eventPlayerId: player.id }).returning();
+        const newGroupPlayer = newGroupPlayerQuery[0];
+        groups[groupIndex] = { ...groups[groupIndex], gps: [...groups[groupIndex].gps, { ...newGroupPlayer, ep: { ...player } }] };
+        data.gps = { ...data.gps, [groups[groupIndex].id]: { ...data.gps[groups[groupIndex].id], [newGroupPlayer.id]: { ...newGroupPlayer, ep: { ...player } } } };
+      };
+
       groupIndex += direction;
 
-      // Reverse direction if we reach the end or start of the groups
       if (groupIndex === numGroups || groupIndex === -1) {
         direction *= -1;
         groupIndex += direction;
-      }
-    });
+      };
+    };
 
-    // Step 4: Return the groups
     return groups;
-  }
+  };
+
+  async function createPairings(groups) {
+    for (let group of groups) {
+      const n = group.gps.length;
+      let sequence = 1;
+
+      for (let round = 0; round < n - 1; round++) {
+        for (let i = 0; i < n / 2; i++) {
+          const playerA = group.gps[i];
+          const playerB = group.gps[n - i - 1];
+
+          const newMatchQuery = await db.insert(ms).values({ sequence }).returning();
+          const newMatch = newMatchQuery[0];
+          const newGroupMatchQuery = await db.insert(gms).values({ eventGroupId: group.id, matchId: newMatch.id }).returning();
+          const newGroupMatch = newGroupMatchQuery[0];
+          const newMatchPlayerAQuery = await db.insert(mps).values({ eventPlayerId: playerA.ep.id, matchId: newMatch.id, position: "top" }).returning();
+          const newMatchPlayerA = newMatchPlayerAQuery[0];
+          const newMatchPlayerBQuery = await db.insert(mps).values({ eventPlayerId: playerB.ep.id, matchId: newMatch.id, position: "bottom" }).returning();
+          const newMatchPlayerB = newMatchPlayerBQuery[0];
+
+          data.gms = {
+            ...data.gms,
+            [group.id]: {
+              ...data.gms[group.id],
+              [newGroupMatch.id]: { ...newGroupMatch }
+            }
+          };
+
+          data.ms = {
+            ...data.ms,
+            [newMatch.id]: {
+              ...newMatch,
+              mps: {
+                top: {
+                  ...newMatchPlayerA,
+                  ep: {
+                    ...playerA.ep
+                  }
+                },
+                bottom: {
+                  ...newMatchPlayerB,
+                  ep: {
+                    ...playerB.ep
+                  }
+                }
+              }
+            }
+          };
+
+          sequence++;
+        }
+
+        const groupPlayers = [group.gps[0], ...group.gps.slice(-1), ...group.gps.slice(1, -1)];
+        group = { ...group, gps: [...groupPlayers] };
+      }
+    };
+  };
+
+  const allEpsQuery = await db.select()
+    .from(eps)
+    .innerJoin(tps, eq(tps.id, eps.tournamentPlayerId))
+    .orderBy(desc(tps.rating), asc(tps.name))
+    .where(eq(eps.tournamentEventId, teId));
+  const allEps = allEpsQuery.map(ep => ({
+    ...ep.eps,
+    tp: {
+      ...ep.tps
+    }
+  }));
+
+  const groups = await groupPlayers(allEps);
+  await createPairings(groups);
+  return data;
 };
