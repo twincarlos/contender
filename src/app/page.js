@@ -10,7 +10,9 @@ export default function Home() {
   const [showWindow, setShowWindow] = useState(false);
 
   useEffect(() => {
+    console.log("in use effect")
     async function getTs() {
+      console.log("fetching...")
       const res = await fetch("/api/get-tournaments", {
         headers: {
           'Cache-Control': 'no-cache',
@@ -19,6 +21,7 @@ export default function Home() {
         }
       });
       const data = await res.json();
+      console.log("data", data);
       setTs(data);
     };
     return () => getTs();
