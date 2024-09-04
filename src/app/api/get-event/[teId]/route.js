@@ -2,7 +2,7 @@ export const fetchCache = 'force-no-store';
 import { db } from "@/app/drizzle/db";
 import { eq } from "drizzle-orm";
 import { tes } from "@/app/drizzle/schema";
-import { arrayToObject } from "../../utils";
+import { arrayToObject } from "@/app/utils";
 
 export async function GET(req, { params }) {
     const te = await db.query.tes.findFirst({
@@ -15,28 +15,12 @@ export async function GET(req, { params }) {
             },
             egs: {
                 with: {
-                    gps: {
-                        with: {
-                            ep: {
-                                with: {
-                                    tp: true
-                                }
-                            }
-                        }
-                    },
+                    gps: true,
                     gms: {
                         with: {
                             m: {
                                 with: {
-                                    mps: {
-                                        with: {
-                                            ep: {
-                                                with: {
-                                                    tp: true,
-                                                },
-                                            }
-                                        }
-                                    }
+                                    mps: true
                                 }
                             }
                         }

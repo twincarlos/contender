@@ -2,7 +2,7 @@ export const fetchCache = 'force-no-store';
 import { db } from "@/app/drizzle/db";
 import { eq } from "drizzle-orm";
 import { ts } from "@/app/drizzle/schema";
-import { arrayToObject } from "../../utils";
+import { arrayToObject } from "@/app/utils";
 
 export async function GET(req, { params }) {
     const t = await db.query.ts.findFirst({

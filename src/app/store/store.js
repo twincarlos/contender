@@ -8,12 +8,12 @@ export const teStore = create(set => ({
 export const epsStore = create(set => ({
     eps: null,
     setEps: eps => set({ eps }),
-    addEp: ep => set(state => ({ 
+    addEp: ep => set(state => ({
         eps: {
             ...state.eps,
             [ep.id]: ep
         }
-     }))
+    }))
 }));
 
 export const egsStore = create(set => ({
@@ -42,7 +42,12 @@ export const egsStore = create(set => ({
 
 export const gpsStore = create(set => ({
     gps: null,
-    setGps: gps => set({ gps })
+    setGps: gps => set({ gps }),
+    setGpPositions: gps => set(state => {
+        const gpsData = JSON.parse(JSON.stringify(state.gps));
+        gps.forEach(gp => gpsData[gp.eventGroupId][gp.id] = gp);
+        return { gps: gpsData };
+    })
 }));
 
 export const gmsStore = create(set => ({

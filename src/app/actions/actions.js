@@ -2,6 +2,7 @@
 import { db } from "../drizzle/db";
 import { ts, tes, egs, gms, ms, mps, eps, tps, gps } from "../drizzle/schema";
 import { eq, sql, and, count, not, desc, asc } from "drizzle-orm";
+import { arrayToObject, calculateStandings } from "../utils";
 
 export async function createT(data) {
   const t = await db.insert(ts).values(data).returning();
@@ -20,7 +21,7 @@ export async function createTe(data) {
 
 export async function createEp(data) {
   const ep = await db.insert(eps).values(data).returning();
-  return ep[0]; 
+  return ep[0];
 };
 
 export async function beginGroups(teId) {
@@ -79,19 +80,50 @@ export async function playerCheckIn({ mId, mpId }) {
 };
 
 export async function playerVerify({ egId, mId, mpId }) {
+
   const mp = await db.update(mps).set({ verified: true }).where(eq(mps.id, mpId)).returning();
   const otherMp = await db.select({ verified: mps.verified }).from(mps).where(and(eq(mps.matchId, mId), eq(mps.position, mp[0].position === "top" ? "bottom" : "top")));
   if (mp[0].verified && otherMp[0].verified) {
     const m = await db.update(ms).set({ status: "finished" }).where(eq(ms.id, mId)).returning();
+
+    const allGms = await db.query.gms.findMany({
+      with: {
+        m: {
+          with: {
+            mps: {
+              with: {
+                ep: {
+                  with: {
+                    tp: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      where: eq(gms.eventGroupId, egId)
+    });
+    const standings = calculateStandings(allGms.map(gm => gm.m).filter(m => m.status === "finished"));
+    const updatedGps = [];
+    let position = 1;
+
+    for (const gp of standings) {
+      const updatedGp = await db.update(gps).set({ position }).where(and(eq(gps.eventPlayerId, gp.eventPlayerId), eq(gps.eventGroupId, egId))).returning();
+      updatedGps.push(updatedGp[0]);
+      position++;
+    };
+
     const notFinishedMs = await db.select({ count: count() })
       .from(ms)
       .innerJoin(gms, eq(ms.id, gms.matchId))
       .where(and(eq(gms.eventGroupId, egId), not(eq(ms.status, "finished"))));
+
     if (notFinishedMs[0].count === 0) {
       const eg = await db.update(egs).set({ status: "finished" }).where(eq(egs.id, egId)).returning();
-      return { mp: mp[0], m: m[0], eg: eg[0] }; // if group is done
+      return { mp: mp[0], m: m[0], eg: eg[0], gps: updatedGps }; // if group is done
     } else {
-      return { mp: mp[0], m: m[0] }; // if match is done
+      return { mp: mp[0], m: m[0], gps: updatedGps }; // if match is done
     };
   } else {
     return { mp: mp[0] }; // update player
@@ -150,57 +182,67 @@ export async function generateGroups({ teId, preferGroupsOf }) {
       const n = group.gps.length;
       let sequence = 1;
 
-      for (let round = 0; round < n - 1; round++) {
-        for (let i = 0; i < n / 2; i++) {
+      const hasOddPlayers = n % 2 !== 0;
+      if (hasOddPlayers) {
+        group.gps.push(null);
+      }
+
+      const rounds = hasOddPlayers ? n : n - 1;
+
+      for (let round = 0; round < rounds; round++) {
+        for (let i = 0; i < Math.floor(group.gps.length / 2); i++) {
           const playerA = group.gps[i];
-          const playerB = group.gps[n - i - 1];
+          const playerB = group.gps[group.gps.length - i - 1];
 
-          const newMatchQuery = await db.insert(ms).values({ sequence }).returning();
-          const newMatch = newMatchQuery[0];
-          const newGroupMatchQuery = await db.insert(gms).values({ eventGroupId: group.id, matchId: newMatch.id }).returning();
-          const newGroupMatch = newGroupMatchQuery[0];
-          const newMatchPlayerAQuery = await db.insert(mps).values({ eventPlayerId: playerA.ep.id, matchId: newMatch.id, position: "top" }).returning();
-          const newMatchPlayerA = newMatchPlayerAQuery[0];
-          const newMatchPlayerBQuery = await db.insert(mps).values({ eventPlayerId: playerB.ep.id, matchId: newMatch.id, position: "bottom" }).returning();
-          const newMatchPlayerB = newMatchPlayerBQuery[0];
+          if (playerA && playerB) {
+            const newMatchQuery = await db.insert(ms).values({ sequence }).returning();
+            const newMatch = newMatchQuery[0];
+            const newGroupMatchQuery = await db.insert(gms).values({ eventGroupId: group.id, matchId: newMatch.id }).returning();
+            const newGroupMatch = newGroupMatchQuery[0];
+            const newMatchPlayerAQuery = await db.insert(mps).values({ eventPlayerId: playerA.ep.id, matchId: newMatch.id, position: "top" }).returning();
+            const newMatchPlayerA = newMatchPlayerAQuery[0];
+            const newMatchPlayerBQuery = await db.insert(mps).values({ eventPlayerId: playerB.ep.id, matchId: newMatch.id, position: "bottom" }).returning();
+            const newMatchPlayerB = newMatchPlayerBQuery[0];
 
-          data.gms = {
-            ...data.gms,
-            [group.id]: {
-              ...data.gms[group.id],
-              [newGroupMatch.id]: { ...newGroupMatch }
-            }
-          };
+            data.gms = {
+              ...data.gms,
+              [group.id]: {
+                ...data.gms[group.id],
+                [newGroupMatch.id]: { ...newGroupMatch }
+              }
+            };
 
-          data.ms = {
-            ...data.ms,
-            [newMatch.id]: {
-              ...newMatch,
-              mps: {
-                top: {
-                  ...newMatchPlayerA,
-                  ep: {
-                    ...playerA.ep
-                  }
-                },
-                bottom: {
-                  ...newMatchPlayerB,
-                  ep: {
-                    ...playerB.ep
+            data.ms = {
+              ...data.ms,
+              [newMatch.id]: {
+                ...newMatch,
+                mps: {
+                  top: {
+                    ...newMatchPlayerA,
+                    ep: {
+                      ...playerA.ep
+                    }
+                  },
+                  bottom: {
+                    ...newMatchPlayerB,
+                    ep: {
+                      ...playerB.ep
+                    }
                   }
                 }
               }
-            }
-          };
+            };
 
-          sequence++;
-        }
+            sequence++;
+          };
+        };
 
         const groupPlayers = [group.gps[0], ...group.gps.slice(-1), ...group.gps.slice(1, -1)];
-        group = { ...group, gps: [...groupPlayers] };
-      }
+        group = { ...group, gps: groupPlayers };
+      };
     };
   };
+
 
   const allEpsQuery = await db.select()
     .from(eps)

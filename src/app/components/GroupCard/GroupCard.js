@@ -14,6 +14,7 @@ export default memo(function GroupCard({ eg }) {
         <div className="group-card card">
             <div className="group-header card-header">
                 <p>Group {eg.number}</p>
+                <p>{eg.status}</p>
             </div>
             <GroupStandings gps={Object.values(gps)} />
             <button onClick={() => setShowMatchList(!showMatchList)}>Matches</button>

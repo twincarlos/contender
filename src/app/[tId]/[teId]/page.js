@@ -9,7 +9,7 @@ import { BeginGroupsButton } from "@/app/components/Buttons/BeginGroupsButton";
 import { CreateEventPlayerButton } from "@/app/components/Buttons/CreateEventPlayerButton";
 import { CreateEventPlayer } from "@/app/components/Forms/CreateEventPlayer";
 import Window from "@/app/components/Window/Window";
-import { arrayToObject } from "@/app/api/utils";
+import { arrayToObject } from "@/app/utils";
 
 export default function Event({ params }) {
     const setGroupMatchesReady = msStore(state => state.setGroupMatchesReady);
