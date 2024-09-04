@@ -18,7 +18,7 @@ export default memo(function GroupCard({ eg }) {
             </div>
             <GroupStandings gps={Object.values(gps)} />
             <button onClick={() => setShowMatchList(!showMatchList)}>Matches</button>
-            {showMatchList && <MatchList ms={Object.values(gms)} />}
+            {showMatchList && <MatchList ms={Object.values(gms).sort((a, b) => a.sequence - b.sequence)} />}
         </div>
     );
 });

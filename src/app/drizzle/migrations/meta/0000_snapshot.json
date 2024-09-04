@@ -1,9 +1,49 @@
 {
-  "id": "f25d48d4-593e-49c0-8e6a-a8daf8f7a81b",
+  "id": "eba1c54c-2a02-43fc-a648-d2e60e42c482",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.dms": {
+      "name": "dms",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "match_id": {
+          "name": "match_id",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "round": {
+          "name": "round",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sequence": {
+          "name": "sequence",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.egs": {
       "name": "egs",
       "schema": "",
@@ -89,6 +129,12 @@
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
+        },
+        "sequence": {
+          "name": "sequence",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -259,18 +305,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'upcoming'"
-        },
-        "round": {
-          "name": "round",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sequence": {
-          "name": "sequence",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
@@ -381,6 +415,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'upcoming'"
+        },
+        "prefers_groups_of": {
+          "name": "prefers_groups_of",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 4
         },
         "max_rating": {
           "name": "max_rating",

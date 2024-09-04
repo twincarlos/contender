@@ -1,32 +1,11 @@
-DROP TYPE "tournament_status" CASCADE;
-DROP TYPE "tournament_event_type" CASCADE;
-DROP TYPE "tournament_event_status" CASCADE;
-DROP TYPE "event_group_status" CASCADE;
-DROP TYPE "match_status" CASCADE;
-DROP TYPE "match_player_position" CASCADE;
-
-DO $$
-BEGIN
-   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'tournament_status') THEN
-      CREATE TYPE "tournament_status" AS ENUM ('finished', 'upcoming', 'current');
-   END IF;
-   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'tournament_event_type') THEN
-      CREATE TYPE "tournament_event_type" AS ENUM ('rr', 'grr', 'teams', 'handicap');
-   END IF;
-   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'tournament_event_status') THEN
-      CREATE TYPE "tournament_event_status" AS ENUM ('finished', 'upcoming', 'groups', 'draw');
-   END IF;
-   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'event_group_status') THEN
-      CREATE TYPE "event_group_status" AS ENUM ('finished', 'ready', 'upcoming', 'in progress');
-   END IF;
-   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'match_status') THEN
-      CREATE TYPE "match_status" AS ENUM ('finished', 'upcoming', 'ready', 'in progress', 'pending');
-   END IF;
-   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'match_player_position') THEN
-      CREATE TYPE "match_player_position" AS ENUM ('top', 'bottom');
-   END IF;
-END $$;
-
+CREATE TABLE IF NOT EXISTS "dms" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"event_id" smallint NOT NULL,
+	"match_id" smallint NOT NULL,
+	"round" smallint NOT NULL,
+	"sequence" smallint
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "egs" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"event_id" smallint NOT NULL,
@@ -43,7 +22,8 @@ CREATE TABLE IF NOT EXISTS "eps" (
 CREATE TABLE IF NOT EXISTS "gms" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"event_group_id" smallint NOT NULL,
-	"match_id" smallint NOT NULL
+	"match_id" smallint NOT NULL,
+	"sequence" smallint
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "gps" (
@@ -74,9 +54,7 @@ CREATE TABLE IF NOT EXISTS "mps" (
 CREATE TABLE IF NOT EXISTS "ms" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"best_of" smallint DEFAULT 5 NOT NULL,
-	"status" "match_status" DEFAULT 'upcoming' NOT NULL,
-	"round" smallint,
-	"sequence" smallint
+	"status" "match_status" DEFAULT 'upcoming' NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "mts" (
@@ -95,6 +73,7 @@ CREATE TABLE IF NOT EXISTS "tes" (
 	"draw_time" time,
 	"type" "tournament_event_type" DEFAULT 'rr' NOT NULL,
 	"status" "tournament_event_status" DEFAULT 'upcoming' NOT NULL,
+	"prefers_groups_of" smallint DEFAULT 4 NOT NULL,
 	"max_rating" smallint,
 	"max_age" smallint
 );

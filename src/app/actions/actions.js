@@ -195,9 +195,9 @@ export async function generateGroups({ teId, preferGroupsOf }) {
           const playerB = group.gps[group.gps.length - i - 1];
 
           if (playerA && playerB) {
-            const newMatchQuery = await db.insert(ms).values({ sequence }).returning();
+            const newMatchQuery = await db.insert(ms).values({}).returning();
             const newMatch = newMatchQuery[0];
-            const newGroupMatchQuery = await db.insert(gms).values({ eventGroupId: group.id, matchId: newMatch.id }).returning();
+            const newGroupMatchQuery = await db.insert(gms).values({ eventGroupId: group.id, matchId: newMatch.id, sequence }).returning();
             const newGroupMatch = newGroupMatchQuery[0];
             const newMatchPlayerAQuery = await db.insert(mps).values({ eventPlayerId: playerA.ep.id, matchId: newMatch.id, position: "top" }).returning();
             const newMatchPlayerA = newMatchPlayerAQuery[0];

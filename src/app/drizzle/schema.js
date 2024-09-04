@@ -38,6 +38,7 @@ export const tes = pgTable('tes', {
     drawTime: time('draw_time'),
     type: tournamentEventTypeEnum('type').notNull().default('rr'),
     status: tournamentEventStatusEnum('status').notNull().default('upcoming'),
+    prefersGroupsOf: smallint('prefers_groups_of').notNull().default(4),
     maxRating: smallint('max_rating'),
     maxAge: smallint('max_age')
 });
@@ -58,7 +59,16 @@ export const gps = pgTable('gps', {
 export const gms = pgTable('gms', {
     id: serial('id').primaryKey(),
     eventGroupId: smallint('event_group_id').notNull(),
-    matchId: smallint('match_id').notNull()
+    matchId: smallint('match_id').notNull(),
+    sequence: smallint('sequence')
+});
+
+export const dms = pgTable('dms', {
+    id: serial('id').primaryKey(),
+    tournamentEventId: smallint('event_id').notNull(),
+    matchId: smallint('match_id').notNull(),
+    round: smallint('round').notNull(),
+    sequence: smallint('sequence')
 });
 
 export const mps = pgTable('mps', {
@@ -89,9 +99,7 @@ export const egs = pgTable('egs', {
 export const ms = pgTable('ms', {
     id: serial('id').primaryKey(),
     bestOf: smallint('best_of').notNull().default(5),
-    status: matchStatusEnum('status').notNull().default('upcoming'),
-    round: smallint('round'),
-    sequence: smallint('sequence')
+    status: matchStatusEnum('status').notNull().default('upcoming')
 });
 
 export const tts = pgTable('tts', {
@@ -123,6 +131,7 @@ export const tournamentEventRelations = relations(tes, ({ one, many }) => ({
     t: one(ts, { fields: [tes.tournamentId], references: [ts.id] }),
     eps: many(eps),
     egs: many(egs),
+    dms: many(dms)
 }));
 
 export const eventPlayerRelations = relations(eps, ({ one, many }) => ({
@@ -142,6 +151,11 @@ export const groupMatchRelations = relations(gms, ({ one }) => ({
     m: one(ms, { fields: [gms.matchId], references: [ms.id] })
 }));
 
+export const drawMatchRelations = relations(dms, ({ one }) => ({
+    te: one(tes, { fields: [dms.tournamentEventId], references: [tes.id] }),
+    m: one(ms, { fields: [dms.matchId], references: [ms.id] })
+}));
+
 export const matchPlayerRelations = relations(mps, ({ one }) => ({
     m: one(ms, { fields: [mps.matchId], references: [ms.id] }),
     ep: one(eps, { fields: [mps.eventPlayerId], references: [eps.id] })
@@ -155,6 +169,7 @@ export const eventGroupRelations = relations(egs, ({ one, many }) => ({
 
 export const matchRelations = relations(ms, ({ one, many }) => ({
     gm: one(gms, { fields: [ms.id], references: [gms.matchId] }),
+    dm: one(dms, { fields: [ms.id], references: [dms.matchId] }),
     mps: many(mps),
     mts: many(mts)
 }));

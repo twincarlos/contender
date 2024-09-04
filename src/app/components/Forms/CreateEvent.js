@@ -13,6 +13,7 @@ export function CreateEvent({ t, setT }) {
         drawTime: "",
         type: "rr",
         status: "upcoming",
+        prefersGroupsOf: 4,
         maxRating: null,
         maxAge: null
     });
@@ -112,6 +113,14 @@ export function CreateEvent({ t, setT }) {
                         handicap
                     </label>
                 </fieldset>
+                <label>
+                    Prefer groups of:
+                    <input
+                        type="number"
+                        value={data.prefersGroupsOf || ""}
+                        onChange={e => setData({ ...data, prefersGroupsOf: e.target.value })}
+                    />
+                </label>
                 <label>
                     Rating must be under
                     <input
