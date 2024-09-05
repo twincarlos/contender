@@ -2,7 +2,7 @@
 import "./Forms.css";
 import { useEffect, useState } from "react";
 import PlayerCard from "../PlayerCard/PlayerCard";
-import { createEp } from "@/app/actions/actions";
+import { createEp } from "@/app/actions/create";
 
 export function CreateEventPlayer({ te, eps, addEp }) {
     const [tps, setTps] = useState({});

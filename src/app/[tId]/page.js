@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import EventList from "../components/EventList/EventList";
 import Window from "../components/Window/Window";
-import { CreateEvent } from "../components/Forms/CreateEvent";
+import { CreateTournamentEvent } from "../components/Forms/CreateTournamentEvent";
 import { CreateEventButton } from "../components/Buttons/CreateEventButton";
 import { CreateTournamentPlayer } from "../components/Forms/CreateTournamentPlayer";
 import { CreateTournamentPlayerButton } from "../components/Buttons/CreateTournamentPlayerButton";
@@ -13,7 +13,7 @@ export default function Tournament({ params }) {
     const [showWindow, setShowWindow] = useState(null);
     const [t, setT] = useState(null);
     const window = {
-        "create event": <CreateEvent t={t} setT={setT} />,
+        "create event": <CreateTournamentEvent t={t} setT={setT} />,
         "create tournament player": <CreateTournamentPlayer t={t} setT={setT} />
     };
     useEffect(() => {

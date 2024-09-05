@@ -1,7 +1,7 @@
 import "./MatchCard.css";
 import MatchPlayer from "@/app/components/MatchPlayer/MatchPlayer";
 import { msStore } from "@/app/store/store";
-import { updateMScore } from "@/app/actions/actions";
+import { updateMScore } from "@/app/actions/updateMScore";
 
 export default function MatchCard({ egId, mId }) {
     const m = msStore(state => state.ms[mId]);

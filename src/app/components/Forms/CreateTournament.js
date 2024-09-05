@@ -1,7 +1,7 @@
 "use client";
 import "./Forms.css";
 import { useState } from "react";
-import { createT } from "@/app/actions/actions";
+import { createT } from "@/app/actions/create";
 
 export function CreateTournament({ ts, setTs }) {
     const [data, setData] = useState({

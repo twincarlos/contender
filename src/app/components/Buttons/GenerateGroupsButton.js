@@ -1,4 +1,4 @@
-import { generateGroups } from "@/app/actions/actions";
+import { generateGroups } from "@/app/actions/generateGroups";
 
 export function GenerateGroupsButton({ te, setEgs, setGps, setGms, setMs }) {
     async function handleGenerateGroups() {

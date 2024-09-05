@@ -38,7 +38,7 @@ export const tes = pgTable('tes', {
     drawTime: time('draw_time'),
     type: tournamentEventTypeEnum('type').notNull().default('rr'),
     status: tournamentEventStatusEnum('status').notNull().default('upcoming'),
-    prefersGroupsOf: smallint('prefers_groups_of').notNull().default(4),
+    allowUnratedAdvance: boolean('allow_unrated_advance').notNull().default(true),
     maxRating: smallint('max_rating'),
     maxAge: smallint('max_age')
 });
@@ -65,7 +65,7 @@ export const gms = pgTable('gms', {
 
 export const dms = pgTable('dms', {
     id: serial('id').primaryKey(),
-    tournamentEventId: smallint('event_id').notNull(),
+    tournamentEventId: smallint('tournament_event_id').notNull(),
     matchId: smallint('match_id').notNull(),
     round: smallint('round').notNull(),
     sequence: smallint('sequence')
@@ -91,7 +91,7 @@ export const mps = pgTable('mps', {
 
 export const egs = pgTable('egs', {
     id: serial('id').primaryKey(),
-    tournamentEventId: smallint('event_id').notNull(),
+    tournamentEventId: smallint('tournament_event_id').notNull(),
     number: smallint('number').notNull(),
     status: eventGroupStatusEnum('status').notNull().default('upcoming')
 });

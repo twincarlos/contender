@@ -13,7 +13,6 @@ export default function GroupStandings({ gps }) {
                     <div key={gp.id} className="group-player-standing">
                         <PlayerCard tp={ep.tp} />
                         <div className="group-player-stats">
-                            <p>0 - 0</p>
                             <p>#{gp.position}</p>
                         </div>
                     </div>

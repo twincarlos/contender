@@ -1,7 +1,7 @@
 "use client";
 import "./Forms.css";
 import { useState } from "react";
-import { createTp } from "@/app/actions/actions";
+import { createTp } from "@/app/actions/create";
 
 export function CreateTournamentPlayer({ t, setT }) {
     const [data, setData] = useState({
@@ -73,6 +73,14 @@ export function CreateTournamentPlayer({ t, setT }) {
                         type="checkbox"
                         value={data.isAdmin}
                         onChange={e => setData({ ...data, isAdmin: e.target.value })}
+                    />
+                </label>
+                <label>
+                    Is estimated?
+                    <input
+                        type="checkbox"
+                        value={data.isEstimated}
+                        onChange={e => setData({ ...data, isEstimated: e.target.value })}
                     />
                 </label>
                 <button type="submit">Submit</button>

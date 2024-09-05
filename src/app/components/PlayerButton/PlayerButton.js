@@ -1,5 +1,6 @@
 import "./PlayerButton.css";
-import { playerCheckIn, playerVerify } from "@/app/actions/actions";
+import { playerCheckIn } from "@/app/actions/playerCheckIn";
+import { playerVerify } from "@/app/actions/playerVerify";
 import { egsStore, msStore, gpsStore } from "@/app/store/store";
 
 export default function PlayerButton({ egId, m, mp }) {

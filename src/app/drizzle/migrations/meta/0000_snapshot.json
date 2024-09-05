@@ -1,5 +1,5 @@
 {
-  "id": "eba1c54c-2a02-43fc-a648-d2e60e42c482",
+  "id": "497226c5-65a9-4b08-8815-bcd0a0f6ae21",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -14,8 +14,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "event_id": {
-          "name": "event_id",
+        "tournament_event_id": {
+          "name": "tournament_event_id",
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
@@ -54,8 +54,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "event_id": {
-          "name": "event_id",
+        "tournament_event_id": {
+          "name": "tournament_event_id",
           "type": "smallint",
           "primaryKey": false,
           "notNull": true
@@ -416,12 +416,12 @@
           "notNull": true,
           "default": "'upcoming'"
         },
-        "prefers_groups_of": {
-          "name": "prefers_groups_of",
-          "type": "smallint",
+        "allow_unrated_advance": {
+          "name": "allow_unrated_advance",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": true,
-          "default": 4
+          "default": true
         },
         "max_rating": {
           "name": "max_rating",

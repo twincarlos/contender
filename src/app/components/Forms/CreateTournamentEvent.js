@@ -1,9 +1,9 @@
 "use client";
 import "./Forms.css";
 import { useState } from "react";
-import { createTe } from "@/app/actions/actions";
+import { createTe } from "@/app/actions/create";
 
-export function CreateEvent({ t, setT }) {
+export function CreateTournamentEvent({ t, setT }) {
     const [data, setData] = useState({
         tournamentId: t.id,
         name: "",
@@ -13,7 +13,7 @@ export function CreateEvent({ t, setT }) {
         drawTime: "",
         type: "rr",
         status: "upcoming",
-        prefersGroupsOf: 4,
+        allowUnratedAdvance: true,
         maxRating: null,
         maxAge: null
     });
@@ -114,11 +114,12 @@ export function CreateEvent({ t, setT }) {
                     </label>
                 </fieldset>
                 <label>
-                    Prefer groups of:
+                    Allow unrated players to advance
                     <input
-                        type="number"
-                        value={data.prefersGroupsOf || ""}
-                        onChange={e => setData({ ...data, prefersGroupsOf: e.target.value })}
+                        type="checkbox"
+                        defaultChecked={true}
+                        value={data.allowUnratedAdvance}
+                        onChange={e => setData({ ...data, allowUnratedAdvance: e.target.value })}
                     />
                 </label>
                 <label>

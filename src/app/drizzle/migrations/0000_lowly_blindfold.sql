@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS "dms" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"event_id" smallint NOT NULL,
+	"tournament_event_id" smallint NOT NULL,
 	"match_id" smallint NOT NULL,
 	"round" smallint NOT NULL,
 	"sequence" smallint
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS "dms" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "egs" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"event_id" smallint NOT NULL,
+	"tournament_event_id" smallint NOT NULL,
 	"number" smallint NOT NULL,
 	"status" "event_group_status" DEFAULT 'upcoming' NOT NULL
 );
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS "tes" (
 	"draw_time" time,
 	"type" "tournament_event_type" DEFAULT 'rr' NOT NULL,
 	"status" "tournament_event_status" DEFAULT 'upcoming' NOT NULL,
-	"prefers_groups_of" smallint DEFAULT 4 NOT NULL,
+	"allow_unrated_advance" boolean DEFAULT true NOT NULL,
 	"max_rating" smallint,
 	"max_age" smallint
 );

@@ -7,6 +7,7 @@ import GroupList from "@/app/components/GroupList/GroupList";
 import { GenerateGroupsButton } from "@/app/components/Buttons/GenerateGroupsButton";
 import { BeginGroupsButton } from "@/app/components/Buttons/BeginGroupsButton";
 import { CreateEventPlayerButton } from "@/app/components/Buttons/CreateEventPlayerButton";
+import { GenerateDrawButton } from "@/app/components/Buttons/GenerateDrawButton";
 import { CreateEventPlayer } from "@/app/components/Forms/CreateEventPlayer";
 import Window from "@/app/components/Window/Window";
 import { arrayToObject } from "@/app/utils";
@@ -50,6 +51,7 @@ export default function Event({ params }) {
         <main className="event">
             <Header>
                 <p>{te.name}</p>
+                <GenerateDrawButton teId={te.id} />
                 <GenerateGroupsButton te={te} setEgs={setEgs} setGps={setGps} setGms={setGms} setMs={setMs} />
                 <BeginGroupsButton te={te} setGroupMatchesReady={setGroupMatchesReady} />
                 <CreateEventPlayerButton setShowWindow={setShowWindow} />
