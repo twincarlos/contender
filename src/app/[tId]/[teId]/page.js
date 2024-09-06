@@ -1,7 +1,7 @@
 "use client";
 import "./Event.css";
 import { useEffect, useState } from "react";
-import { epsStore, teStore, egsStore, gpsStore, gmsStore, msStore } from "@/app/store/store";
+import { epsStore, teStore, egsStore, gpsStore, gmsStore, msStore, dmsStore } from "@/app/store/store";
 import Header from "@/app/components/Header/Header";
 import GroupList from "@/app/components/GroupList/GroupList";
 import { GenerateGroupsButton } from "@/app/components/Buttons/GenerateGroupsButton";
@@ -19,6 +19,7 @@ export default function Event({ params }) {
     const setEgs = egsStore(state => state.setEgs);
     const setGps = gpsStore(state => state.setGps);
     const setGms = gmsStore(state => state.setGms);
+    const setDms = dmsStore(state => state.setDms);
     const setMs = msStore(state => state.setMs);
     const [showWindow, setShowWindow] = useState(null);
     const window = {
@@ -40,6 +41,7 @@ export default function Event({ params }) {
             setEgs(data.egs);
             setGps(data.gps);
             setGms(data.gms);
+            setDms(data.dms);
             setMs(data.ms);
         };
         setTeData();

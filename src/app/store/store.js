@@ -55,6 +55,11 @@ export const gmsStore = create(set => ({
     setGms: gms => set({ gms })
 }));
 
+export const dmsStore = create(set => ({
+    dms: null,
+    setDms: dms => set({ dms })
+}));
+
 export const msStore = create(set => ({
     ms: null,
     setMs: ms => set({ ms }),

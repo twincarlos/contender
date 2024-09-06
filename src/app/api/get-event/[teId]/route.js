@@ -26,8 +26,52 @@ export async function GET(req, { params }) {
                         }
                     }
                 }
+            },
+            dms: {
+                with: {
+                    m: {
+                        with: {
+                            mps: true
+                        }
+                    }
+                }
             }
         }
+    });
+    const dmsData = {};
+    let firstRound = 0;
+    te.dms.forEach(dm => {
+        let top = dm.m.mps.find(mp => mp.position === "top");
+        let bottom = dm.m.mps.find(mp => mp.position === "bottom");
+        if (dm.round in dmsData) {
+            dmsData[dm.round] = {
+                ...dmsData[dm.round],
+                [dm.id]: {
+                    ...dm,
+                    m: {
+                        ...dm.m,
+                        mps: {
+                            top: top ? top : (firstRound < 2 ? { bye: true } : { upcoming: true }),
+                            bottom: bottom ? bottom : (firstRound < 2 ? { bye: true } : { upcoming: true })
+                        }
+                    }
+                }
+            };
+        } else {
+            firstRound++;
+            dmsData[dm.round] = {
+                [dm.id]: {
+                    ...dm,
+                    m: {
+                        ...dm.m,
+                        mps: {
+                            top: top ? top : (firstRound < 2 ? { bye: true } : { upcoming: true }),
+                            bottom: bottom ? bottom : (firstRound < 2 ? { bye: true } : { upcoming: true })
+                        }
+                    }
+                }
+            };
+        };
     });
     const teData = {
         te,
@@ -47,6 +91,7 @@ export async function GET(req, { params }) {
         }).reduce((acc, currentObj) => {
             return { ...acc, ...currentObj };
         }, {}),
+        dms: dmsData,
         ms: te.egs.map(eg => arrayToObject(eg.gms.map(gm => {
             gm.m.mps = arrayToObject(gm.m.mps, "position");
             return gm.m;
