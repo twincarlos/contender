@@ -60,7 +60,12 @@ export const dmsStore = create(set => ({
 
 export const msStore = create(set => ({
     ms: null,
-    setMs: ms => set({ ms }),
+    setMs: ms => set(state => ({
+        ms: {
+            ...state.ms,
+            ...ms
+        }
+    })),
     updateScore: m => set(state => ({
         ms: {
             ...state.ms,
@@ -88,6 +93,7 @@ export const msStore = create(set => ({
             [mp.matchId]: {
                 ...state.ms[mp.matchId],
                 mps: {
+                    ...state.ms[mp.matchId].mps,
                     [mp.position]: mp
                 }
             }

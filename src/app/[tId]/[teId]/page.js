@@ -60,7 +60,7 @@ export default function Event({ params }) {
                 <CreateEventPlayerButton setShowWindow={setShowWindow} />
             </Header>
             <GroupList />
-            {/* <Draw /> */}
+            <Draw />
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
                 { window[showWindow] }
             </Window>

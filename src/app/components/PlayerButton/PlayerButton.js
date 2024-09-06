@@ -14,11 +14,11 @@ export default function PlayerButton({ egId, m, mp, dm }) {
     };
 
     async function handlePlayerVerify() {
-        const res = await playerVerify({ egId, mId: m.id, mpId: mp.id });
-        setPlayerVerify({ m: res.m, mp: res.mp, dm });
+        const res = await playerVerify({ egId, mId: m.id, mpId: mp.id, dm });
+        setPlayerVerify({ m: res.m, mp: res.mp || res.dmp });
         if (res.eg) setEgStatus(res.eg);
         if (res.gps) setGpPositions(res.gps);
-        if (res.dmp) advanceMatchPlayer(dmp);
+        if (res.dmp) advanceMatchPlayer(res.dmp);
     };
 
     const playerButton = {

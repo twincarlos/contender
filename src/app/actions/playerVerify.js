@@ -1,6 +1,6 @@
 "use server";
 import { db } from "../drizzle/db";
-import { mps, ms, gps, egs, gms } from "../drizzle/schema";
+import { mps, ms, gps, egs, gms, dms } from "../drizzle/schema";
 import { and, eq, not, count } from "drizzle-orm";
 import { calculateStandings } from "../utils";
 
@@ -53,7 +53,7 @@ export async function playerVerify({ egId, mId, mpId, dm }) {
         }
 
         else if (dm) {
-            const drawMatch = await db.query.dms.findFirst({
+            const nextDrawMatch = await db.query.dms.findFirst({
                 where: and(
                     eq(dms.tournamentEventId, dm.tournamentEventId),
                     eq(dms.round, dm.round / 2),
@@ -63,15 +63,17 @@ export async function playerVerify({ egId, mId, mpId, dm }) {
                     m: true
                 }
             });
-            
-            if (drawMatch) {
+
+            if (nextDrawMatch) {
                 const matchPlayerQuery = await db.insert(mps).values({
                     eventPlayerId: mp[0].isWinner ? mp[0].eventPlayerId : otherMp[0].eventPlayerId,
-                    matchId: drawMatch.m.id,
+                    matchId: nextDrawMatch.m.id,
                     position: dm.sequence % 2 === 0 ? "bottom" : "top"
                 }).returning();
-                return { dmp: matchPlayerQuery[0] };
-            }
+                return { m: m[0], mp: mp[0], dmp: matchPlayerQuery[0] };
+            } else {
+                return { m: m[0], mp: mp[0] };
+            };
         }
     } else {
         return { mp: mp[0] }; // update player
