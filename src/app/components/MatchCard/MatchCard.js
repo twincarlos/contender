@@ -1,7 +1,7 @@
 import "./MatchCard.css";
 import MatchPlayer from "@/app/components/MatchPlayer/MatchPlayer";
-import { msStore } from "@/app/store/store";
 import { updateMScore } from "@/app/actions/updateMScore";
+import { msStore } from "@/app/store/store";
 
 export default function MatchCard({ egId, mId }) {
     const m = msStore(state => state.ms[mId]);
@@ -73,8 +73,8 @@ export default function MatchCard({ egId, mId }) {
     return (
         <div className="match-card card">
             <p>{m.status}</p>
-            <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.top} updateScore={updateScore} />
-            <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.bottom} updateScore={updateScore} />
+            { m.mps.top.bye ? <p>Bye!</p> : (m.mps.top.upcoming ? <p>Upcoming</p> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.top} updateScore={updateScore} />) }
+            { m.mps.bottom.bye ? <p>Bye!</p> : (m.mps.bottom.upcoming ? <p>Upcoming</p> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.bottom} updateScore={updateScore} />) }
         </div>
     );
 };

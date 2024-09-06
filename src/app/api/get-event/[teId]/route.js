@@ -99,5 +99,6 @@ export async function GET(req, { params }) {
             return { ...acc, ...currentObj };
         }, {})
     };
+    Object.values(dmsData).forEach(round => Object.values(round).forEach(dm => teData.ms[dm.m.id] = dm.m));
     return new Response(JSON.stringify(teData));
 };

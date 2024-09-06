@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { arrayToObject } from "../utils";
 
 export const teStore = create(set => ({
     te: null,
@@ -77,6 +78,11 @@ export const msStore = create(set => ({
             };
             return acc;
         }, {});
+        return { ms: msData };
+    }),
+    setDrawRoundReady: msIds => set(state => {
+        const msData = JSON.parse(JSON.stringify(state.ms));
+        msIds.forEach(mId => msData[mId].status = "ready");
         return { ms: msData };
     }),
     setPlayerCheckIn: ({ m, mp }) => set(state => ({

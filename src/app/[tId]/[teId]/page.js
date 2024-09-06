@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { epsStore, teStore, egsStore, gpsStore, gmsStore, msStore, dmsStore } from "@/app/store/store";
 import Header from "@/app/components/Header/Header";
 import GroupList from "@/app/components/GroupList/GroupList";
+import Draw from "@/app/components/Draw/Draw";
 import { GenerateGroupsButton } from "@/app/components/Buttons/GenerateGroupsButton";
 import { BeginGroupsButton } from "@/app/components/Buttons/BeginGroupsButton";
 import { CreateEventPlayerButton } from "@/app/components/Buttons/CreateEventPlayerButton";
 import { GenerateDrawButton } from "@/app/components/Buttons/GenerateDrawButton";
 import { CreateEventPlayer } from "@/app/components/Forms/CreateEventPlayer";
-import Window from "@/app/components/Window/Window";
 import { arrayToObject } from "@/app/utils";
+import Window from "@/app/components/Window/Window";
 
 export default function Event({ params }) {
     const setGroupMatchesReady = msStore(state => state.setGroupMatchesReady);
@@ -58,7 +59,8 @@ export default function Event({ params }) {
                 <BeginGroupsButton te={te} setGroupMatchesReady={setGroupMatchesReady} />
                 <CreateEventPlayerButton setShowWindow={setShowWindow} />
             </Header>
-            <GroupList />
+            {/* <GroupList /> */}
+            <Draw />
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
                 { window[showWindow] }
             </Window>
