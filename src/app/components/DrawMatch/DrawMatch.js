@@ -4,7 +4,7 @@ import MatchCard from "../MatchCard/MatchCard";
 export default function DrawMatch({ dm }) {
     return (
         <div>
-            <MatchCard mId={dm.m.id} />
+            <MatchCard mId={dm.m.id} dm={dm} />
         </div>
     );
 };

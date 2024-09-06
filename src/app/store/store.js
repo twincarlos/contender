@@ -20,15 +20,12 @@ export const epsStore = create(set => ({
 export const egsStore = create(set => ({
     egs: null,
     setEgs: egs => set({ egs }),
-    setEgsReady: () => set(state => {
-        const egsData = Object.keys(state.egs).reduce((acc, key) => {
-            acc[key] = {
-                ...state.ms[key],
-                status: "ready"
-            };
-            return acc;
-        }, {});
-        return { egs: egsData };
+    setEgsInProgress: () => set(state => {
+        const egs = Object.values(state.egs).map(eg => ({
+            ...eg,
+            status: "in progress"
+        }));
+        return { egs: arrayToObject(egs, "id") };
     }),
     setEgStatus: eg => set(state => ({
         egs: {
@@ -85,6 +82,17 @@ export const msStore = create(set => ({
         msIds.forEach(mId => msData[mId].status = "ready");
         return { ms: msData };
     }),
+    advanceMatchPlayer: mp => set(state => ({
+        ms: {
+            ...state.ms,
+            [mp.matchId]: {
+                ...state.ms[mp.matchId],
+                mps: {
+                    [mp.position]: mp
+                }
+            }
+        }
+    })),
     setPlayerCheckIn: ({ m, mp }) => set(state => ({
         ms: {
             ...state.ms,

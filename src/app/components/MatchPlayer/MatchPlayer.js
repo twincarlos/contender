@@ -4,7 +4,7 @@ import PlayerButton from "../PlayerButton/PlayerButton";
 import { useOptimistic, startTransition } from "react";
 import { epsStore } from "@/app/store/store";
 
-export default function MatchPlayer({ egId, m, mp, updateGameScore }) {
+export default function MatchPlayer({ egId, m, mp, updateGameScore, dm }) {
     const [optimisticMp, setOptimisticMp] = useOptimistic(mp, (state, { n, score }) => ({
         ...state,
         [`score${n}`]: score
@@ -17,7 +17,7 @@ export default function MatchPlayer({ egId, m, mp, updateGameScore }) {
     return (
         <div className={`match-player match-player-${optimisticMp.position} ${optimisticMp.isWinner ? "match-player-winner" : ""}`}>
             <div className="match-player-header">
-                <PlayerButton egId={egId} m={m} mp={optimisticMp} />
+                <PlayerButton egId={egId} m={m} mp={optimisticMp} dm={dm} />
                 <PlayerCard tp={ep.tp} />
                 {
                     optimisticMp.isWinner ? (

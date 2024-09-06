@@ -8,7 +8,6 @@ export function GenerateDrawButton({ teId }) {
         const draw = await generateDraw({ teId, allowUnratedAdvance: false });
         setDms(draw);
         const ms = arrayToObject(Object.values(draw).map(round => Object.values(round).map(dm => dm.m)), "id");
-        console.log(ms);
         setMs(ms);
     };
     return <button onClick={handleGenerateDraw}>Generate draw</button>;

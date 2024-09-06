@@ -59,8 +59,8 @@ export default function Event({ params }) {
                 <BeginGroupsButton te={te} setGroupMatchesReady={setGroupMatchesReady} />
                 <CreateEventPlayerButton setShowWindow={setShowWindow} />
             </Header>
-            {/* <GroupList /> */}
-            <Draw />
+            <GroupList />
+            {/* <Draw /> */}
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
                 { window[showWindow] }
             </Window>

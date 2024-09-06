@@ -40,7 +40,9 @@ export async function generateDraw({ teId, allowUnratedAdvance }) {
     const draw = {};
     // PASS 1
     for (const sequence of drawSequence) {
-        const matchQuery = await db.insert(ms).values({}).returning();
+        let matchPlayerA = players[(sequence[0] || players.length + 1) - 1];
+        let matchPlayerB = players[(sequence[1] || players.length + 1) - 1];
+        const matchQuery = await db.insert(ms).values({ status: (!matchPlayerA || !matchPlayerB) ? "finished" : "upcoming" }).returning();
         const match = matchQuery[0];
         const drawMatchQuery = await db.insert(dms).values({
             tournamentEventId: teId,
@@ -49,13 +51,12 @@ export async function generateDraw({ teId, allowUnratedAdvance }) {
             sequence: sequenceNumber
         }).returning();
         const drawMatch = drawMatchQuery[0];
-        let matchPlayerA = players[(sequence[0] || players.length + 1) - 1];
-        let matchPlayerB = players[(sequence[1] || players.length + 1) - 1];
         if (matchPlayerA) {
             const matchPlayerQuery = await db.insert(mps).values({
                 matchId: match.id,
                 eventPlayerId: matchPlayerA.id,
-                position: "top"
+                position: "top",
+                isWinner: !matchPlayerB
             }).returning();
             matchPlayerA = matchPlayerQuery[0];
         } else {
@@ -65,7 +66,8 @@ export async function generateDraw({ teId, allowUnratedAdvance }) {
             const matchPlayerQuery = await db.insert(mps).values({
                 matchId: match.id,
                 eventPlayerId: matchPlayerB.id,
-                position: "bottom"
+                position: "bottom",
+                isWinner: !matchPlayerA
             }).returning();
             matchPlayerB = matchPlayerQuery[0];
         } else {
