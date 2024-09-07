@@ -28,3 +28,15 @@
     color: black;
     font-size: 1em;
 }
+
+.bye-player, .upcoming-player {
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.bye-player {
+    opacity: 0.5;
+}

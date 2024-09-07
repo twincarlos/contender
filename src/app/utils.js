@@ -1,3 +1,15 @@
+export function roundName(round) {
+    const roundNames = {
+        2: 'Finals',
+        4: 'Semi-Finals',
+        8: 'Quarter-Finals',
+        16: 'Round of 16',
+        32: 'Round of 32',
+        64: 'Round of 64'
+    };
+    return roundNames[round];
+};
+
 export function arrayToObject(array, key) {
     return array.reduce((acc, obj) => {
         acc[obj[key]] = obj;

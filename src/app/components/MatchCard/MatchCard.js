@@ -1,7 +1,10 @@
 import "./MatchCard.css";
 import MatchPlayer from "@/app/components/MatchPlayer/MatchPlayer";
+import { ByePlayer } from "../MatchPlayer/ByePlayer";
+import { UpcomingPlayer } from "../MatchPlayer/UpcomingPlayer";
 import { updateMScore } from "@/app/actions/updateMScore";
 import { egsStore, msStore, teStore } from "@/app/store/store";
+import { roundName } from "@/app/utils";
 import Status from "../Status/Status";
 
 export default function MatchCard({ egId, mId, dm }) {
@@ -79,13 +82,16 @@ export default function MatchCard({ egId, mId, dm }) {
                 <div className="match-details match-details-1">
                     <p>{te.name}</p>
                     { eg && <p> • Group {eg.number}</p> }
+                    { dm && <p> • {roundName(dm.round)}</p> }
                 </div>
                 <div className="match-details match-details-2">
                     <Status status={m.status} />
                 </div>
             </div>
-            { m.mps.top.bye ? <p>Bye!</p> : (m.mps.top.upcoming ? <p>Upcoming</p> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.top} updateScore={updateScore} dm={dm} />) }
-            { m.mps.bottom.bye ? <p>Bye!</p> : (m.mps.bottom.upcoming ? <p>Upcoming</p> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.bottom} updateScore={updateScore} dm={dm} />) }
+            <div className="match-body">
+                { m.mps.top.bye ? <ByePlayer /> : (m.mps.top.upcoming ? <UpcomingPlayer /> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.top} updateScore={updateScore} dm={dm} />) }
+                { m.mps.bottom.bye ? <ByePlayer /> : (m.mps.bottom.upcoming ? <UpcomingPlayer /> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.bottom} updateScore={updateScore} dm={dm} />) }
+            </div>
         </div>
     );
 };

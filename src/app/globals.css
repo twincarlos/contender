@@ -63,9 +63,13 @@ section {
 }
 
 .card {
-  border: 1px solid var(--border-color-1);
   border-radius: 5px;
+  background: var(--background-2);
+  color: var(--border-color-2);
   box-shadow: 0 5px 5px #0000002e;
+  border: 1px solid var(--border-color-1);
+  width: 400px;
+  min-height: 225px;
 }
 
 .card-header {
