@@ -2,9 +2,22 @@
 
 :root {
   --background-1: #191919;
-  --background-1-secondary: #232323;
   --color-1: #bfbfbf;
   --border-color-1: #2e2e2e;
+
+  --background-2: #F5F5F5;
+  --color-2: #191919;
+  --border-color-2: #2e2e2e;
+
+  --background-3: #bfbfbf;
+  --color-3: #191919;
+  --border-color-3: #2e2e2e;
+
+  --status: #F5F5F5;
+  --upcoming: #3C3D37;
+  --ready: #00712D;
+  --in-progress: #E85C0D;
+  --finished: #229799;
 }
 
 * {
@@ -51,4 +64,14 @@ section {
 
 .card {
   border: 1px solid var(--border-color-1);
+  border-radius: 5px;
+  box-shadow: 0 5px 5px #0000002e;
+}
+
+.card-header {
+  background: var(--background-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 5px 5px 0 0;
 }

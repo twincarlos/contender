@@ -1,0 +1,12 @@
+.player-details {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: .8em;
+}
+
+.player-name {
+    font-weight: 500;
+    font-size: 1.1em;
+}

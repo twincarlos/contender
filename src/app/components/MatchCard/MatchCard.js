@@ -1,11 +1,14 @@
 import "./MatchCard.css";
 import MatchPlayer from "@/app/components/MatchPlayer/MatchPlayer";
 import { updateMScore } from "@/app/actions/updateMScore";
-import { msStore } from "@/app/store/store";
+import { egsStore, msStore, teStore } from "@/app/store/store";
+import Status from "../Status/Status";
 
 export default function MatchCard({ egId, mId, dm }) {
     const m = msStore(state => state.ms[mId]);
     const updateScore = msStore(state => state.updateScore);
+    const te = teStore(state => state.te);
+    const eg = egsStore(state => state.egs[egId]);
 
     function gameIsValid(score1, score2) {
         if (!score1 || !score2) return false;
@@ -72,7 +75,15 @@ export default function MatchCard({ egId, mId, dm }) {
 
     return (
         <div className="match-card card">
-            <p>{m.status}</p>
+            <div className="match-header card-header">
+                <div className="match-details match-details-1">
+                    <p>{te.name}</p>
+                    { eg && <p> • Group {eg.number}</p> }
+                </div>
+                <div className="match-details match-details-2">
+                    <Status status={m.status} />
+                </div>
+            </div>
             { m.mps.top.bye ? <p>Bye!</p> : (m.mps.top.upcoming ? <p>Upcoming</p> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.top} updateScore={updateScore} dm={dm} />) }
             { m.mps.bottom.bye ? <p>Bye!</p> : (m.mps.bottom.upcoming ? <p>Upcoming</p> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.bottom} updateScore={updateScore} dm={dm} />) }
         </div>

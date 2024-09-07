@@ -17,15 +17,11 @@ export default function MatchPlayer({ egId, m, mp, updateGameScore, dm }) {
     return (
         <div className={`match-player match-player-${optimisticMp.position} ${optimisticMp.isWinner ? "match-player-winner" : ""}`}>
             <div className="match-player-header">
-                <PlayerButton egId={egId} m={m} mp={optimisticMp} dm={dm} />
                 <PlayerCard tp={ep.tp} />
                 {
-                    optimisticMp.isWinner ? (
-                        <div className="match-player-winner">
-                            <h1>W</h1>
-                        </div>
-                    ) : null
+                    optimisticMp.isWinner ? <i className="fa-solid fa-trophy" /> : null
                 }
+                <PlayerButton egId={egId} m={m} mp={optimisticMp} dm={dm} />
             </div>
             <div className="match-player-body">
                 <p>{optimisticMp.games}</p>

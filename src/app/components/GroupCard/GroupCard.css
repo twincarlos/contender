@@ -1,10 +1,17 @@
 .group-card {
     flex-grow: 1;
     max-width: 500px;
+    background: var(--background-2);
+    color: var(--color-2);
+    border-radius: 5px;
 }
 
-.group-header {
+.group-detail {
+    padding: 5px;
+}
+
+.show-matches-button {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
