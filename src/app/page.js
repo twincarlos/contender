@@ -1,6 +1,7 @@
 "use client";
 import Header from "./components/Header/Header";
 import Window from "./components/Window/Window";
+import AdminActions from "./components/AdminActions/AdminActions";
 import TournamentList from "./components/TournamentList/TournamentList";
 import { CreateTournament } from "./components/Forms/CreateTournament";
 import { useEffect, useState } from "react";
@@ -29,8 +30,11 @@ export default function Home() {
   return (
     <main>
       <Header>
-        <button onClick={() => setShowWindow(true)}>Create tournament</button>
+        Tournaments
       </Header>
+      <AdminActions>
+        <button onClick={() => setShowWindow(true)}>Create tournament</button>
+      </AdminActions>
       <TournamentList ts={Object.values(ts)} />
       <Window showWindow={showWindow} setShowWindow={setShowWindow}>
         <CreateTournament ts={ts} setTs={setTs} />

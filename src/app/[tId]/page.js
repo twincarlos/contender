@@ -2,8 +2,9 @@
 import "./Tournament.css";
 import { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
-import EventList from "../components/EventList/EventList";
 import Window from "../components/Window/Window";
+import AdminActions from "../components/AdminActions/AdminActions";
+import EventList from "../components/EventList/EventList";
 import { CreateTournamentEvent } from "../components/Forms/CreateTournamentEvent";
 import { CreateEventButton } from "../components/Buttons/CreateEventButton";
 import { CreateTournamentPlayer } from "../components/Forms/CreateTournamentPlayer";
@@ -36,10 +37,12 @@ export default function Tournament({ params }) {
     return (
         <main className="tournament">
             <Header>
-                <p>{t.name}</p>
+                {t.name}
+            </Header>
+            <AdminActions>
                 <CreateTournamentPlayerButton setShowWindow={setShowWindow} />
                 <CreateEventButton setShowWindow={setShowWindow} />
-            </Header>
+            </AdminActions>
             <EventList tes={Object.values(t.tes)} />
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
                 { window[showWindow] }

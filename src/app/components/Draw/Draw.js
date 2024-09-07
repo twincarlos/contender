@@ -17,8 +17,6 @@ export default function Draw() {
         }
     }, []);
 
-    console.log(height);
-
     return (
         <section ref={componentRef} className="draw">
             {Object.keys(dms).sort((a, b) => b - a).map((round, index) => (

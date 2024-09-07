@@ -2,9 +2,10 @@
 import "./Event.css";
 import { useEffect, useState } from "react";
 import { epsStore, teStore, egsStore, gpsStore, gmsStore, msStore, dmsStore } from "@/app/store/store";
+import Draw from "@/app/components/Draw/Draw";
 import Header from "@/app/components/Header/Header";
 import GroupList from "@/app/components/GroupList/GroupList";
-import Draw from "@/app/components/Draw/Draw";
+import AdminActions from "@/app/components/AdminActions/AdminActions";
 import { GenerateGroupsButton } from "@/app/components/Buttons/GenerateGroupsButton";
 import { BeginGroupsButton } from "@/app/components/Buttons/BeginGroupsButton";
 import { CreateEventPlayerButton } from "@/app/components/Buttons/CreateEventPlayerButton";
@@ -14,7 +15,6 @@ import { arrayToObject } from "@/app/utils";
 import Window from "@/app/components/Window/Window";
 
 export default function Event({ params }) {
-    const setGroupMatchesReady = msStore(state => state.setGroupMatchesReady);
     const { te, setTe } = teStore(state => state);
     const { eps, setEps, addEp, } = epsStore(state => state);
     const setEgs = egsStore(state => state.setEgs);
@@ -54,11 +54,13 @@ export default function Event({ params }) {
         <main className="event">
             <Header>
                 <p>{te.name}</p>
-                <GenerateDrawButton teId={te.id} />
-                <GenerateGroupsButton te={te} setEgs={setEgs} setGps={setGps} setGms={setGms} setMs={setMs} />
-                <BeginGroupsButton te={te} setGroupMatchesReady={setGroupMatchesReady} />
-                <CreateEventPlayerButton setShowWindow={setShowWindow} />
             </Header>
+            <AdminActions>
+                <GenerateDrawButton />
+                <GenerateGroupsButton />
+                <BeginGroupsButton />
+                <CreateEventPlayerButton setShowWindow={setShowWindow} />
+            </AdminActions>
             <GroupList />
             <Draw />
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
