@@ -1,5 +1,5 @@
 import { beginGroups } from "@/app/actions/beginGroups";
-import { egsStore, msStore, teStore, epsStore } from "@/app/store/store";
+import { egsStore, msStore, teStore } from "@/app/store/store";
 
 export function BeginGroupsButton() {
     const te = teStore(state => state.te);
