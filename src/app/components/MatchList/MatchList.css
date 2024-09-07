@@ -4,8 +4,5 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-}
-
-.draw-match-list .match-card {
-    width: 380px;
+    padding: 10px 0;
 }
