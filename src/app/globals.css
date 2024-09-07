@@ -80,3 +80,10 @@ section {
   align-items: flex-start;
   border-radius: 5px 5px 0 0;
 }
+
+.page-expand-buttons {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 0;
+}

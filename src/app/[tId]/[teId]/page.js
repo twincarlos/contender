@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { epsStore, teStore, egsStore, gpsStore, gmsStore, msStore, dmsStore } from "@/app/store/store";
 import Draw from "@/app/components/Draw/Draw";
 import Header from "@/app/components/Header/Header";
+import EventPlayerList from "@/app/components/EventPlayerList/EventPlayerList";
 import GroupList from "@/app/components/GroupList/GroupList";
 import AdminActions from "@/app/components/AdminActions/AdminActions";
 import { GenerateGroupsButton } from "@/app/components/Buttons/GenerateGroupsButton";
@@ -12,6 +13,7 @@ import { CreateEventPlayerButton } from "@/app/components/Buttons/CreateEventPla
 import { GenerateDrawButton } from "@/app/components/Buttons/GenerateDrawButton";
 import { CreateEventPlayer } from "@/app/components/Forms/CreateEventPlayer";
 import { arrayToObject } from "@/app/utils";
+import Link from "next/link";
 import Window from "@/app/components/Window/Window";
 
 export default function Event({ params }) {
@@ -53,7 +55,10 @@ export default function Event({ params }) {
     return (
         <main className="event">
             <Header>
-                <p>{te.name}</p>
+                <Link className="back-button" href={`/${params.tId}`}><i className="fa-solid fa-arrow-left-long" /> Back</Link>
+                <div className="header-body">
+                    <h1>{te.name}</h1>
+                </div>
             </Header>
             <AdminActions>
                 <GenerateDrawButton />
@@ -61,10 +66,11 @@ export default function Event({ params }) {
                 <BeginGroupsButton />
                 <CreateEventPlayerButton setShowWindow={setShowWindow} />
             </AdminActions>
+            <EventPlayerList />
             <GroupList />
             <Draw />
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
-                { window[showWindow] }
+                {window[showWindow]}
             </Window>
         </main>
     );

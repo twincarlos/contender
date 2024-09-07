@@ -1,15 +1,28 @@
+"use client";
 import "./GroupList.css";
 import GroupCard from "../GroupCard/GroupCard";
 import { egsStore } from "@/app/store/store";
+import { useState } from "react";
 
 export default function GroupList() {
+    const [showGroupList, setShowGroupList] = useState(true);
     const egs = egsStore(state => state.egs);
     return (
-        <section className="group-list">
+        <section>
+            <div className="page-expand-buttons">
+                <button onClick={() => setShowGroupList(!showGroupList)}><i className={`fa-solid fa-chevron-${showGroupList ? "up" : "down"}`} /></button>
+                <h2>Groups</h2>
+            </div>
             {
-                Object.values(egs).map(eg => (
-                    <GroupCard key={eg.id} eg={eg} />
-                ))
+                showGroupList && (
+                    <div className="group-list">
+                        {
+                            Object.values(egs).map(eg => (
+                                <GroupCard key={eg.id} eg={eg} />
+                            ))
+                        }
+                    </div>
+                )
             }
         </section>
     );

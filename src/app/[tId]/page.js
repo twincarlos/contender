@@ -3,12 +3,14 @@ import "./Tournament.css";
 import { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import Window from "../components/Window/Window";
-import AdminActions from "../components/AdminActions/AdminActions";
 import EventList from "../components/EventList/EventList";
+import TournamentPlayerList from "../components/TournamentPlayerList/TournamentPlayerList";
+import AdminActions from "../components/AdminActions/AdminActions";
 import { CreateTournamentEvent } from "../components/Forms/CreateTournamentEvent";
 import { CreateEventButton } from "../components/Buttons/CreateEventButton";
 import { CreateTournamentPlayer } from "../components/Forms/CreateTournamentPlayer";
 import { CreateTournamentPlayerButton } from "../components/Buttons/CreateTournamentPlayerButton";
+import Link from "next/link";
 
 export default function Tournament({ params }) {
     const [showWindow, setShowWindow] = useState(null);
@@ -37,12 +39,16 @@ export default function Tournament({ params }) {
     return (
         <main className="tournament">
             <Header>
-                {t.name}
+                <Link className="back-button" href={"/"}><i className="fa-solid fa-arrow-left-long" /> Back</Link>
+                <div className="header-body">
+                    <h1>{t.name}</h1>
+                </div>
             </Header>
             <AdminActions>
                 <CreateTournamentPlayerButton setShowWindow={setShowWindow} />
                 <CreateEventButton setShowWindow={setShowWindow} />
             </AdminActions>
+            <TournamentPlayerList tps={t.tps} />
             <EventList tes={Object.values(t.tes)} />
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
                 { window[showWindow] }
