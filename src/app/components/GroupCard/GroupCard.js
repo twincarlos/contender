@@ -18,7 +18,13 @@ export default memo(function GroupCard({ eg }) {
                 <Status status={eg.status} />
             </div>
             <GroupStandings gps={Object.values(gps)} />
-            <div className="show-matches-button"><button onClick={() => setShowMatchList(!showMatchList)}><i className={`fa-solid fa-chevron-${showMatchList ? "up" : "down"}`} /> Matches</button></div>
+            {
+                Object.values(gms || {}).length > 0 && (
+                    <div className="show-matches-button">
+                        <button onClick={() => setShowMatchList(!showMatchList)}><i className={`fa-solid fa-chevron-${showMatchList ? "up" : "down"}`} /> Matches</button>
+                    </div>
+                )
+            }
             {showMatchList && <MatchList ms={Object.values(gms).sort((a, b) => a.sequence - b.sequence)} />}
         </div>
     );

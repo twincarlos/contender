@@ -1,16 +1,18 @@
 import { beginGroups } from "@/app/actions/beginGroups";
-import { egsStore, msStore, teStore } from "@/app/store/store";
+import { egsStore, msStore, teStore, gmsStore } from "@/app/store/store";
 
 export function BeginGroupsButton() {
     const te = teStore(state => state.te);
     const egs = egsStore(state => state.egs);
+    const setGms = gmsStore(state => state.setGms);
+    const setMs = msStore(state => state.setMs);
     const setEgsInProgress = egsStore(state => state.setEgsInProgress);
-    const setGroupMatchesReady = msStore(state => state.setGroupMatchesReady);
 
     async function handleBeginGroups() {
-        await beginGroups(te.id);
-        setGroupMatchesReady();
+        const data = await beginGroups(te.id);
         setEgsInProgress();
+        setGms(data.gms);
+        setMs(data.ms);
     };
 
     const egsArray = Object.values(egs);

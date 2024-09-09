@@ -72,16 +72,6 @@ export const msStore = create(set => ({
             [m.id]: m
         }
     })),
-    setGroupMatchesReady: () => set(state => {
-        const msData = Object.keys(state.ms).reduce((acc, key) => {
-            acc[key] = {
-                ...state.ms[key],
-                status: "ready"
-            };
-            return acc;
-        }, {});
-        return { ms: msData };
-    }),
     setDrawRoundReady: msIds => set(state => {
         const msData = JSON.parse(JSON.stringify(state.ms));
         msIds.forEach(mId => msData[mId].status = "ready");
