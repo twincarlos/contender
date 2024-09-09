@@ -6,7 +6,7 @@ import Status from "../Status/Status";
 import { gmsStore, gpsStore } from "@/app/store/store";
 import { useState, memo } from "react";
 
-export default memo(function GroupCard({ eg }) {
+export default memo(function GroupCard({ eg, swapPlayers, swapPlayersData, setSwapPlayersData }) {
     const gps = gpsStore(state => state.gps[eg.id]);
     const gms = gmsStore(state => state.gms[eg.id]);
     const [showMatchList, setShowMatchList] = useState(false);
@@ -17,7 +17,12 @@ export default memo(function GroupCard({ eg }) {
                 <p className="group-detail">Group {eg.number}</p>
                 <Status status={eg.status} />
             </div>
-            <GroupStandings gps={Object.values(gps)} />
+            <GroupStandings
+                gps={Object.values(gps)}
+                swapPlayers={swapPlayers}
+                swapPlayersData={swapPlayersData}
+                setSwapPlayersData={setSwapPlayersData}
+            />
             {
                 Object.values(gms || {}).length > 0 && (
                     <div className="show-matches-button">

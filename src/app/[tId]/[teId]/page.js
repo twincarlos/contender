@@ -6,6 +6,7 @@ import Draw from "@/app/components/Draw/Draw";
 import Header from "@/app/components/Header/Header";
 import EventPlayerList from "@/app/components/EventPlayerList/EventPlayerList";
 import GroupList from "@/app/components/GroupList/GroupList";
+import { ConfirmSwapButton } from "@/app/components/Buttons/ConfirmSwapButton";
 import AdminActions from "@/app/components/AdminActions/AdminActions";
 import { GenerateGroupsButton } from "@/app/components/Buttons/GenerateGroupsButton";
 import { BeginGroupsButton } from "@/app/components/Buttons/BeginGroupsButton";
@@ -15,6 +16,7 @@ import { CreateEventPlayer } from "@/app/components/Forms/CreateEventPlayer";
 import { arrayToObject } from "@/app/utils";
 import Link from "next/link";
 import Window from "@/app/components/Window/Window";
+import { SwapPlayersButton } from "@/app/components/Buttons/SwapPlayersButton";
 
 export default function Event({ params }) {
     const { te, setTe } = teStore(state => state);
@@ -25,6 +27,11 @@ export default function Event({ params }) {
     const setDms = dmsStore(state => state.setDms);
     const setMs = msStore(state => state.setMs);
     const [showWindow, setShowWindow] = useState(null);
+    const [swapPlayers, setSwapPlayers] = useState(false);
+    const [swapPlayersData, setSwapPlayersData] = useState({
+        player1: null,
+        player2: null
+    });
     const window = {
         "add player": <CreateEventPlayer te={te} eps={eps && arrayToObject(Object.values(eps), "tournamentPlayerId")} addEp={addEp} />
     };
@@ -61,13 +68,34 @@ export default function Event({ params }) {
                 </div>
             </Header>
             <AdminActions>
-                <GenerateDrawButton />
-                <GenerateGroupsButton />
-                <BeginGroupsButton />
-                <CreateEventPlayerButton setShowWindow={setShowWindow} />
+                {
+                    !swapPlayers && (
+                        <>
+                            <GenerateDrawButton />
+                            <GenerateGroupsButton />
+                            <BeginGroupsButton />
+                            <CreateEventPlayerButton setShowWindow={setShowWindow} />
+                        </>
+                    )
+                }
+                <SwapPlayersButton
+                    swapPlayers={swapPlayers}
+                    setSwapPlayers={setSwapPlayers}
+                    setSwapPlayersData={setSwapPlayersData}
+                />
+                <ConfirmSwapButton
+                    swapPlayers={swapPlayers}
+                    swapPlayersData={swapPlayersData}
+                    setSwapPlayersData={setSwapPlayersData}
+                />
             </AdminActions>
             <EventPlayerList />
-            <GroupList />
+            <GroupList
+                swapPlayers={swapPlayers}
+                setSwapPlayers={setSwapPlayers}
+                swapPlayersData={swapPlayersData}
+                setSwapPlayersData={setSwapPlayersData}
+            />
             <Draw />
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
                 {window[showWindow]}

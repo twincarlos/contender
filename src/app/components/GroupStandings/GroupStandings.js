@@ -3,7 +3,7 @@ import "./GroupStandings.css";
 import PlayerCard from "../PlayerCard/PlayerCard";
 import { epsStore } from "@/app/store/store";
 
-export default function GroupStandings({ gps }) {
+export default function GroupStandings({ gps, swapPlayers, swapPlayersData, setSwapPlayersData }) {
     const eps = epsStore(state => state.eps);
     const positions = {
         1: <i className="position position-1 fa-solid fa-1" />,
@@ -24,9 +24,47 @@ export default function GroupStandings({ gps }) {
             {gps.map(gp => {
                 const ep = eps[gp.eventPlayerId];
                 return (
-                    <div key={gp.id} className="group-player-standing">
+                    <div
+                        className="group-player-standing"
+                        key={gp.id}
+                        onClick={() => {
+                            if (swapPlayers) {
+                                if (swapPlayersData.player2) {
+                                    if (swapPlayersData.player1.id === gp.id) {
+                                        setSwapPlayersData({
+                                            ...swapPlayersData,
+                                            player1: swapPlayersData.player2,
+                                            player2: null
+                                        });
+                                    } else {
+                                        setSwapPlayersData({
+                                            ...swapPlayersData,
+                                            player2: swapPlayersData.player2.id === gp.id ? null : { ...gp, ep }
+                                        });
+                                    };
+                                } else if (swapPlayersData.player1) {
+                                    if (swapPlayersData.player1.id === gp.id) {
+                                        setSwapPlayersData({
+                                            ...swapPlayersData,
+                                            player1: null
+                                        });
+                                    } else {
+                                        setSwapPlayersData({
+                                            ...swapPlayersData,
+                                            player2: { ...gp, ep }
+                                        });
+                                    };
+                                } else {
+                                    setSwapPlayersData({
+                                        ...swapPlayersData,
+                                        player1: { ...gp, ep }
+                                    });
+                                };
+                            };
+                        }}
+                    >
                         <PlayerCard tp={ep.tp} />
-                        { gp.position && positions[gp.position] }
+                        {gp.position && positions[gp.position]}
                     </div>
                 )
             })}

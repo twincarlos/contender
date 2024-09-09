@@ -45,7 +45,28 @@ export const gpsStore = create(set => ({
         const gpsData = JSON.parse(JSON.stringify(state.gps));
         gps.forEach(gp => gpsData[gp.eventGroupId][gp.id] = gp);
         return { gps: gpsData };
-    })
+    }),
+    swapGps: ({ gp1, gp2 }) => set(state => ({
+        gps: {
+            ...state.gps,
+            [gp1.eventGroupId]: {
+                ...state.gps[gp1.eventGroupId],
+                [gp1.id]: {
+                    ...state.gps[gp1.eventGroupId][gp1.id],
+                    eventPlayerId: gp2.eventPlayerId,
+                    ep: gp2.ep
+                }
+            },
+            [gp2.eventGroupId]: {
+                ...state.gps[gp2.eventGroupId],
+                [gp2.id]: {
+                    ...state.gps[gp2.eventGroupId][gp2.id],
+                    eventPlayerId: gp1.eventPlayerId,
+                    ep: gp1.ep
+                }
+            }
+        }
+    }))
 }));
 
 export const gmsStore = create(set => ({

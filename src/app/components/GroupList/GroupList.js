@@ -4,7 +4,7 @@ import GroupCard from "../GroupCard/GroupCard";
 import { egsStore } from "@/app/store/store";
 import { useState } from "react";
 
-export default function GroupList() {
+export default function GroupList({ swapPlayers, swapPlayersData, setSwapPlayersData }) {
     const [showGroupList, setShowGroupList] = useState(true);
     const egs = egsStore(state => state.egs);
     return (
@@ -18,7 +18,13 @@ export default function GroupList() {
                     <div className="group-list">
                         {
                             Object.values(egs).map(eg => (
-                                <GroupCard key={eg.id} eg={eg} />
+                                <GroupCard
+                                    key={eg.id}
+                                    eg={eg}
+                                    swapPlayers={swapPlayers}
+                                    swapPlayersData={swapPlayersData}
+                                    setSwapPlayersData={setSwapPlayersData}
+                                />
                             ))
                         }
                     </div>
