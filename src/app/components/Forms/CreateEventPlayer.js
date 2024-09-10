@@ -29,7 +29,7 @@ export function CreateEventPlayer({ te, eps, addEp }) {
             const data = await res.json();
             setTps(data);
         };
-        return () => getTps();
+        getTps();
     }, []);
 
     return (
