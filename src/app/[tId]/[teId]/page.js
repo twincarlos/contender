@@ -6,13 +6,15 @@ import Draw from "@/app/components/Draw/Draw";
 import Header from "@/app/components/Header/Header";
 import EventPlayerList from "@/app/components/EventPlayerList/EventPlayerList";
 import GroupList from "@/app/components/GroupList/GroupList";
-import { ConfirmSwapButton } from "@/app/components/Buttons/ConfirmSwapButton";
+import { GenerateHandicapDraw } from "@/app/components/Forms/GenerateHandicapDraw";
 import AdminActions from "@/app/components/AdminActions/AdminActions";
+import { ConfirmSwapButton } from "@/app/components/Buttons/ConfirmSwapButton";
 import { GenerateGroupsButton } from "@/app/components/Buttons/GenerateGroupsButton";
 import { BeginGroupsButton } from "@/app/components/Buttons/BeginGroupsButton";
 import { CreateEventPlayerButton } from "@/app/components/Buttons/CreateEventPlayerButton";
 import { GenerateDrawButton } from "@/app/components/Buttons/GenerateDrawButton";
 import { CreateEventPlayer } from "@/app/components/Forms/CreateEventPlayer";
+import { GenerateHandicapDrawButton } from "@/app/components/Buttons/GenerateHandicapDrawButton";
 import { arrayToObject } from "@/app/utils";
 import Link from "next/link";
 import Window from "@/app/components/Window/Window";
@@ -33,7 +35,8 @@ export default function Event({ params }) {
         player2: null
     });
     const window = {
-        "add player": <CreateEventPlayer te={te} eps={eps && arrayToObject(Object.values(eps), "tournamentPlayerId")} addEp={addEp} />
+        "add player": <CreateEventPlayer te={te} eps={eps && arrayToObject(Object.values(eps), "tournamentPlayerId")} addEp={addEp} />,
+        "generate handicap draw": <GenerateHandicapDraw te={te} />
     };
 
     useEffect(() => {
@@ -72,6 +75,7 @@ export default function Event({ params }) {
                     !swapPlayers && (
                         <>
                             <GenerateDrawButton />
+                            <GenerateHandicapDrawButton setShowWindow={setShowWindow} />
                             <GenerateGroupsButton />
                             <BeginGroupsButton />
                             <CreateEventPlayerButton setShowWindow={setShowWindow} />

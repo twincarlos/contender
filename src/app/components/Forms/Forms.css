@@ -28,3 +28,9 @@ input {
     color: var(--color-1);
     padding: 5px;
 }
+
+.generate-handicap-draw-body {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}

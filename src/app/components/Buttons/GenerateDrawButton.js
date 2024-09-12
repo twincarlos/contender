@@ -9,13 +9,14 @@ export function GenerateDrawButton() {
     const setDms = dmsStore(state => state.setDms);
 
     async function handleGenerateDraw() {
-        const draw = await generateDraw({ teId: te.id, allowUnratedAdvance: false, teType: te.type });
+        const draw = await generateDraw({ teId: te.id, allowUnratedAdvance: te.allowUnratedAdvance, teType: te.type });
         setDms(draw);
         const ms = {};
         Object.values(draw).forEach(round => Object.values(round).forEach(dm => ms[dm.m.id] = dm.m));
         setMs(ms);
     };
 
+    if (te.type === "handicap" || te.type === "grr") return null;
     const egsArray = Object.values(egs);
     if (egsArray.length === 0) return null;
     for (const eg of egsArray) if (eg.status !== "finished") return null;

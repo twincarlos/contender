@@ -92,6 +92,14 @@ section {
   color: var(--color-1);
 }
 
+.list > * {
+  padding: 5px 10px;
+}
+
+.list > *:nth-child(odd) {
+  background: var(--border-color-1);
+}
+
 @media screen and (max-width: 600px) {
   body {
     font-size: 14px;
