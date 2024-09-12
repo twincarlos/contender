@@ -7,7 +7,7 @@ export default function TournamentPlayerList({ tps }) {
     const [showPlayerList, setShowPlayerList] = useState(true);
 
     return (
-        <section>
+        <section className="tournament-player-list-section">
             <div className="page-expand-buttons">
                 <button onClick={() => setShowPlayerList(!showPlayerList)}><i className={`fa-solid fa-chevron-${showPlayerList ? "up" : "down"}`} /></button>
                 <h2>Players</h2>

@@ -9,7 +9,7 @@ export default function EventPlayerList() {
     const eps = epsStore(state => state.eps);
 
     return (
-        <section>
+        <section className="event-player-list-section">
             <div className="page-expand-buttons">
                 <button onClick={() => setShowPlayerList(!showPlayerList)}><i className={`fa-solid fa-chevron-${showPlayerList ? "up" : "down"}`} /></button>
                 <h2>Players</h2>

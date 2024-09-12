@@ -9,7 +9,7 @@ export function GenerateGroupsButton() {
     const egs = egsStore(state => state.egs);
 
     async function handleGenerateGroups() {
-        const data = await generateGroups({ teId: te.id, preferGroupsOf: 4 });
+        const data = await generateGroups({ teId: te.id, teType: te.type, preferGroupsOf: 4 });
         setEgs(data.egs);
         setGps(data.gps);
     };

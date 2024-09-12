@@ -9,7 +9,7 @@ export function GenerateDrawButton() {
     const setDms = dmsStore(state => state.setDms);
 
     async function handleGenerateDraw() {
-        const draw = await generateDraw({ teId: te.id, allowUnratedAdvance: false });
+        const draw = await generateDraw({ teId: te.id, allowUnratedAdvance: false, teType: te.type });
         setDms(draw);
         const ms = {};
         Object.values(draw).forEach(round => Object.values(round).forEach(dm => ms[dm.m.id] = dm.m));

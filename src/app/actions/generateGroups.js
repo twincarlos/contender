@@ -2,8 +2,9 @@
 import { db } from "../drizzle/db";
 import { egs, eps, tps, gps } from "../drizzle/schema";
 import { eq, desc, asc } from "drizzle-orm";
+import { shuffleArray } from "../utils";
 
-export async function generateGroups({ teId, preferGroupsOf }) {
+export async function generateGroups({ teId, teType, preferGroupsOf }) {
     const data = {
         egs: {},
         gps: {}
@@ -14,12 +15,13 @@ export async function generateGroups({ teId, preferGroupsOf }) {
         .innerJoin(tps, eq(tps.id, eps.tournamentPlayerId))
         .orderBy(desc(tps.rating), asc(tps.name))
         .where(eq(eps.tournamentEventId, teId));
-    const players = playersQuery.map(ep => ({
+    const formattedPlayers = playersQuery.map(ep => ({
         ...ep.eps,
         tp: {
             ...ep.tps
         }
     }));
+    const players = teType === "handicap" ? shuffleArray(formattedPlayers) : formattedPlayers;
 
     const totalPlayers = players.length;
     const numGroups = Math.ceil(totalPlayers / preferGroupsOf);

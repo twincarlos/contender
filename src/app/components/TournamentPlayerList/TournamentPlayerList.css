@@ -11,3 +11,8 @@
     padding: 10px;
     border-radius: 5px;
 }
+
+.tournament-player-list-section {
+    border: 1px solid;
+    border-radius: 5px;
+}

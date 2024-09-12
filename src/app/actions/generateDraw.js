@@ -2,9 +2,9 @@
 import { db } from "../drizzle/db";
 import { asc, eq } from "drizzle-orm";
 import { dms, egs, mps, ms } from "../drizzle/schema";
-import { determineDrawRound, determineDrawSequence } from "../utils";
+import { determineDrawRound, determineDrawSequence, shuffleArray } from "../utils";
 
-export async function generateDraw({ teId, allowUnratedAdvance }) {
+export async function generateDraw({ teId, teType, allowUnratedAdvance, reEntryPlayers }) {
     const firstPlayers = [];
     const secondPlayers = [];
     const allEgs = await db.query.egs.findMany({
@@ -33,7 +33,14 @@ export async function generateDraw({ teId, allowUnratedAdvance }) {
             secondPlayers.unshift(filteredPlayers[1].ep);
         };
     });
-    const players = [...firstPlayers, ...secondPlayers];
+    const players = teType === "handicap" ? [
+        ...shuffleArray(firstPlayers),
+        ...shuffleArray(secondPlayers),
+        ...shuffleArray(reEntryPlayers)
+    ] : [
+        ...firstPlayers,
+        ...secondPlayers
+    ];
     let drawRound = determineDrawRound(players.length);
     const drawSequence = determineDrawSequence(players.length);
     let sequenceNumber = 1;

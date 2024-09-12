@@ -1,9 +1,16 @@
+.event-player-list-section {
+    border: 1px solid;
+    border-radius: 5px;
+}
+
 .event-player-list {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 5px;
+    max-height: 200px;
+    overflow-y: scroll;
 }
 
 .event-player-list .player-card {
