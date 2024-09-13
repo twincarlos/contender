@@ -80,24 +80,37 @@ section {
   border-radius: 5px 5px 0 0;
 }
 
-.page-expand-buttons {
+.tabs {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px;
+  gap: 10px;
 }
 
-.page-expand-buttons button {
+.tab {
   background: transparent;
   color: var(--color-1);
+  border: 1px solid;
 }
 
-.list > * {
-  padding: 5px 10px;
+.tab.active {
+  background: var(--background-2);
+  color: var(--color-2);
 }
 
-.list > *:nth-child(odd) {
-  background: var(--border-color-1);
+.player-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 5px;
+}
+
+.player-list .player-card {
+  border: 1px solid var(--border-color-1);
+  padding: 10px;
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 600px) {

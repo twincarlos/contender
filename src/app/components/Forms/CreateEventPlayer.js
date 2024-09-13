@@ -6,6 +6,7 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 
 export function CreateEventPlayer({ te, eps, addEp }) {
     const [tps, setTps] = useState({});
+    const [keyword, setKeyword] = useState("");
 
     async function handleCreateEventPlayer(tp) {
         const data = await createEp({ tournamentEventId: te.id, tournamentPlayerId: tp.id });
@@ -35,13 +36,14 @@ export function CreateEventPlayer({ te, eps, addEp }) {
     return (
         <div className="contender-form create-event-player">
             <p>Add player</p>
-            <div className="create-event-player-body list">
+            <input type="text" value={keyword} onChange={e => setKeyword(e.target.value.toLocaleLowerCase())} />
+            <div className="player-list">
                 {
                     Object.values(tps).sort((a, b) => {
                         if (b.id in eps) return 1;
                         else if (a.id in eps) return -1;
                         else return b.rating - a.rating;
-                    }).map(tp => (
+                    }).filter(tp => tp.name.toLocaleLowerCase().includes(keyword)).map(tp => (
                         <div key={tp.id} onClick={() => handleCreateEventPlayer(tp)}>
                             <PlayerCard tp={tp} />
                         </div>

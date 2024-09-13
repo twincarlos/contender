@@ -15,10 +15,7 @@ import Link from "next/link";
 export default function Tournament({ params }) {
     const [showWindow, setShowWindow] = useState(null);
     const [t, setT] = useState(null);
-    const window = {
-        "create event": <CreateTournamentEvent t={t} setT={setT} />,
-        "create tournament player": <CreateTournamentPlayer t={t} setT={setT} />
-    };
+    const [tab, setTab] = useState("events");
     useEffect(() => {
         async function getT() {
             const res = await fetch(`/api/get-tournament/${params.tId}`, {
@@ -33,8 +30,17 @@ export default function Tournament({ params }) {
         };
         getT();
     }, []);
-
+    
     if (!t) return <p>loading</p>;
+
+    const window = {
+        "create event": <CreateTournamentEvent t={t} setT={setT} />,
+        "create tournament player": <CreateTournamentPlayer t={t} setT={setT} />
+    };
+    const tabs = {
+        "players": <TournamentPlayerList tps={t.tps} />,
+        "events": <EventList tes={Object.values(t.tes)} />
+    };
 
     return (
         <main className="tournament">
@@ -48,8 +54,11 @@ export default function Tournament({ params }) {
                 <CreateTournamentPlayerButton setShowWindow={setShowWindow} />
                 <CreateEventButton setShowWindow={setShowWindow} />
             </AdminActions>
-            <TournamentPlayerList tps={t.tps} />
-            <EventList tes={Object.values(t.tes)} />
+            <div className="tabs">
+                <button className={`tab ${tab === "events" ? "active" : ""}`} onClick={() => setTab("events")}>Events</button>
+                <button className={`tab ${tab === "players" ? "active" : ""}`} onClick={() => setTab("players")}>Players</button>
+            </div>
+            { tabs[tab] }
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
                 { window[showWindow] }
             </Window>

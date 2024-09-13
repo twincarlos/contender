@@ -11,5 +11,5 @@ export function GenerateHandicapDrawButton({ setShowWindow }) {
     for (const eg of egsArray) if (eg.status !== "finished") return null;
     if (Object.values(dms).length > 0) return null;
 
-    return <button onClick={() => setShowWindow("generate handicap draw")}>Generate handicap draw</button>;
+    return <button onClick={() => setShowWindow("generate handicap draw")}>Generate draw</button>;
 };

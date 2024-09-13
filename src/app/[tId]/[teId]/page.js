@@ -34,9 +34,22 @@ export default function Event({ params }) {
         player1: null,
         player2: null
     });
+    const [tab, setTab] = useState("groups");
+
     const window = {
         "add player": <CreateEventPlayer te={te} eps={eps && arrayToObject(Object.values(eps), "tournamentPlayerId")} addEp={addEp} />,
         "generate handicap draw": <GenerateHandicapDraw te={te} />
+    };
+
+    const tabs = {
+        "players": <EventPlayerList />,
+        "groups": <GroupList
+            swapPlayers={swapPlayers}
+            setSwapPlayers={setSwapPlayers}
+            swapPlayersData={swapPlayersData}
+            setSwapPlayersData={setSwapPlayersData}
+        />,
+        "draw": <Draw />
     };
 
     useEffect(() => {
@@ -93,14 +106,12 @@ export default function Event({ params }) {
                     setSwapPlayersData={setSwapPlayersData}
                 />
             </AdminActions>
-            <EventPlayerList />
-            <GroupList
-                swapPlayers={swapPlayers}
-                setSwapPlayers={setSwapPlayers}
-                swapPlayersData={swapPlayersData}
-                setSwapPlayersData={setSwapPlayersData}
-            />
-            <Draw />
+            <div className="tabs">
+                <button className={`tab ${tab === "groups" ? "active" : ""}`} onClick={() => setTab("groups")}>Groups</button>
+                <button className={`tab ${tab === "draw" ? "active" : ""}`} onClick={() => setTab("draw")}>Draw</button>
+                <button className={`tab ${tab === "players" ? "active" : ""}`} onClick={() => setTab("players")}>Players</button>
+            </div>
+            { tabs[tab] }
             <Window showWindow={showWindow} setShowWindow={setShowWindow}>
                 {window[showWindow]}
             </Window>

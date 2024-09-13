@@ -60,42 +60,55 @@ export function GenerateHandicapDraw() {
             <button onClick={handleGenerateDraw}>Generate draw</button>
             <div className="generate-handicap-draw-body">
                 <div className="qualified-players">
-                    <div className="first-qualified-players">
-                        {
-                            Object.values(gps.firstGps).map(gp => (
-                                <div key={gp.id}>
-                                    <PlayerCard tp={gp.ep.tp} />
-                                </div>
-                            ))
-                        }
+                    <div className="qualify-players first-qualified-players">
+                        <h3>Qualified first</h3>
+                        <div className="player-list">
+                            {
+                                Object.values(gps.firstGps).map(gp => (
+                                    <div key={gp.id}>
+                                        <PlayerCard tp={gp.ep.tp} />
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
-                    <div className="second-qualified-players">
-                        {
-                            Object.values(gps.secondGps).map(gp => (
-                                <div key={gp.id}>
-                                    <PlayerCard tp={gp.ep.tp} />
-                                </div>
-                            ))
-                        }
+                    <div className="qualify-players second-qualified-players">
+                        <h3>Qualified second</h3>
+                        <div className="player-list">
+                            {
+                                Object.values(gps.secondGps).map(gp => (
+                                    <div key={gp.id}>
+                                        <PlayerCard tp={gp.ep.tp} />
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
-                    <div className="reentry-players">
-                        {
-                            Object.values(gps.reEntryGps || {}).map(gp => (
-                                <div key={gp.id}>
-                                    <PlayerCard tp={gp.ep.tp} />
-                                </div>
-                            ))
-                        }
+                    <div className="qualify-players reentry-players">
+                        <h3>Re-entries</h3>
+                        <div className="player-list">
+                            {
+                                Object.values(gps.reEntryGps || {}).map(gp => (
+                                    <div key={gp.id}>
+                                        <PlayerCard tp={gp.ep.tp} />
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
                 </div>
-                <div className="can-advance-players">
-                {
+                <div className="qualify-players can-advance-players">
+                    <h3>Not qualified:</h3>
+                    <p>Click to re-enter</p>
+                    <div className="player-list">
+                        {
                             Object.values(gps.thirdGps).map(gp => (
                                 <div onClick={() => handleReEntryPlayer(gp)} key={gp.id}>
                                     <PlayerCard tp={gp.ep.tp} />
                                 </div>
                             ))
                         }
+                    </div>
                 </div>
             </div>
         </div>
