@@ -10,7 +10,9 @@ import { CreateTournamentEvent } from "../components/Forms/CreateTournamentEvent
 import { CreateEventButton } from "../components/Buttons/CreateEventButton";
 import { CreateTournamentPlayer } from "../components/Forms/CreateTournamentPlayer";
 import { CreateTournamentPlayerButton } from "../components/Buttons/CreateTournamentPlayerButton";
+import { ReportAs } from "../components/Forms/ReportAs";
 import Link from "next/link";
+import { ReportAsButton } from "../components/Buttons/ReportAsButton";
 
 export default function Tournament({ params }) {
     const [showWindow, setShowWindow] = useState(null);
@@ -35,7 +37,8 @@ export default function Tournament({ params }) {
 
     const window = {
         "create event": <CreateTournamentEvent t={t} setT={setT} />,
-        "create tournament player": <CreateTournamentPlayer t={t} setT={setT} />
+        "create tournament player": <CreateTournamentPlayer t={t} setT={setT} />,
+        "report as": <ReportAs tId={t.id} />
     };
     const tabs = {
         "players": <TournamentPlayerList tps={t.tps} />,
@@ -54,6 +57,7 @@ export default function Tournament({ params }) {
                 <CreateTournamentPlayerButton setShowWindow={setShowWindow} />
                 <CreateEventButton setShowWindow={setShowWindow} />
             </AdminActions>
+            <ReportAsButton setShowWindow={setShowWindow} />
             <div className="tabs">
                 <button className={`tab ${tab === "events" ? "active" : ""}`} onClick={() => setTab("events")}>Events</button>
                 <button className={`tab ${tab === "players" ? "active" : ""}`} onClick={() => setTab("players")}>Players</button>

@@ -20,7 +20,7 @@ export function CreateEventPlayer({ te, eps, addEp }) {
 
     useEffect(() => {
         async function getTps() {
-            const res = await fetch(`/api/get-tournament-players/${te.tournamentId}/${te.id}`, {
+            const res = await fetch(`/api/get-event-players-from-tournament-players/${te.tournamentId}/${te.id}`, {
                 headers: {
                     'Cache-Control': 'no-cache',
                     'Pragma': 'no-cache',

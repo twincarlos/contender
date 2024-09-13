@@ -15,6 +15,8 @@ import { CreateEventPlayerButton } from "@/app/components/Buttons/CreateEventPla
 import { GenerateDrawButton } from "@/app/components/Buttons/GenerateDrawButton";
 import { CreateEventPlayer } from "@/app/components/Forms/CreateEventPlayer";
 import { GenerateHandicapDrawButton } from "@/app/components/Buttons/GenerateHandicapDrawButton";
+import { ReportAs } from "@/app/components/Forms/ReportAs";
+import { ReportAsButton } from "@/app/components/Buttons/ReportAsButton";
 import { arrayToObject } from "@/app/utils";
 import Link from "next/link";
 import Window from "@/app/components/Window/Window";
@@ -38,7 +40,8 @@ export default function Event({ params }) {
 
     const window = {
         "add player": <CreateEventPlayer te={te} eps={eps && arrayToObject(Object.values(eps), "tournamentPlayerId")} addEp={addEp} />,
-        "generate handicap draw": <GenerateHandicapDraw te={te} />
+        "generate handicap draw": <GenerateHandicapDraw te={te} />,
+        "report as": <ReportAs tId={params.tId} />
     };
 
     const tabs = {
@@ -106,6 +109,7 @@ export default function Event({ params }) {
                     setSwapPlayersData={setSwapPlayersData}
                 />
             </AdminActions>
+            <ReportAsButton setShowWindow={setShowWindow} />
             <div className="tabs">
                 <button className={`tab ${tab === "groups" ? "active" : ""}`} onClick={() => setTab("groups")}>Groups</button>
                 <button className={`tab ${tab === "draw" ? "active" : ""}`} onClick={() => setTab("draw")}>Draw</button>

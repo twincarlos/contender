@@ -113,6 +113,12 @@ section {
   border-radius: 5px;
 }
 
+.up-down-arrow {
+  background: transparent;
+  color: var(--color-1);
+  padding: 0;
+}
+
 @media screen and (max-width: 600px) {
   body {
     font-size: 14px;

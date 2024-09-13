@@ -1,17 +1,21 @@
+"use client";
 import "./MatchCard.css";
 import MatchPlayer from "@/app/components/MatchPlayer/MatchPlayer";
 import { ByePlayer } from "../MatchPlayer/ByePlayer";
 import { UpcomingPlayer } from "../MatchPlayer/UpcomingPlayer";
 import { updateMScore } from "@/app/actions/updateMScore";
-import { egsStore, msStore, teStore } from "@/app/store/store";
+import { egsStore, msStore, teStore, epsStore } from "@/app/store/store";
 import { roundName } from "@/app/utils";
 import Status from "../Status/Status";
+import { usePlayer } from "@/app/context/PlayerContext";
 
 export default function MatchCard({ egId, mId, dm }) {
     const m = msStore(state => state.ms[mId]);
     const updateScore = msStore(state => state.updateScore);
     const te = teStore(state => state.te);
     const eg = egsStore(state => state.egs[egId]);
+    const eps = epsStore(state => state.eps);
+    const { playerId } = usePlayer();
 
     function gameIsValid(score1, score2) {
         if (!score1 || !score2) return false;
@@ -76,6 +80,19 @@ export default function MatchCard({ egId, mId, dm }) {
         updateMScore(mData);
     };
 
+    let allowPlayerUpdate = false;
+    if (playerId === "admin") allowPlayerUpdate = true;
+    if (m.mps.top.eventPlayerId) {
+        if (eps[m.mps.top.eventPlayerId].tournamentPlayerId == playerId) {
+            allowPlayerUpdate = true;
+        };
+    };
+    if (m.mps.bottom.eventPlayerId) {
+        if (eps[m.mps.bottom.eventPlayerId].tournamentPlayerId == playerId) {
+            allowPlayerUpdate = true;
+        };
+    };
+
     return (
         <div className="match-card card">
             <div className="match-header card-header">
@@ -89,8 +106,8 @@ export default function MatchCard({ egId, mId, dm }) {
                 </div>
             </div>
             <div className="match-body">
-                { m.mps.top.bye ? <ByePlayer /> : (m.mps.top.upcoming ? <UpcomingPlayer /> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.top} updateScore={updateScore} dm={dm} />) }
-                { m.mps.bottom.bye ? <ByePlayer /> : (m.mps.bottom.upcoming ? <UpcomingPlayer /> : <MatchPlayer updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.bottom} updateScore={updateScore} dm={dm} />) }
+                { m.mps.top.bye ? <ByePlayer /> : (m.mps.top.upcoming ? <UpcomingPlayer /> : <MatchPlayer allowPlayerUpdate={allowPlayerUpdate} updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.top} updateScore={updateScore} dm={dm} />) }
+                { m.mps.bottom.bye ? <ByePlayer /> : (m.mps.bottom.upcoming ? <UpcomingPlayer /> : <MatchPlayer allowPlayerUpdate={allowPlayerUpdate} updateGameScore={updateGameScore} egId={egId} m={m} mp={m.mps.bottom} updateScore={updateScore} dm={dm} />) }
             </div>
         </div>
     );

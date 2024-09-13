@@ -50,3 +50,27 @@ input {
     align-items: flex-start;
     gap: 10px;
 }
+
+.report-as-players {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 5px;
+    max-height: 70dvh;
+    overflow-y: scroll;
+}
+
+.report-as-player {
+    width: 100%;
+    border: 1px solid var(--border-color-1);
+    padding: 5px 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.report-as-player .error {
+    border: 1px solid red;
+}

@@ -3,8 +3,9 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 import PlayerButton from "../PlayerButton/PlayerButton";
 import { useOptimistic, startTransition } from "react";
 import { epsStore } from "@/app/store/store";
+import { usePlayer } from "@/app/context/PlayerContext";
 
-export default function MatchPlayer({ egId, m, mp, updateGameScore, dm }) {
+export default function MatchPlayer({ egId, m, mp, updateGameScore, dm, allowPlayerUpdate }) {
     const [optimisticMp, setOptimisticMp] = useOptimistic(mp, (state, { n, score }) => ({
         ...state,
         [`score${n}`]: score
@@ -14,6 +15,7 @@ export default function MatchPlayer({ egId, m, mp, updateGameScore, dm }) {
         await updateGameScore({ position, n, score });
     };
     const ep = epsStore(state => state.eps[optimisticMp.eventPlayerId]);
+    const { playerId } = usePlayer();
     return (
         <div className={`match-player match-player-${optimisticMp.position} ${optimisticMp.isWinner ? "match-player-winner" : ""}`}>
             <div className="match-player-header">
@@ -21,7 +23,7 @@ export default function MatchPlayer({ egId, m, mp, updateGameScore, dm }) {
                 {
                     optimisticMp.isWinner ? <i className="fa-solid fa-trophy" /> : null
                 }
-                <PlayerButton egId={egId} m={m} mp={optimisticMp} dm={dm} />
+                <PlayerButton playerId={playerId} egId={egId} m={m} mp={optimisticMp} dm={dm} />
             </div>
             <div className="match-player-body">
                 <p>{optimisticMp.games}</p>
@@ -32,7 +34,7 @@ export default function MatchPlayer({ egId, m, mp, updateGameScore, dm }) {
                                 key={n}
                                 type="number"
                                 value={optimisticMp[`score${n}`] || ""}
-                                disabled={m.status === "upcoming" || m.status === "ready" || m.status === "finished"}
+                                disabled={m.status === "upcoming" || m.status === "ready" || m.status === "finished" || allowPlayerUpdate === false}
                                 onChange={e => updateMp({
                                     position: optimisticMp.position,
                                     n,

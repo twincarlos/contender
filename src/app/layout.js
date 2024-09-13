@@ -1,5 +1,7 @@
 import "./globals.css";
 import Script from "next/script";
+import dynamic from "next/dynamic";
+const PlayerProvider = dynamic(() => import("./context/PlayerContext"), { ssr: false });
 
 export const metadata = {
   title: "CONTENDER",
@@ -12,7 +14,9 @@ export default function RootLayout({ children }) {
     <html>
       <Script src="https://kit.fontawesome.com/09c2dac4bc.js" crossOrigin="anonymous" />
       <body>
-        {children}
+        <PlayerProvider>
+          {children}
+        </PlayerProvider>
       </body>
     </html>
   );
