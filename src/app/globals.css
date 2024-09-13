@@ -107,10 +107,14 @@ section {
   gap: 5px;
 }
 
-.player-list .player-card {
-  border: 1px solid var(--border-color-1);
-  padding: 10px;
-  border-radius: 5px;
+.player-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 5px;
+  overflow-y: scroll;
+  max-height: 70dvh;
 }
 
 .up-down-arrow {
