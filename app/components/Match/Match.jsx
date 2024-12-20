@@ -22,9 +22,9 @@ export default function Match ({ match }) {
 function SinglesMatch ({ match }) {
   return (
     <div className='singles-match'>
-      <Player player={match.players.player1} />
-      <Scoreboard scores={match.scores} />
-      <Player player={match.players.player2} />
+      <Player playerId={match.players.player1.id} />
+      <Scoreboard playerId1={match.players.player1.id} playerId2={match.players.player2.id} matchBestOf={match.bestOf} />
+      <Player playerId={match.players.player2.id} />
     </div>
   );
 };
