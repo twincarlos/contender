@@ -1,24 +1,17 @@
-import Score from "../Score/Score";
 import "./Scoreboard.css";
 
-export default function Scoreboard({ playerId1, playerId2, matchBestOf }) {
-  function buildArray() {
-    const arr = [];
-    for (let i = 1; i <= matchBestOf; i++) arr.push(i);
-    return arr;
-  };
-  const arr = buildArray();
+export default function Scoreboard({ scores, matchScore }) {
   return (
     <div className="scoreboard">
       <div className="scores game-scores">
-        <span className="game-score score score-1">2</span>
-        <span className="game-score score score-2">1</span>
+        <span className="game-score score score-1">{matchScore.score1}</span>
+        <span className="game-score score score-2">{matchScore.score2}</span>
       </div>
-      {arr.map((n) => {
+      {Object.values(scores).map((score, idx) => {
         return (
-          <div className="scores" key={n}>
-            <Score playerId={playerId1} gameNumber={n} />
-            <Score playerId={playerId2} gameNumber={n} />
+          <div className="scores" key={idx}>
+            <span className='score'>{scores[idx + 1].score1}</span>
+            <span className='score'>{scores[idx + 1].score2}</span>
           </div>
         );
       })}
