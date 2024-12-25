@@ -29,7 +29,7 @@ export default function EditableScoreboard({ match, setMatch }) {
                 });
                 setMatch({
                   ...match,
-                  status: validity === 'Invalid' ? 'In Progress' : validity,
+                  status: validity === "Invalid" ? "In Progress" : validity,
                   matchScore,
                   winner,
                   scores
@@ -51,7 +51,7 @@ export default function EditableScoreboard({ match, setMatch }) {
                 });
                 setMatch({
                   ...match,
-                  status: validity === 'Invalid' ? 'In Progress' : validity,
+                  status: validity === "Invalid" ? "In Progress" : validity,
                   matchScore,
                   winner,
                   scores

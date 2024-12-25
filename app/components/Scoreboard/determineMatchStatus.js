@@ -37,7 +37,7 @@ export default function updateMatchScoreAndStatus({ score, playerNumber, gameNum
   let matchScore1 = 0;
   let matchScore2 = 0;
   let matchWinner = null;
-  let matchValidity = 'In Progress';
+  let matchValidity = "In Progress";
 
   scores = {
     ...scores,
@@ -57,16 +57,16 @@ export default function updateMatchScoreAndStatus({ score, playerNumber, gameNum
       else matchScore2++;
 
       // Update match status
-      if ((matchValidity === 'In Progress') && (matchScore1 === gamesNeededToWin || matchScore2 === gamesNeededToWin)) {
-        matchValidity = 'Finished';
+      if ((matchValidity === "In Progress") && (matchScore1 === gamesNeededToWin || matchScore2 === gamesNeededToWin)) {
+        matchValidity = "Finished";
         matchWinner = winner;
-      } else if (matchValidity === 'Finished') {
-        matchValidity = 'Invalid';
+      } else if (matchValidity === "Finished") {
+        matchValidity = "Invalid";
         matchWinner = null;
       };
     }
-    else if ((matchValidity === 'In Progress') || ((matchValidity === 'Finished') && (score1 !== 0 || score2 !== 0))) {
-      matchValidity = 'Invalid';
+    else if ((matchValidity === "In Progress") || ((matchValidity === "Finished") && (score1 !== 0 || score2 !== 0))) {
+      matchValidity = "Invalid";
       matchWinner = null;
     };
   };

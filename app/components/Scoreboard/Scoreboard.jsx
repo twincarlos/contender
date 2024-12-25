@@ -10,8 +10,8 @@ export default function Scoreboard({ scores, matchScore }) {
       {Object.values(scores).map((score, idx) => {
         return (
           <div className="scores" key={idx}>
-            <span className='score'>{scores[idx + 1].score1}</span>
-            <span className='score'>{scores[idx + 1].score2}</span>
+            <span className="score">{scores[idx + 1].score1}</span>
+            <span className="score">{scores[idx + 1].score2}</span>
           </div>
         );
       })}

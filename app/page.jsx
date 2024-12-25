@@ -1,5 +1,5 @@
-import './page.css';
-import Tournaments from './components/Tournaments/Tournaments';
+import "./page.css";
+import Tournaments from "./components/Tournaments/Tournaments";
 
 export default function Home() {
   return (

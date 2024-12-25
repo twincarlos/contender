@@ -1,8 +1,8 @@
-import './Gallery.css';
+import "./Gallery.css";
 
 export default function Gallery ({ children }) {
   return (
-    <div className='Gallery'>
+    <div className="Gallery">
       {children}
     </div>
   );
