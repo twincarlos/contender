@@ -1,0 +1,20 @@
+.Status {
+  opacity: 0.8;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.upcoming {
+  color: #fff;
+  background: #454545;
+}
+
+.in-progress {
+  color: #d6ffe6;
+  background: #00b85f;
+}
+
+.finished {
+  color: #b4ccfe;
+  background: #007bff;
+}

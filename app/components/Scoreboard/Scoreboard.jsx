@@ -2,7 +2,7 @@ import "./Scoreboard.css";
 
 export default function Scoreboard({ scores, matchScore }) {
   return (
-    <div className="scoreboard">
+    <div className="Scoreboard">
       <div className="scores game-scores">
         <span className="game-score score score-1">{matchScore.score1}</span>
         <span className="game-score score score-2">{matchScore.score2}</span>

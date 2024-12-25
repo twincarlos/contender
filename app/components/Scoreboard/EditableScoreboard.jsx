@@ -2,7 +2,7 @@ import determineMatchStatus from "./determineMatchStatus";
 
 export default function EditableScoreboard({ match, setMatch }) {
   return (
-    <div className="scoreboard">
+    <div className="Scoreboard">
       <div className="scores game-scores">
         <span className="game-score score score-1">
           {match.matchScore.score1}

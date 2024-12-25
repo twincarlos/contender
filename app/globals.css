@@ -43,6 +43,66 @@ a {
   }
 }
 
+ul {
+  list-style-type: none;
+}
+
 main {
   padding: 1rem;
+}
+
+.caption {
+  font-size: 12px;
+}
+
+.flex {
+  display: flex;
+}
+.flex-direction--column {
+  flex-direction: column;
+}
+.justify-content--center {
+  justify-content: center;
+}
+.align-items--center {
+  align-items: center;
+}
+.justify-content--flex-start {
+  justify-content: flex-start;
+}
+.align-items--flex-start {
+  align-items: flex-start;
+}
+.justify-content--flex-end {
+  justify-content: flex-end;
+}
+.align-items--flex-end {
+  align-items: flex-end;
+}
+.justify-content--space-between {
+  justify-content: space-between;
+}
+.align-items--space-between {
+  align-items: space-between;;
+}
+
+.gap {
+  gap: 10px
+}
+
+button {
+  background: none;
+  padding: 5px 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+}
+
+button.tertiary {
+  border: 1px solid white;
+}
+
+button.quartenary {
+  opacity: 0.7;
 }

@@ -4,7 +4,7 @@ import Status from '../../Status/Status';
 
 export default function SinglesMatch({ match }) {
   return (
-    <div className='singles-match'>
+    <div className='SinglesMatch'>
       <Status status={match.status} />
       <Player player={match.players.player1} />
       <Scoreboard scores={match.scores} matchScore={match.matchScore} />

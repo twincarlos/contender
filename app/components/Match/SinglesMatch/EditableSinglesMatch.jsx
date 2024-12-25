@@ -14,7 +14,7 @@ export default function EditableSinglesMatch({ matchId }) {
   if (!match) return null;
 
   return (
-    <div className="singles-match">
+    <div className="SinglesMatch">
       <Status status={match.status} />
       <Player player={match.players.player1} />
       <EditableScoreboard match={match} setMatch={setMatch} />

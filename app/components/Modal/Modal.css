@@ -1,0 +1,18 @@
+.modal-overlay {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  z-index: 1;
+  inset: 0px;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 650px;
+  border-radius: 5px;
+}
+
+.modal-header {
+  width: 100%;
+}

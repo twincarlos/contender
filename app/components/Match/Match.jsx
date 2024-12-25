@@ -8,7 +8,7 @@ export default function Match ({ match }) {
   if (match.type === 'Singles') {
     return (
       <Card>
-        <div className='match'>
+        <div className='Match'>
           <div className='match-header'>
           </div>
           { editable ? <EditableSinglesMatch matchId={1} /> : <SinglesMatch match={match} /> }

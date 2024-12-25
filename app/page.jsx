@@ -4,7 +4,7 @@ import Tournaments from './components/Tournaments/Tournaments';
 export default function Home() {
   return (
     <main>
-      <Tournaments />
+        <Tournaments />
     </main>
   );
 };
