@@ -1,0 +1,25 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+form span {
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+form button {
+  color: var(--primary-text-color);
+  background: var(--primary-color);
+}

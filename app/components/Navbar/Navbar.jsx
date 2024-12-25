@@ -1,11 +1,11 @@
+import Link from "next/link";
 import "./Navbar.css";
 
 export default function Navbar({ children }) {
   return (
     <nav className="Navbar">
-      <ul className="flex justify-content--flex-end gap">
-        {children}
-      </ul>
+      <Link href="/"><h6>CONTENDER</h6></Link>
+      <div className="flex justify-content--space-between">{children}</div>
     </nav>
   );
-};
+}

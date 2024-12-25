@@ -11,12 +11,17 @@ export default function Modal() {
             <div className="modal-content">
                 <Card>
                     <div className="modal-header flex justify-content--space-between">
-                          <h3>{content.title}</h3>
-                        <button className="quartenary" onClick={() => setContent(null)}><i className="fa-solid fa-xmark" /></button>
+                        <h3>{content.title}</h3>
+                        <button
+                            className="quartenary"
+                            onClick={() => setContent(null)}
+                        >
+                            <i className="fa-solid fa-xmark" />
+                        </button>
                     </div>
                     {content.content}
                 </Card>
             </div>
         </div>
     );
-};
+}

@@ -3,7 +3,7 @@ import "./Forms.css";
 import { useActionState, useEffect } from "react";
 import { createTournament } from "../../actions/tournaments";
 
-export default function CreateTournament({ setTournaments }) {
+export default function CreateTournament({ setTournaments, closeModal }) {
   const [tournament, action, loading] = useActionState(createTournament, undefined);
 
   useEffect(() => {
@@ -12,6 +12,7 @@ export default function CreateTournament({ setTournaments }) {
         ...tournaments,
         [tournament.id]: tournament,
       }));
+      closeModal();
     }
   }, [tournament, setTournaments]);
 
