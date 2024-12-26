@@ -6,15 +6,20 @@ import { useModal } from "./context/ModalContext";
 import useFetch from "./hooks/useFetch";
 import Error from "./components/Error/Error";
 import Loading from "./components/Loading/Loading";
+import { useTournaments } from "./store/store";
 
 export default function Home() {
   const { setContent } = useModal();
+  const { tournaments, setTournaments } = useTournaments();
 
-  const { data, setData, error, loading } = useFetch("/api/tournaments");
+  const { error, loading } = useFetch({
+    url: "/api/tournaments",
+    cb: setTournaments
+  });
 
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
-  
+
   return (
     <main>
       <Navbar>
@@ -24,12 +29,7 @@ export default function Home() {
             <button
               onClick={() =>
                 setContent({
-                  content: (
-                    <CreateTournament
-                      setTournaments={setData}
-                      closeModal={() => setContent(null)}
-                    />
-                  ),
+                  content: <CreateTournament />,
                   title: "Create Tournament",
                 })
               }
@@ -40,7 +40,7 @@ export default function Home() {
           </li>
         </ul>
       </Navbar>
-      <Tournaments tournaments={data} />
+      <Tournaments tournaments={tournaments} />
     </main>
   );
 };

@@ -1,4 +1,10 @@
 /** @type {import("next").NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    experimental: {
+        serverActions: {
+            allowedOrigins: ["supreme-trout-v7qx6r946vw2xvxq-3000.app.github.dev", "localhost:3000"]
+        }
+    }
+};
 
 export default nextConfig;

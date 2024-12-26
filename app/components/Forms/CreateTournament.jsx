@@ -1,20 +1,15 @@
 "use client";
 import "./Forms.css";
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
+import useFormSubmit from "@/app/hooks/useFormSubmit";
 import { createTournament } from "../../actions/tournaments";
+import { useTournaments } from "@/app/store/store";
 
-export default function CreateTournament({ setTournaments, closeModal }) {
+export default function CreateTournament() {
   const [tournament, action, loading] = useActionState(createTournament, undefined);
+  const { addTournament } = useTournaments();
 
-  useEffect(() => {
-    if (tournament) {
-      setTournaments(tournaments => ({
-        ...tournaments,
-        [tournament.id]: tournament,
-      }));
-      closeModal();
-    }
-  }, [tournament, setTournaments]);
+  useFormSubmit(tournament, addTournament);
 
   return (
     <form action={action}>
