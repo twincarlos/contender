@@ -5,9 +5,9 @@ import { socket } from "@/app/socket/socket";
 import { useActionState } from "react";
 
 export default function UpdateTournament({ tournament }) {
-  const [tournament, action, loading] = useActionState(updateTournament, undefined);
+  const [updatedTournament, action, loading] = useActionState(updateTournament, undefined);
 
-  useFormSubmit({ data: tournament, cb: (data) => {
+  useFormSubmit({ data: updatedTournament, cb: (data) => {
     socket.emit("update-tournament", { tournament: data });
   }});
 
