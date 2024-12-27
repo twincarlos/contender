@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--trace-warnings --no-warnings' node server.mjs",
-    "build": "next build",
-    "start": "NODE_ENV=production node dist/server.mjs",
+    "dev": "node server.mjs",
+    "build": "next build && mkdir -p dist && cp server.mjs dist/",
+    "start": "node dist/server.mjs",
     "lint": "next lint"
   },
   "dependencies": {
