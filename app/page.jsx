@@ -4,21 +4,27 @@ import Navbar from "./components/Navbar/Navbar";
 import CreateTournament from "./components/Forms/CreateTournament";
 import { useModal } from "./context/ModalContext";
 import useFetch from "./hooks/useFetch";
-import Error from "./components/Error/Error";
 import Loading from "./components/Loading/Loading";
 import { useTournaments } from "./store/store";
+import { useEffect } from "react";
+import { socket } from "./socket/socket";
 
 export default function Home() {
   const { setContent } = useModal();
-  const { tournaments, setTournaments } = useTournaments();
+  const { tournaments, setTournaments, updateTournament, addTournament } = useTournaments();
 
-  const { error, loading } = useFetch({
-    url: "/api/tournaments",
-    cb: setTournaments
-  });
+  const { loading } = useFetch({ url: "/api/tournaments", cb: setTournaments });
+
+  useEffect(() => {
+    socket.on("add-tournament", (tournament) => addTournament(tournament));
+    socket.on("update-tournament", (tournament) => updateTournament(tournament));
+    return () => {
+      socket.off("add-tournament");
+      socket.off("update-tournament");
+    };
+  }, []);
 
   if (loading) return <Loading />;
-  if (error) return <Error error={error} />;
 
   return (
     <main>

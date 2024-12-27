@@ -18,3 +18,13 @@ export const useTournaments = create((set) => ({
             return { tournaments: state.tournaments };
         }),
 }));
+
+export const useTournament = create((set) => ({
+    tournament: {},
+
+    setTournament: (tournament) =>
+        (set(() => ({ tournament }))),
+
+    updateTournament: (tournament) =>
+        (set((state) => ({ tournament: { ...state.tournament, tournament } })))
+}));

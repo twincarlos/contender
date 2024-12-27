@@ -3,13 +3,14 @@ import "./Forms.css";
 import { useActionState } from "react";
 import useFormSubmit from "@/app/hooks/useFormSubmit";
 import { createTournament } from "../../actions/tournaments";
-import { useTournaments } from "@/app/store/store";
+import { socket } from "@/app/socket/socket";
 
 export default function CreateTournament() {
   const [tournament, action, loading] = useActionState(createTournament, undefined);
-  const { addTournament } = useTournaments();
 
-  useFormSubmit(tournament, addTournament);
+  useFormSubmit({ data: tournament, cb: (data) => {
+    socket.emit("add-tournament", { tournament: data });
+  }});
 
   return (
     <form action={action}>
