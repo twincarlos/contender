@@ -11,12 +11,7 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
     const httpServer = createServer(handle);
-    const io = new Server(httpServer, {
-        cors: {
-          origin: `https://${hostname}`,
-          methods: ["GET", "POST"]
-        }
-      });
+    const io = new Server(httpServer);
 
     io.on("connection", (socket) => {
         console.log(`User connected: **${socket.id}**`);
@@ -26,11 +21,11 @@ app.prepare().then(() => {
             console.log(`User joined tournament **${id}**`);
         });
         socket.on("update-tournament", ({ tournament }) => {
-            socket.emit("update-tournament", tournament);
+            io.emit("update-tournament", tournament);
             console.log(`Tournament updated: **tournament-${tournament.id}**`);
         });
         socket.on("add-tournament", ({ tournament }) => {
-            socket.emit("add-tournament", tournament);
+            io.emit("add-tournament", tournament);
             console.log(`Tournament added: **tournament-${tournament.id}**`);
         });
 
@@ -38,7 +33,6 @@ app.prepare().then(() => {
             console.log("User disconnected");
         });
     });
-
 
     httpServer.listen(port, () => {
         console.log(`Server running on https://${hostname}:${port}`);
