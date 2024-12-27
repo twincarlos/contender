@@ -3,8 +3,8 @@ import { Server } from "socket.io";
 import { createServer } from "node:http";
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = process.env.HOSTNAME || "supreme-trout-v7qx6r946vw2xvxq-3000.app.github.dev";
-const port = parseInt(process.env.PORT || "3000", 10);
+const hostname = process.env.HOSTNAME;
+const port = 3000;
 
 const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler();
