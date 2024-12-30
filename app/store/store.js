@@ -10,9 +10,17 @@ export const useTournaments = create((set) => ({
         set((state) => ({ tournaments: { ...state.tournaments, [tournament.id]: tournament } })),
 
     updateTournament: (tournament) =>
-        set((state) => ({ tournaments: { ...state.tournaments, [tournament.id]: tournament } })),
+        set((state) => ({
+            tournaments: {
+                ...state.tournaments,
+                [tournament.id]: {
+                    ...state.tournaments[tournament.id],
+                    ...tournament
+                }
+            }
+        })),
 
-    removeTournament: (id) =>
+    deleteTournament: (id) =>
         set((state) => {
             delete state.tournaments[id];
             return { tournaments: state.tournaments };
@@ -26,5 +34,10 @@ export const useTournament = create((set) => ({
         (set(() => ({ tournament }))),
 
     updateTournament: (tournament) =>
-        (set((state) => ({ tournament: { ...state.tournament, tournament } })))
+    (set((state) => ({
+        tournament: {
+            ...state.tournament,
+            ...tournament
+        }
+    })))
 }));

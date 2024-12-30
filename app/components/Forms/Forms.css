@@ -23,3 +23,8 @@ form button {
   color: var(--primary-text-color);
   background: var(--primary-color);
 }
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}

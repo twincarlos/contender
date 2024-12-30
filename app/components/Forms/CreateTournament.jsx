@@ -9,7 +9,7 @@ export default function CreateTournament() {
   const [tournament, action, loading] = useActionState(createTournament, undefined);
 
   useFormSubmit({ data: tournament, cb: (data) => {
-    socket.emit("add-tournament", { tournament: data });
+    socket.emit("add-tournament", data);
   }});
 
   return (
@@ -26,9 +26,11 @@ export default function CreateTournament() {
         <span>Enable Ranking</span>
         <input type="checkbox" name="enable-ranking" />
       </label>
-      <button disabled={loading} className="primary">
-        Submit
-      </button>
+      <div className="form-buttons">
+        <button type="submit" disabled={loading} className="primary">
+          Submit
+        </button>
+      </div>
     </form>
   );
 }

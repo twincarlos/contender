@@ -2,7 +2,7 @@
 import Loading from "@/app/components/Loading/Loading";
 import useFetch from "@/app/hooks/useFetch";
 import { useTournament } from "@/app/store/store";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { socket } from "@/app/socket/socket";
 import { useEffect } from "react";
 import Navbar from "@/app/components/Navbar/Navbar";
@@ -17,10 +17,12 @@ export default function Tournament() {
   const { loading } = useFetch({ url: `/api/tournament/${tournamentId}`, cb: setTournament });
 
   useEffect(() => {
-    socket.emit("join-tournament", { id: `tournament-${tournamentId}` });
-    socket.on("update-tournament", (tournament) => updateTournament(tournament));
+    socket.emit("join-tournament", tournamentId);
+    socket.on("update-single-tournament", (tournament) => updateTournament(tournament));
+    socket.on("delete-single-tournament", () => redirect("/"));
     return () => {
-      socket.off("update-tournament");
+      socket.off("update-single-tournament");
+      socket.off("delete-single-tournament");
     };
   }, [tournamentId]);
 
@@ -35,13 +37,13 @@ export default function Tournament() {
             <button
               onClick={() =>
                 setContent({
-                  content: <UpdateTournament />,
+                  content: <UpdateTournament tournament={tournament} />,
                   title: "Update Tournament",
                 })
               }
               className="tertiary"
             >
-              <i className="fa-solid fa-gears" /> Create Tournament
+              <i className="fa-solid fa-gears" /> Update Tournament
             </button>
           </li>
         </ul>

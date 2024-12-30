@@ -111,6 +111,19 @@ button.tertiary {
 button.quartenary {
   opacity: 0.7;
 }
+button.confirm-button {
+  background: transparent;
+  border: 1px solid green;
+  color: var(--foreground);
+}
+button.cancel-button {
+  background: transparent;
+  border: 1px solid red;
+  color: var(--foreground);
+}
+button.delete-button {
+  background: rgb(255, 13, 65);
+}
 
 input {
   font-size: 16px;
