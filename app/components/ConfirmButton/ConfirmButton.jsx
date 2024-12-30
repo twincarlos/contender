@@ -1,14 +1,19 @@
 "use client";
+import { useModal } from "@/app/context/ModalContext";
 import "./ConfirmButton.css";
 import { useState } from "react";
 
 export default function ConfirmButton ({ name, cb }) {
     const [confirm, setConfirm] = useState(false);
+    const { setContent } = useModal();
 
     if (confirm === true) {
         return (
             <div className="flex gap">
-                <button type="button" onClick={cb} className="confirm-button"><i className="fa-solid fa-check" /></button>
+                <button type="button" onClick={() => {
+                    cb();
+                    setContent(null);
+                }} className="confirm-button"><i className="fa-solid fa-check" /></button>
                 <button type="button" className="cancel-button" onClick={() => setConfirm(false)}><i className="fa-solid fa-xmark" /></button>
             </div>
         );
