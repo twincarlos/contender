@@ -25,7 +25,7 @@ export default function CreateTournament() {
       </label>
       <label>
         <span>Enable Ranking</span>
-        <input type="checkbox" name="enable-ranking" />
+        <input type="checkbox" name="enable-ranking" defaultChecked={false} defaultValue={false} />
       </label>
       <div className="form-buttons">
         <button type="submit" disabled={loading} className="primary">
@@ -34,4 +34,4 @@ export default function CreateTournament() {
       </div>
     </form>
   );
-}
+};

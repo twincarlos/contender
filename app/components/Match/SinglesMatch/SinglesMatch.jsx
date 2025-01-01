@@ -1,4 +1,4 @@
-import Player from "../../Player/Player";
+import Player from "../../TournamentPlayer/TournamentPlayer";
 import Scoreboard from "../../Scoreboard/Scoreboard";
 import Status from "../../Status/Status";
 

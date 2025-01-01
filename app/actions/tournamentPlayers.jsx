@@ -34,15 +34,12 @@ export async function updateTournamentPlayer(initialState, formData) {
   const dob = formData.get("tournament-player-dob");
   const location = formData.get("tournament-player-location");
   const club = formData.get("tournament-player-club");
-  const rated = formData.get("is-rated");
 
   if (name) data.name = name;
   if (rating) data.rating = Number(rating);
   if (dob) data.dob = dob;
   if (location) data.location = location;
   if (club) data.club = club;
-
-  console.log(data);
 
   const tournamentPlayerData = await db.update(tournamentPlayersTable).set(data).where(eq(tournamentPlayersTable.id, tournamentPlayerId)).returning();
   return tournamentPlayerData[0];

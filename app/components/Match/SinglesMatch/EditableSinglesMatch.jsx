@@ -1,5 +1,5 @@
 "use client";
-import Player from "../../Player/Player";
+import Player from "../../TournamentPlayer/TournamentPlayer";
 import EditableScoreboard from "../../Scoreboard/EditableScoreboard";
 import { useEffect, useState } from "react";
 import Status from "../../Status/Status";

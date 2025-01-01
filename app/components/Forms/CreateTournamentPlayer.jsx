@@ -44,4 +44,4 @@ export default function CreateTournamentPlayer({ tournamentId }) {
       </div>
     </form>
   );
-}
+};

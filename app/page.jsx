@@ -8,6 +8,7 @@ import { useTournaments } from "./store/store";
 import { useEffect } from "react";
 import { socket } from "./socket/socket";
 import Tournament from "./components/Tournament/Tournament";
+import Gallery from "./components/Gallery/Gallery";
 
 export default function Home() {
   const { setContent } = useModal();

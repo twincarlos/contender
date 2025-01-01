@@ -82,3 +82,37 @@ export const useTournamentPlayers = create((set) => ({
         };
     }))
 }));
+
+export const useTournamentEvents = create((set) => ({
+    tournamentEvents: {},
+
+    setTournamentEvents: (tournamentEvents) =>
+        (set(() => ({ tournamentEvents }))),
+
+    createTournamentEvent: (tournamentEvent) =>
+    (set((state) => ({
+        tournamentEvents: {
+            ...state.tournamentEvents,
+            [tournamentEvent.id]: tournamentEvent
+        }
+    }))),
+
+    updateTournamentEvent: (tournamentEvent) =>
+    (set((state) => ({
+        tournamentEvents: {
+            ...state.tournamentEvents,
+            [tournamentEvent.id]: {
+                ...state.tournamentEvents[tournamentEvent.id],
+                ...tournamentEvent
+            }
+        }
+    }))),
+
+    deleteTournamentEvent: (id) =>
+    (set((state) => {
+        delete state.tournamentEvents[id];
+        return {
+            tournamentEvents: state.tournamentEvents
+        };
+    }))
+}));
