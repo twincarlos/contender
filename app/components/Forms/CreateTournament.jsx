@@ -8,9 +8,10 @@ import { socket } from "@/app/socket/socket";
 export default function CreateTournament() {
   const [tournament, action, loading] = useActionState(createTournament, undefined);
 
-  useFormSubmit({ data: tournament, cb: (data) => {
-    socket.emit("add-tournament", data);
-  }});
+  useFormSubmit({
+    data: tournament,
+    cb: (tournament) => socket.emit("create-tournament", tournament)
+  });
 
   return (
     <form action={action}>

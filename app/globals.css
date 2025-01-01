@@ -1,16 +1,21 @@
 :root {
-  --background: #ffffff;
+  --background: #dddddd;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #171717;
+    --foreground: #dddddd;
     --border-color: #ededed;
+    --secondary-border-color: #adadad;
     --card-background: #141414;
     --primary-color: #00e699;
     --primary-text-color: #0a0a0a;
+    --tabs-background: #dddddd;
+    --tabs-foreground: #171717;
+    --list-background-even: #dddddd;
+    --list-background-odd: #cdcdcd;
   }
 }
 
@@ -26,6 +31,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
 }
 
 * {

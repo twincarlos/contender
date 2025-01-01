@@ -1,4 +1,3 @@
-import "./Player.css";
 import Details from "../Details/Details";
 
 export default function Player ({ player }) {

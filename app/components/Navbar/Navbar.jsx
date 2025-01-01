@@ -5,7 +5,7 @@ export default function Navbar({ children }) {
   return (
     <nav className="Navbar">
       <Link href="/"><h6>CONTENDER</h6></Link>
-      <div className="flex justify-content--space-between">{children}</div>
+      <div className="nav-buttons flex justify-content--space-between">{children}</div>
     </nav>
   );
 }

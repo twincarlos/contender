@@ -4,15 +4,14 @@ import { deleteTournament, updateTournament } from "@/app/actions/tournaments";
 import useFormSubmit from "@/app/hooks/useFormSubmit";
 import { socket } from "@/app/socket/socket";
 import { useActionState } from "react";
-import ConfirmButton from "../ConfirmButton/ConfirmButton";
+import ConfirmButton from "../Buttons/ConfirmButton";
 
 export default function UpdateTournament({ tournament }) {
     const [updatedTournament, action, loading] = useActionState(updateTournament, undefined);
 
     useFormSubmit({
-        data: updatedTournament, cb: (data) => {
-            socket.emit("update-tournament", data);
-        }
+        data: updatedTournament,
+        cb: (tournament) => socket.emit("update-tournament", tournament)
     });
 
     return (
@@ -34,10 +33,13 @@ export default function UpdateTournament({ tournament }) {
                 <button type="submit" disabled={loading} className="primary">
                     Submit
                 </button>
-                <ConfirmButton name={"Delete Tournament"} cb={async () => {
-                    await deleteTournament(tournament.id);
-                    socket.emit("delete-tournament", tournament.id);
-                }} />
+                <ConfirmButton
+                    name={"Delete Tournament"}
+                    cb={async () => {
+                        await deleteTournament(tournament.id);
+                        socket.emit("delete-tournament", tournament.id);
+                    }}
+                />
             </div>
         </form>
     );

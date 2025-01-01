@@ -1,0 +1,21 @@
+.List {
+    border: 1px solid var(--secondary-border-color);
+    border-radius: 5px;
+}
+
+.list-item {
+    padding: 5px;
+    border-bottom: 1px solid var(--secondary-border-color);
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.list-item:nth-child(even) {
+    background: var(--list-background-even)
+}
+
+.list-item:nth-child(odd) {
+    background: var(--list-background-odd)
+}

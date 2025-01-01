@@ -1,5 +1,4 @@
 "use client";
-import Tournaments from "./components/Tournaments/Tournaments";
 import Navbar from "./components/Navbar/Navbar";
 import CreateTournament from "./components/Forms/CreateTournament";
 import { useModal } from "./context/ModalContext";
@@ -8,19 +7,20 @@ import Loading from "./components/Loading/Loading";
 import { useTournaments } from "./store/store";
 import { useEffect } from "react";
 import { socket } from "./socket/socket";
+import Tournament from "./components/Tournament/Tournament";
 
 export default function Home() {
   const { setContent } = useModal();
-  const { tournaments, setTournaments, updateTournament, addTournament, deleteTournament } = useTournaments();
+  const { tournaments, setTournaments, updateTournament, createTournament, deleteTournament } = useTournaments();
 
   const { loading } = useFetch({ url: "/api/tournaments", cb: setTournaments });
 
   useEffect(() => {
-    socket.on("add-tournament", (tournament) => addTournament(tournament));
+    socket.on("create-tournament", (tournament) => createTournament(tournament));
     socket.on("update-tournament", (tournament) => updateTournament(tournament));
     socket.on("delete-tournament", (id) => deleteTournament(id));
     return () => {
-      socket.off("add-tournament");
+      socket.off("create-tournament");
       socket.off("update-tournament");
       socket.off("delete-tournament");
     };
@@ -48,7 +48,11 @@ export default function Home() {
           </li>
         </ul>
       </Navbar>
-      <Tournaments tournaments={tournaments} />
+      <Gallery>
+        {Object.values(tournaments).map((tournament) => (
+          <Tournament key={tournament.id} tournament={tournament} />
+        ))}
+      </Gallery>
     </main>
   );
 };
