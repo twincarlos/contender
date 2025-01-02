@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { socket } from "./socket/socket";
 import Tournament from "./components/Tournament/Tournament";
 import Gallery from "./components/Gallery/Gallery";
+import Card from "./components/Card/Card";
+import Link from "next/link";
 
 export default function Home() {
   const { setContent } = useModal();
@@ -49,11 +51,18 @@ export default function Home() {
           </li>
         </ul>
       </Navbar>
-      <Gallery>
-        {Object.values(tournaments).map((tournament) => (
-          <Tournament key={tournament.id} tournament={tournament} />
-        ))}
-      </Gallery>
+      <Gallery
+        identifier={"id"}
+        items={Object.values(tournaments)}
+        renderItem={(tournament) => (
+          <Link href={`/tournament/${tournament.id}`}>
+            <Card>
+              <Tournament tournament={tournament} />
+            </Card>
+          </Link>
+        )}
+        searchBy={(tournament, keyword) => tournament.name.toLowerCase().includes(keyword.toLowerCase())}
+      />
     </main>
   );
 };

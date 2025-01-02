@@ -13,7 +13,7 @@ export async function createTournamentEvent(initialState, formData) {
 
   const name = formData.get("tournament-event-name");
   const date = formData.get("tournament-event-date");
-  const time = formData.get("tournament-event-date");
+  const time = formData.get("tournament-event-time");
   const format = formData.get("tournament-event-format");
   const status = formData.get("tournament-event-status");
   const teamsFormat = formData.get("tournament-event-teams-format");

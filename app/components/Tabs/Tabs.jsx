@@ -7,7 +7,7 @@ export default function Tabs({ tabs }) {
 
     return (
         <div className="Tabs flex flex-direction--column gap">
-            <div className="tab-names">
+            <div className="tab-names flex gap">
                 {
                     tabs.map((tab, idx) => (
                         <button

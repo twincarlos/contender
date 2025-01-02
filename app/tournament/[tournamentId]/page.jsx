@@ -119,6 +119,12 @@ export default function Tournament() {
                 <TournamentPlayer tournamentPlayer={tournamentPlayer} />
               </div>
             )}
+            searchBy={(tournamentPlayer, keyword) => {
+              if (tournamentPlayer.name.toLowerCase().includes(keyword.toLowerCase())) return true;
+              if (tournamentPlayer.club && tournamentPlayer.club.toLowerCase().includes(keyword.toLowerCase())) return true;
+              if (tournamentPlayer.location && tournamentPlayer.location.toLowerCase().includes(keyword.toLowerCase())) return true;
+              return false;
+            }}
           />
         },
         {
@@ -129,6 +135,7 @@ export default function Tournament() {
             renderItem={(tournamentEvent) => (
               <TournamentEvent tournamentEvent={tournamentEvent} />
             )}
+            searchBy={(tournamentEvent, keyword) => tournamentEvent.name.toLowerCase().includes(keyword.toLowerCase())}
           />
         }
       ]}
