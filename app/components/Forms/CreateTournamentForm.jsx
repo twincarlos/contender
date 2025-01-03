@@ -5,7 +5,7 @@ import useFormSubmit from "@/app/hooks/useFormSubmit";
 import { createTournament } from "../../actions/tournaments";
 import { socket } from "@/app/socket/socket";
 
-export default function CreateTournament() {
+export default function CreateTournamentForm () {
   const [tournament, action, loading] = useActionState(createTournament, undefined);
 
   useFormSubmit({

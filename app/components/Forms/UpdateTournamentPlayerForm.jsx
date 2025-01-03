@@ -6,7 +6,7 @@ import useFormSubmit from "@/app/hooks/useFormSubmit";
 import { deleteTournamentPlayer, updateTournamentPlayer } from "@/app/actions/tournamentPlayers";
 import ConfirmButton from "../Buttons/ConfirmButton";
 
-export default function UpdateTournamentPlayer({ tournamentPlayer }) {
+export default function UpdateTournamentPlayerForm ({ tournamentPlayer }) {
   const [updatedTournamentPlayer, action, loading] = useActionState(updateTournamentPlayer, undefined);
 
   useFormSubmit({

@@ -6,7 +6,7 @@ import { socket } from "@/app/socket/socket";
 import { useActionState } from "react";
 import ConfirmButton from "../Buttons/ConfirmButton";
 
-export default function UpdateTournament({ tournament }) {
+export default function UpdateTournamentForm ({ tournament }) {
     const [updatedTournament, action, loading] = useActionState(updateTournament, undefined);
 
     useFormSubmit({

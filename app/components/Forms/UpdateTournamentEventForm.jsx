@@ -5,12 +5,12 @@ import { socket } from "@/app/socket/socket";
 import useFormSubmit from "@/app/hooks/useFormSubmit";
 import { deleteTournamentEvent, updateTournamentEvent } from "@/app/actions/tournamentEvents";
 
-export default function CreateTournamentEvent({ tournamentEvent }) {
+export default function UpdateTournamentEventForm ({ tournamentEvent }) {
     const [updatedTournamentEvent, action, loading] = useActionState(updateTournamentEvent, undefined);
 
     useFormSubmit({
         data: updatedTournamentEvent,
-        cb: (tournamentEvent) => socket.emit("create-tournament-event", tournamentEvent)
+        cb: (tournamentEvent) => socket.emit("update-tournament-event", tournamentEvent)
     });
 
     return (

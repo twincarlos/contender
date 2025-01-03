@@ -1,6 +1,5 @@
 "use client";
 import Navbar from "./components/Navbar/Navbar";
-import CreateTournament from "./components/Forms/CreateTournament";
 import { useModal } from "./context/ModalContext";
 import useFetch from "./hooks/useFetch";
 import Loading from "./components/Loading/Loading";
@@ -11,6 +10,7 @@ import Tournament from "./components/Tournament/Tournament";
 import Gallery from "./components/Gallery/Gallery";
 import Card from "./components/Card/Card";
 import Link from "next/link";
+import CreateTournamentButton from "./components/Buttons/CreateTournamentButton";
 
 export default function Home() {
   const { setContent } = useModal();
@@ -37,17 +37,7 @@ export default function Home() {
         <h1>Tournaments</h1>
         <ul>
           <li>
-            <button
-              onClick={() =>
-                setContent({
-                  content: <CreateTournament />,
-                  title: "Create Tournament",
-                })
-              }
-              className="tertiary"
-            >
-              <i className="fa-solid fa-plus" /> Create Tournament
-            </button>
+            <CreateTournamentButton />
           </li>
         </ul>
       </Navbar>

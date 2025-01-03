@@ -1,6 +1,6 @@
 "use client";
 import { useModal } from "@/app/context/ModalContext";
-import UpdateTournamentPlayer from "../Forms/UpdateTournamentPlayer";
+import UpdateTournamentPlayer from "../Forms/UpdateTournamentPlayerForm";
 
 export default function UpdateTournamentPlayerButton({ tournamentPlayer }) {
     const { setContent } = useModal();

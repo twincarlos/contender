@@ -6,19 +6,17 @@ import { redirect, useParams } from "next/navigation";
 import { socket } from "@/app/socket/socket";
 import { useEffect } from "react";
 import Navbar from "@/app/components/Navbar/Navbar";
-import { useModal } from "@/app/context/ModalContext";
-import UpdateTournament from "@/app/components/Forms/UpdateTournament";
-import CreateTournamentPlayer from "@/app/components/Forms/CreateTournamentPlayer";
 import Tabs from "@/app/components/Tabs/Tabs";
 import List from "@/app/components/List/List";
 import TournamentPlayer from "@/app/components/TournamentPlayer/TournamentPlayer";
 import UpdateTournamentPlayerButton from "@/app/components/Buttons/UpdateTournamentPlayerButton";
 import TournamentEvent from "@/app/components/TournamentEvent/TournamentEvent";
-import CreateTournamentEvent from "@/app/components/Forms/CreateTournamentEvent";
+import CreateTournamentPlayerButton from "@/app/components/Buttons/CreateTournamentPlayerButton";
+import CreateTournamentEventButton from "@/app/components/Buttons/CreateTournamentEventButton";
+import UpdateTournamentButton from "@/app/components/Buttons/UpdateTournamentButton";
 
-export default function Tournament() {
+export default function Tournament () {
   const { tournamentId } = useParams();
-  const { setContent } = useModal();
   const { tournament, setTournament, updateTournament } = useTournament();
   const { tournamentPlayers, setTournamentPlayers, createTournamentPlayer, updateTournamentPlayer, deleteTournamentPlayer } = useTournamentPlayers();
   const { tournamentEvents, setTournamentEvents, createTournamentEvent, updateTournamentEvent, deleteTournamentEvent } = useTournamentEvents();
@@ -66,43 +64,13 @@ export default function Tournament() {
         <h1>{tournament.name}</h1>
         <ul>
           <li>
-            <button
-              onClick={() =>
-                setContent({
-                  content: <CreateTournamentPlayer tournamentId={tournament.id} />,
-                  title: "Add Player",
-                })
-              }
-              className="tertiary"
-            >
-              <i className="fa-solid fa-plus" /> Add Player
-            </button>
+            <CreateTournamentPlayerButton tournamentId={tournamentId} />
           </li>
           <li>
-            <button
-              onClick={() =>
-                setContent({
-                  content: <CreateTournamentEvent tournamentId={tournament.id} />,
-                  title: "Add Event",
-                })
-              }
-              className="tertiary"
-            >
-              <i className="fa-solid fa-plus" /> Add Event
-            </button>
+            <CreateTournamentEventButton tournamentId={tournamentId} />
           </li>
           <li>
-            <button
-              onClick={() =>
-                setContent({
-                  content: <UpdateTournament tournament={tournament} />,
-                  title: "Update Tournament",
-                })
-              }
-              className="tertiary"
-            >
-              <i className="fa-solid fa-gears" /> Update Tournament
-            </button>
+            <UpdateTournamentButton tournament={tournament} />
           </li>
         </ul>
       </Navbar>
