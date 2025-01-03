@@ -14,3 +14,12 @@
     border-radius: 5px;
     padding: 5px 7px;
 }
+
+.Tabs .update-tournament-player-button {
+    color: var(--tabs-foreground);
+}
+
+.Tabs input {
+    background: var(--input-secondary-background);
+    border: 1px solid var(--secondary-border-color);
+}

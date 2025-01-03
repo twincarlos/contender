@@ -1,5 +1,4 @@
 "use client";
-import "./page.css";
 import Loading from "@/app/components/Loading/Loading";
 import useFetch from "@/app/hooks/useFetch";
 import { useTournament, useTournamentPlayers, useTournamentEvents } from "@/app/store/store";

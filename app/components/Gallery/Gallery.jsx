@@ -8,16 +8,24 @@ export default function Gallery({ items, renderItem, identifier, searchBy }) {
   const filteredItems = (searchBy && keyword) ? items.filter(item => searchBy(item, keyword)) : items;
 
   return (
-    <div className="Gallery">
-      {searchBy && <input type="text" name="search" value={keyword} onChange={e => setKeyword(e.target.value)} />}
-      {filteredItems.map((item, idx) => (
-        <div
-          key={identifier ? item[identifier] : idx}
-          className="list-item"
-        >
-          {renderItem(item)}
-        </div>
-      ))}
+    <div className="Gallery flex flex-direction--column gap">
+      {searchBy && <input
+        type="text"
+        name="search"
+        value={keyword}
+        placeholder="Search"
+        onChange={e => setKeyword(e.target.value)}
+      />}
+      <div className="gallery-content">
+        {filteredItems.map((item, idx) => (
+          <div
+            key={identifier ? item[identifier] : idx}
+            className="gallery-item"
+          >
+            {renderItem(item)}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

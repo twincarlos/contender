@@ -1,28 +1,30 @@
-.Gallery {
+
+
+.gallery-content {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.Gallery > * {
+.gallery-content > * {
   width: 100%;
 }
 
 @media screen and (min-width: 600px) {
-  .Gallery > * {
+  .gallery-content > * {
       width: calc(50% - 10px);
   }
 }
 
 @media screen and (min-width: 1000px) {
-  .Gallery > * {
+  .gallery-content > * {
       width: calc(33.3333333333% - 10px);
   }
 }
 
 @media screen and (min-width: 1000px) {
-  .Gallery > * {
+  .gallery-content > * {
       width: calc(25% - 10px);
   }
 }

@@ -16,6 +16,8 @@
     --tabs-foreground: #171717;
     --list-background-even: #dddddd;
     --list-background-odd: #cdcdcd;
+    --input-primary-background: transparent;
+    --input-secondary-background: #cdcdcd;
   }
 }
 
@@ -135,5 +137,6 @@ input {
   font-size: 16px;
   padding: 5px 7px;
   border-radius: 5px;
+  background: var(--input-primary-background);
   border: 1px solid var(--border-color);
 }
