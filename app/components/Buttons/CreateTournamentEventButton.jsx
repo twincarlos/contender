@@ -13,6 +13,7 @@ export default function CreateTournamentEventButton({ tournamentId }) {
                     title: "Add Event",
                 })
             }
+            type="button"
             className="tertiary"
         >
             <i className="fa-solid fa-plus" /> Add Event

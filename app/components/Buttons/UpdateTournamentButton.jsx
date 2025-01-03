@@ -13,6 +13,7 @@ export default function UpdateTournamentButton({ tournament }) {
                     title: "Update Tournament",
                 })
             }
+            type="button"
             className="tertiary"
         >
             <i className="fa-solid fa-gears" /> Update Tournament
